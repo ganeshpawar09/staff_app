@@ -2,37 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:staff_flutter_app/const/font.dart';
 import 'package:staff_flutter_app/models/order.dart';
 import 'package:staff_flutter_app/screens/home/home_screen.dart';
+import 'package:staff_flutter_app/state/movement_state.dart';
+import 'package:staff_flutter_app/widget/movement_list_view.dart';
 import 'package:staff_flutter_app/widget/skeleton_tabbar_view.dart';
-import 'package:staff_flutter_app/widget/order_item_list_view.dart';
-import 'package:staff_flutter_app/state/order_item_state.dart';
 import 'package:provider/provider.dart';
 
-class OrderItemScreen extends StatelessWidget {
-  const OrderItemScreen({super.key});
+class MovementScreen extends StatelessWidget {
+  const MovementScreen({super.key});
 
-  Future<List<ErpOrderItem>> fetchData(BuildContext context) async {
+  Future<List<Movement>> fetchData(BuildContext context) async {
     try {
-      if (!DataFetchStatus.orderItemDataIsFetched) {
-        await context.read<OrderItemState>().getErpOrderItemList();
-        DataFetchStatus.orderItemDataIsFetched = true;
+      if (!DataFetchStatus.movementDataIsFetched) {
+        await context.read<MovementState>().getMovementList();
+        DataFetchStatus.movementDataIsFetched = true;
       }
     } catch (error) {
       print('Error fetching data: $error');
     }
 
     if (context.mounted) {
-      return context.read<OrderItemState>().erporderitemlist;
+      return context.read<MovementState>().movementList;
     }
 
     return [];
   }
 
   void refresh(BuildContext context) {
-    DataFetchStatus.orderItemDataIsFetched = false;
+    DataFetchStatus.movementDataIsFetched = false;
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => OrderItemScreen(),
+        builder: (context) => MovementScreen(),
       ),
     );
   }
@@ -44,7 +44,7 @@ class OrderItemScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            "View Order Item",
+            "View Movement",
             style: AppStyles.mondaB.copyWith(fontSize: 22),
           ),
 
@@ -70,7 +70,7 @@ class OrderItemScreen extends StatelessWidget {
             labelStyle: TextStyle(fontFamily: 'monda', fontSize: 17),
             tabs: [
               Tab(text: 'Total'),
-              Tab(text: 'Upcoming'),
+              Tab(text: 'Pending'),
               Tab(text: 'Completed'),
             ],
           ),
@@ -91,10 +91,10 @@ class OrderItemScreen extends StatelessWidget {
             )
           ],
         ),
-        body: FutureBuilder<List<ErpOrderItem>>(
+        body: FutureBuilder<List<Movement>>(
           future: fetchData(context),
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting ) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
               return const SkeletonTabbarView();
             } else if (snapshot.hasError || !snapshot.hasData) {
               return Center(
@@ -122,25 +122,25 @@ class OrderItemScreen extends StatelessWidget {
             } else {
               return TabBarView(
                 children: [
-                  Consumer<OrderItemState>(
-                    builder: (context, provider, child) => OrderItemTab(
-                      data: provider.erporderitemlist,
+                  Consumer<MovementState>(
+                    builder: (context, provider, child) => MovementTab(
+                      data: provider.movementList,
                       refreshFunction: () {
                         refresh(context);
                       },
                     ),
                   ),
-                  Consumer<OrderItemState>(
-                    builder: (context, provider, child) => OrderItemTab(
-                      data: provider.erporderitempendinglist,
+                  Consumer<MovementState>(
+                    builder: (context, provider, child) => MovementTab(
+                      data: provider.movementPendingList,
                       refreshFunction: () {
                         refresh(context);
                       },
                     ),
                   ),
-                  Consumer<OrderItemState>(
-                    builder: (context, provider, child) => OrderItemTab(
-                      data: provider.erporderitemcompletedlist,
+                  Consumer<MovementState>(
+                    builder: (context, provider, child) => MovementTab(
+                      data: provider.movementCompletedList,
                       refreshFunction: () {
                         refresh(context);
                       },
@@ -156,11 +156,11 @@ class OrderItemScreen extends StatelessWidget {
   }
 }
 
-class OrderItemTab extends StatelessWidget {
-  final List<ErpOrderItem> data;
+class MovementTab extends StatelessWidget {
+  final List<Movement> data;
   final VoidCallback refreshFunction;
 
-  const OrderItemTab(
+  const MovementTab(
       {Key? key, required this.data, required this.refreshFunction})
       : super(key: key);
 
@@ -176,7 +176,7 @@ class OrderItemTab extends StatelessWidget {
         child: ListView.builder(
           itemCount: data.length,
           itemBuilder: (BuildContext context, int index) =>
-              OrderItemListView(orderItem: data[index]),
+              MovementListView(movement: data[index]),
         ),
       ),
     );

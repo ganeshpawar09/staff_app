@@ -1,12 +1,11 @@
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:http/http.dart' as http;
 import 'package:staff_flutter_app/models/order_process.dart';
 import 'package:staff_flutter_app/server_url.dart';
 
-class ProcessState with ChangeNotifier {
-  
+class ProcessState extends ChangeNotifier {
   LocalStorage data = LocalStorage('usertoken');
   List<OrderProcess> _orderProcessList = [];
 
@@ -58,7 +57,7 @@ class ProcessState with ChangeNotifier {
     return _orderProcessList.firstWhere((element) => element.id == id);
   }
 
-  Future<http.Response?> updateprocessstatus(
+  Future<http.Response?> updateProcessStatus(
       int id, int val1, String val2) async {
     String url = '$serversite/api/update_process/$id/';
     var token = data.getItem('token');

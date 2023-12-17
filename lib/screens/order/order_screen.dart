@@ -94,8 +94,7 @@ class OrderScreen extends StatelessWidget {
         body: FutureBuilder<List<ErpOrder>>(
           future: fetchData(context),
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting ||
-                DataFetchStatus.orderDataIsFetched == false) {
+            if (snapshot.connectionState == ConnectionState.waiting ) {
               return const SkeletonTabbarView();
             } else if (snapshot.hasError || !snapshot.hasData) {
               return Center(

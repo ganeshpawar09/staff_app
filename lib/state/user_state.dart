@@ -1,17 +1,15 @@
 import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:localstorage/localstorage.dart';
 import 'package:staff_flutter_app/server_url.dart';
 
-class UserState with ChangeNotifier {
-  LocalStorage storage =  LocalStorage('usertoken');
+class UserState extends ChangeNotifier {
+  LocalStorage storage = LocalStorage('usertoken');
 
   Future<bool> loginNow(String uname, String passw) async {
     String url = '$serversite/api/login/';
     try {
-
       http.Response response = await http.post(Uri.parse(url),
           headers: {
             "Content-Type": "application/json",

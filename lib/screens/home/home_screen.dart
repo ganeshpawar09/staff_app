@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:staff_flutter_app/models/grid_item.dart';
+import 'package:staff_flutter_app/screens/movement/movement_screen.dart';
 import 'package:staff_flutter_app/widget/home_grid_view.dart';
 import 'package:staff_flutter_app/screens/order/order_screen.dart';
 import 'package:staff_flutter_app/screens/orderitem/odert_item_screen.dart';
@@ -11,6 +12,7 @@ class DataFetchStatus {
   static bool orderDataIsFetched = false;
   static bool processDataIsFetched = false;
   static bool orderItemDataIsFetched = false;
+  static bool movementDataIsFetched = false;
 }
 
 class HomeScreen extends StatefulWidget {
@@ -42,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
       GridItem(
         title: "View Movements",
         img: "assets/movement.png",
-        widget: ProcessScreen(),
+        widget: MovementScreen(),
       ),
       GridItem(
         title: "View RFQ Vendor",
