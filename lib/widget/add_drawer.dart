@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:staff_flutter_app/const/font.dart';
-import 'package:staff_flutter_app/old%20screen/home_screen1.dart';
 import 'package:staff_flutter_app/screens/home/home_screen.dart';
 import 'package:staff_flutter_app/screens/login/login_screen.dart';
 import 'package:staff_flutter_app/screens/order/order_screen.dart';

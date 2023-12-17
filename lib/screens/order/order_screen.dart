@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:staff_flutter_app/const/font.dart';
 import 'package:staff_flutter_app/models/order.dart';
 import 'package:staff_flutter_app/screens/home/home_screen.dart';
-import 'package:staff_flutter_app/screens/order/widget/order_list_view.dart';
-import 'package:staff_flutter_app/screens/order/widget/skeleton_order_tabbar_view.dart';
+import 'package:staff_flutter_app/widget/order_list_view.dart';
+import 'package:staff_flutter_app/widget/skeleton_tabbar_view.dart';
 import 'package:staff_flutter_app/state/order_state.dart';
 import 'package:provider/provider.dart';
 
@@ -13,15 +13,17 @@ class OrderScreen extends StatelessWidget {
   Future<List<ErpOrder>> fetchData(BuildContext context) async {
     try {
       if (!DataFetchStatus.orderDataIsFetched) {
-        await Provider.of<OrderState>(context, listen: false).getErpOrderList();
+        await context.read<OrderState>().getErpOrderList();
         DataFetchStatus.orderDataIsFetched = true;
       }
     } catch (error) {
       print('Error fetching data: $error');
     }
+
     if (context.mounted) {
-      return Provider.of<OrderState>(context, listen: false).erporderlist;
+      return context.read<OrderState>().erporderlist;
     }
+
     return [];
   }
 
@@ -94,7 +96,7 @@ class OrderScreen extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting ||
                 DataFetchStatus.orderDataIsFetched == false) {
-              return const SkeletonOrderTabbarView();
+              return const SkeletonTabbarView();
             } else if (snapshot.hasError || !snapshot.hasData) {
               return Center(
                 child: Column(
@@ -195,7 +197,7 @@ class OrderTab extends StatelessWidget {
         child: ListView.builder(
           itemCount: data.length,
           itemBuilder: (BuildContext context, int index) =>
-              OrderListView(dataOrderAllSingle: data[index]),
+              OrderListView(order: data[index]),
         ),
       ),
     );

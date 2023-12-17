@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:staff_flutter_app/const/font.dart';
 import 'package:staff_flutter_app/models/order.dart';
-import 'package:staff_flutter_app/old%20screen/home_screen1.dart';
-import 'package:staff_flutter_app/screens/order/widget/part_list_view.dart';
-import 'package:staff_flutter_app/state/order_state.dart';
-import 'package:staff_flutter_app/state/process_state.dart';
-import 'package:provider/provider.dart';
+import 'package:staff_flutter_app/widget/order_item_list_view.dart';
 
 class OrderDetailScreen extends StatefulWidget {
   final ErpOrder order;
@@ -190,7 +184,8 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
               child: ListView.builder(
                 scrollDirection: Axis.vertical,
                 itemCount: orderitem.length,
-                itemBuilder: (BuildContext context, int index) => PartListView(
+                itemBuilder: (BuildContext context, int index) =>
+                    OrderItemListView(
                   orderItem: orderitem[index],
                 ),
               ),

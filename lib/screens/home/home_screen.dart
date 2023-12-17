@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:staff_flutter_app/models/grid_item.dart';
-import 'package:staff_flutter_app/screens/home/widget/home_grid_view.dart';
+import 'package:staff_flutter_app/widget/home_grid_view.dart';
 import 'package:staff_flutter_app/screens/order/order_screen.dart';
+import 'package:staff_flutter_app/screens/orderitem/odert_item_screen.dart';
 import 'package:staff_flutter_app/screens/process/process_screen.dart';
-import 'package:staff_flutter_app/state/order_item_state.dart';
-import 'package:staff_flutter_app/state/order_state.dart';
-import 'package:staff_flutter_app/state/process_state.dart';
-import 'package:staff_flutter_app/widgets/add_drawer.dart';
+import 'package:staff_flutter_app/widget/add_drawer.dart';
+import 'package:staff_flutter_app/const/font.dart';
 
 class DataFetchStatus {
   static bool orderDataIsFetched = false;
   static bool processDataIsFetched = false;
+  static bool orderItemDataIsFetched = false;
 }
 
 class HomeScreen extends StatefulWidget {
@@ -22,32 +21,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // bool _init = true;
-  // bool _isLoading = true;
-
-  // Future<void> fetchData() async {
-  //   await Provider.of<ProcessState>(context, listen: false)
-  //       .getorderprocesslists();
-  //   await Provider.of<ProcessState>(context, listen: false)
-  //       .getorderprocessnowlists();
-  //   await Provider.of<ProcessState>(context, listen: false)
-  //       .getorderprocessupcominglists();
-  //   await Provider.of<OrderState>(context, listen: false).geterporderlists();
-  //   await Provider.of<OrderitemState>(context, listen: false)
-  //       .geterporderitemlists();
-  // }
-
-  // void didChangeDependencies() async {
-  //   if (_init) {
-  //     await fetchData();
-  //     setState(() {
-  //       _isLoading = false;
-  //     });
-  //   }
-  //   _init = false;
-  //   super.didChangeDependencies();
-  // }
-
   @override
   Widget build(BuildContext context) {
     final List<GridItem> items = [
@@ -59,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
       GridItem(
         title: "View OrderItem",
         img: "assets/parts.png",
-        widget: ProcessScreen(),
+        widget: OrderItemScreen(),
       ),
       GridItem(
         title: "View Process",
@@ -100,17 +73,15 @@ class _HomeScreenState extends State<HomeScreen> {
               },
               child: Image.asset(
                 "assets/menu.png",
-                width: 40,
-                height: 40,
+                width: 35,
+                height: 35,
               ),
             );
           },
         ),
-        title: Image.asset(
-          "assets/cadandcart.png",
-          fit: BoxFit.contain,
-          height: 35,
-          width: 180,
+        title: Text(
+          "Dashboard",
+          style: AppStyles.mondaB.copyWith(fontSize: 22),
         ),
         actions: [
           IconButton(
@@ -120,6 +91,9 @@ class _HomeScreenState extends State<HomeScreen> {
               size: 30,
             ),
             onPressed: () {},
+          ),
+          const SizedBox(
+            width: 30,
           ),
         ],
       ),

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:staff_flutter_app/const/font.dart';
 import 'package:staff_flutter_app/models/order.dart';
-import 'package:staff_flutter_app/screens/order/item_detail_screen.dart';
+import 'package:staff_flutter_app/screens/order/order_item_detail_screen.dart';
 
-class PartListView extends StatelessWidget {
+class OrderItemListView extends StatelessWidget {
   final ErpOrderItem orderItem;
-  const PartListView({super.key, required this.orderItem});
+  const OrderItemListView({super.key, required this.orderItem});
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +97,9 @@ class PartListView extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ItemDetailScreen(part: orderItem,),
+                        builder: (context) => OrderItemDetailScreen(
+                          part: orderItem,
+                        ),
                       ),
                     );
                   },

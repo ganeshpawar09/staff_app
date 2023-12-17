@@ -68,16 +68,16 @@ class OrderState with ChangeNotifier {
   //   return order.itemsNew;
   // }
 
-  getorderbyprocess(items_new) {
-    for (var order in _erpOrders) {
-      for (var items_new in {order.itemsNew}) {
-        items_new == items_new ? print('object okay') : print('object okay');
-        if (items_new == items_new) {
-          return _erpOrders.firstWhere((element) => element.id == order.id);
-        }
-        int? test = order.id;
-        print('test is $test');
-      }
-    }
-  }
+  // getorderbyprocess(items_new) {
+  //   for (var order in _erpOrders) {
+  //     for (var items_new in {order.itemsNew}) {
+  //       items_new == items_new ? print('object okay') : print('object okay');
+  //       if (items_new == items_new) {
+  //         return _erpOrders.firstWhere((element) => element.id == order.id);
+  //       }
+  //       int? test = order.id;
+  //       print('test is $test');
+  //     }
+  //   }
+  // }
 }

@@ -14,7 +14,7 @@ class MaterialVendor {
   String? city;
   String? state;
   String? country;
-  int? pin;  
+  int? pin;
   String? email;
   String? contPersonName;
   int? contPersonNumber;
@@ -64,33 +64,30 @@ class MaterialVendor {
     contPersonNumber = json['cont_person_number'];
     latitude = json['latitude'];
     longitude = json['longitude'];
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
   }
-
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['vendor_code'] = this.vendorCode;
-    data['company_name'] = this.companyName;
-    data['material_spec'] = this.materialSpec;
-    data['gst_no'] = this.gstNo;
-    data['bank_account_no'] = this.bankAccountNo;
-    data['ifsc_code'] = this.ifscCode;
-    data['name_on_check'] = this.nameOnCheck;
-    data['upi_id'] = this.upiId;
-    data['billing_add_1'] = this.billingAdd1;
-    data['billing_add_2'] = this.billingAdd2;
-    data['city'] = this.city;
-    data['state'] = this.state;
-    data['country'] = this.country;
-    data['pin'] = this.pin;
-    data['email'] = this.email;
-    data['cont_person_name'] = this.contPersonName;
-    data['cont_person_number'] = this.contPersonNumber;
-    data['latitude'] = this.latitude;
-    data['longitude'] = this.longitude;
-    if (this.user != null) {
-      data['user'] = this.user!.toJson();
-    }
-    return data;
+    return {
+      'vendor_code': vendorCode,
+      'company_name': companyName,
+      'material_spec': materialSpec,
+      'gst_no': gstNo,
+      'bank_account_no': bankAccountNo,
+      'ifsc_code': ifscCode,
+      'name_on_check': nameOnCheck,
+      'upi_id': upiId,
+      'billing_add_1': billingAdd1,
+      'billing_add_2': billingAdd2,
+      'city': city,
+      'state': state,
+      'country': country,
+      'pin': pin,
+      'email': email,
+      'cont_person_name': contPersonName,
+      'cont_person_number': contPersonNumber,
+      'latitude': latitude,
+      'longitude': longitude,
+      'user': user?.toJson(), // This will handle null gracefully
+    };
   }
 }

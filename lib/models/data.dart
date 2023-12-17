@@ -35,24 +35,24 @@ class ManufacturingCapabilities {
     if (json['material'] != null) {
       material = <PartMaterial>[];
       json['material'].forEach((v) {
-        material!.add(new PartMaterial.fromJson(v));
+        material!.add(PartMaterial.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['cap_id'] = this.capId;
-    data['cap_ref_name'] = this.capRefName;
-    data['cap_name'] = this.capName;
-    data['bed_size_x'] = this.bedSizeX;
-    data['bed_size_y'] = this.bedSizeY;
-    data['bed_size_z'] = this.bedSizeZ;
-    data['cap_type'] = this.capType;
-    data['price_calculator'] = this.priceCalculator;
-    data['instant_quote'] = this.instantQuote;
-    if (this.material != null) {
-      data['material'] = this.material!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['cap_id'] = capId;
+    data['cap_ref_name'] = capRefName;
+    data['cap_name'] = capName;
+    data['bed_size_x'] = bedSizeX;
+    data['bed_size_y'] = bedSizeY;
+    data['bed_size_z'] = bedSizeZ;
+    data['cap_type'] = capType;
+    data['price_calculator'] = priceCalculator;
+    data['instant_quote'] = instantQuote;
+    if (material != null) {
+      data['material'] = material!.map((v) => v.toJson()).toList();
     }
     return data;
   }

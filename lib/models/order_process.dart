@@ -70,47 +70,47 @@ class OrderProcess {
     reviewed = json['reviewed'];
     proceed = json['proceed'];    
     manufacturingCapabilities = json['manufacturing_capabilities'] != null
-        ? new ManufacturingCapabilities.fromJson(
+        ?  ManufacturingCapabilities.fromJson(
             json['manufacturing_capabilities'])
         : null;
     vendorDetail = json['vendor_detail'] != null
-        ? new VendorDetail.fromJson(json['vendor_detail'])
+        ?  VendorDetail.fromJson(json['vendor_detail'])
         : null;
     paymentDetails = json['payment_details'] != null
-        ? new PaymentDetails.fromJson(json['payment_details'])
+        ?  PaymentDetails.fromJson(json['payment_details'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['sr_no'] = this.srNo;
-    data['process_name'] = this.processName;
-    data['process_id'] = this.processId;
-    data['barcode_link'] = this.barcodeLink;
-    data['barcode_img'] = this.barcodeImg;
-    data['process_bill'] = this.processBill;
-    data['target_cost'] = this.targetCost;
-    data['cost'] = this.cost;
-    data['inc_tax_cost'] = this.incTaxCost;
-    data['process_part_file'] = this.processPartFile;
-    data['process_drawing'] = this.processDrawing;
-    data['start_date'] = this.startDate;
-    data['end_date'] = this.endDate;
-    data['completed'] = this.completed;
-    data['wo_date'] = this.woDate;
-    data['rfq_vendor_bool'] = this.rfqVendorBool;
-    data['reviewed'] = this.reviewed;
-    data['proceed'] = this.proceed;    
-    if (this.manufacturingCapabilities != null) {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['sr_no'] = srNo;
+    data['process_name'] = processName;
+    data['process_id'] = processId;
+    data['barcode_link'] = barcodeLink;
+    data['barcode_img'] = barcodeImg;
+    data['process_bill'] = processBill;
+    data['target_cost'] = targetCost;
+    data['cost'] = cost;
+    data['inc_tax_cost'] = incTaxCost;
+    data['process_part_file'] = processPartFile;
+    data['process_drawing'] = processDrawing;
+    data['start_date'] = startDate;
+    data['end_date'] = endDate;
+    data['completed'] = completed;
+    data['wo_date'] = woDate;
+    data['rfq_vendor_bool'] = rfqVendorBool;
+    data['reviewed'] = reviewed;
+    data['proceed'] = proceed;    
+    if (manufacturingCapabilities != null) {
       data['manufacturing_capabilities'] =
-          this.manufacturingCapabilities!.toJson();
+          manufacturingCapabilities!.toJson();
     }
-    if (this.vendorDetail != null) {
-      data['vendor_detail'] = this.vendorDetail!.toJson();
+    if (vendorDetail != null) {
+      data['vendor_detail'] = vendorDetail!.toJson();
     }
-    if (this.paymentDetails != null) {
-      data['payment_details'] = this.paymentDetails!.toJson();
+    if (paymentDetails != null) {
+      data['payment_details'] =paymentDetails!.toJson();
     }
     return data;
   }
@@ -148,15 +148,15 @@ class PaymentDetails {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['payment_ref'] = this.paymentRef;
-    data['payment_mode'] = this.paymentMode;
-    data['transaction_id'] = this.transactionId;
-    data['partner_id'] = this.partnerId;
-    data['status'] = this.status;
-    data['amount'] = this.amount;
-    data['timestamp'] = this.timestamp;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['payment_ref'] = paymentRef;
+    data['payment_mode'] = paymentMode;
+    data['transaction_id'] = transactionId;
+    data['partner_id'] = partnerId;
+    data['status'] = status;
+    data['amount'] = amount;
+    data['timestamp'] = timestamp;
     return data;
   }
 }

@@ -5,13 +5,13 @@ import 'package:http/http.dart' as http;
 import 'package:staff_flutter_app/models/order.dart';
 import 'package:staff_flutter_app/server_url.dart';
 
-class OrderitemState with ChangeNotifier {
-  LocalStorage storage = new LocalStorage('usertoken');
+class OrderItemState with ChangeNotifier {
+  LocalStorage storage = LocalStorage('usertoken');
 
-  late List<ErpOrderItem> _erporderitem;
+  List<ErpOrderItem> _erporderitem = [];
 
-  Future<void> geterporderitemlists() async {
-    String url = '$serversite/api/get_orderitem_list_by_partner/';
+  Future<void> getErpOrderItemList() async {
+    String url = '$serversite/api/erp-orderitem/';
     var token = storage.getItem('token');
     try {
       http.Response response = await http.get(Uri.parse(url), headers: {
@@ -34,6 +34,17 @@ class OrderitemState with ChangeNotifier {
       print(e);
       print("error erporderitemlist");
     }
+  }
+
+  List<ErpOrderItem> get erporderitemlist {
+    return _erporderitem;
+  }
+  List<ErpOrderItem> get erporderitemcompletedlist {
+    return _erporderitem.where((element) => element.ordered == true).toList();
+  }
+
+  List<ErpOrderItem> get erporderitempendinglist {
+    return _erporderitem.where((element) => element.ordered == false).toList();
   }
 
   getorderitembyprocess(process) {

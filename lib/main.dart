@@ -9,9 +9,7 @@ import 'package:staff_flutter_app/state/process_state.dart';
 import 'package:staff_flutter_app/state/user_state.dart';
 
 main() {
-  runApp(
-    CadAndCart()
-  );
+  runApp(CadAndCart());
 }
 
 class CadAndCart extends StatelessWidget {
@@ -27,7 +25,7 @@ class CadAndCart extends StatelessWidget {
         ChangeNotifierProvider(create: (ctx) => OrderState()),
         ChangeNotifierProvider(create: (ctx) => ProcessState()),
         ChangeNotifierProvider(create: (ctx) => OrderState()),
-        ChangeNotifierProvider(create: (ctx) => OrderitemState()),
+        ChangeNotifierProvider(create: (ctx) => OrderItemState()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

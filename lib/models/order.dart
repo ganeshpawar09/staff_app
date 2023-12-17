@@ -43,32 +43,29 @@ class ErpOrder {
     status = json['status'];
     closed = json['closed'];
     completed = json['completed'];
-    // itemsNew = json['items_new'] != null
-    //     ? new ErpOrderItem.fromJson(json['items_new'])
-    //     : null;
+   
     if (json['items_new'] != null) {
       itemsNew = <ErpOrderItem>[];
       json['items_new'].forEach((v) {
-        itemsNew!.add(new ErpOrderItem.fromJson(v));
+        itemsNew!.add( ErpOrderItem.fromJson(v));
       });
     }
   }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['ref_code'] = this.refCode;
-    data['quote_no'] = this.quoteNo;
-    data['barcode_img'] = this.barcodeImg;
-    data['start_date'] = this.startDate;
-    data['ordered_date'] = this.orderedDate;
-    data['ordered'] = this.ordered;
-    data['lead_time'] = this.leadTime;
-    data['status'] = this.status;
-    data['closed'] = this.closed;
-    data['completed'] = this.completed;
-    if (this.itemsNew != null) {
-      data['items_new'] = this.itemsNew!.map((v) => v.toJson()).toList();
+ Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['ref_code'] = refCode;
+    data['quote_no'] = quoteNo;
+    data['barcode_img'] = barcodeImg;
+    data['start_date'] = startDate;
+    data['ordered_date'] = orderedDate;
+    data['ordered'] = ordered;
+    data['lead_time'] = leadTime;
+    data['status'] = status;
+    data['closed'] = closed;
+    data['completed'] = completed;
+    if (itemsNew != null) {
+      data['items_new'] = itemsNew!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -153,75 +150,84 @@ class ErpOrderItem {
     erpStage = json['erp_stage'];
     trackSlug = json['track_slug'];
     trackStatus = json['track_status'];
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    user = json['user'] != null ?  User.fromJson(json['user']) : null;
     document = json['document'] != null
-        ? new Document.fromJson(json['document'])
+        ?  Document.fromJson(json['document'])
         : null;
     materialDetail = json['material_detail'] != null
-        ? new PartMaterial.fromJson(json['material_detail'])
+        ?  PartMaterial.fromJson(json['material_detail'])
         : null;
     manufacturingTech = json['manufacturing_tech'] != null
-        ? new ManufacturingCapabilities.fromJson(json['manufacturing_tech'])
+        ?  ManufacturingCapabilities.fromJson(json['manufacturing_tech'])
         : null;
     materialVendorcode = json['material_vendorcode'] != null
-        ? new MaterialVendor.fromJson(json['material_vendorcode'])
+        ?  MaterialVendor.fromJson(json['material_vendorcode'])
         : null;
     if (json['process'] != null) {
       process = <Process>[];
       json['process'].forEach((v) {
-        process!.add(new Process.fromJson(v));
+        process!.add( Process.fromJson(v));
       });
     }
     if (json['movement'] != null) {
       movement = <Movement>[];
       json['movement'].forEach((v) {
-        movement!.add(new Movement.fromJson(v));
+        movement!.add( Movement.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['ordered'] = this.ordered;
-    data['quantity'] = this.quantity;
-    data['surface_finish'] = this.surfaceFinish;
-    data['color'] = this.color;
-    data['thickness'] = this.thickness;
-    data['bend_no'] = this.bendNo;
-    data['price'] = this.price;
-    data['material_price'] = this.materialPrice;
-    data['comment'] = this.comment;
-    data['tech_drawing_file'] = this.techDrawingFile;
-    data['material_required'] = this.materialRequired;
-    data['material_type'] = this.materialType;
-    data['material_x'] = this.materialX;
-    data['material_y'] = this.materialY;
-    data['material_z'] = this.materialZ;
-    data['material_cost'] = this.materialCost;
-    data['erp_stage'] = this.erpStage;
-    data['track_slug'] = this.trackSlug;
-    data['track_status'] = this.trackStatus;
-    if (this.user != null) {
-      data['user'] = this.user!.toJson();
+     final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['ordered'] = ordered;
+    data['quantity'] = quantity;
+    data['surface_finish'] = surfaceFinish;
+    data['color'] = color;
+    data['thickness'] = thickness;
+    data['bend_no'] = bendNo;
+    data['price'] = price;
+    data['material_price'] = materialPrice;
+    data['comment'] = comment;
+    data['tech_drawing_file'] = techDrawingFile;
+    data['material_required'] = materialRequired;
+    data['material_type'] = materialType;
+    data['material_x'] = materialX;
+    data['material_y'] = materialY;
+    data['material_z'] = materialZ;
+    data['material_cost'] = materialCost;
+    data['erp_stage'] = erpStage;
+    data['track_slug'] = trackSlug;
+    data['track_status'] = trackStatus;
+    if (user != null) {
+      data['user'] = user!.toJson();
     }
-    if (this.document != null) {
-      data['document'] = this.document!.toJson();
+    if (document != null) {
+      data['document'] = document!.toJson();
     }
-    if (this.materialDetail != null) {
-      data['material_detail'] = this.materialDetail!.toJson();
+    if (materialDetail != null) {
+      data['material_detail'] = materialDetail!.toJson();
     }
-    if (this.manufacturingTech != null) {
-      data['manufacturing_tech'] = this.manufacturingTech!.toJson();
+    if (user != null) {
+      data['user'] = user!.toJson();
     }
-    if (this.materialVendorcode != null) {
-      data['material_vendorcode'] = this.materialVendorcode!.toJson();
+    if (document != null) {
+      data['document'] = document!.toJson();
     }
-    if (this.process != null) {
-      data['process'] = this.process!.map((v) => v.toJson()).toList();
+    if (materialDetail != null) {
+      data['material_detail'] = materialDetail!.toJson();
     }
-    if (this.movement != null) {
-      data['movement'] = this.movement!.map((v) => v.toJson()).toList();
+    if (manufacturingTech != null) {
+      data['manufacturing_tech'] = manufacturingTech!.toJson();
+    }
+    if (materialVendorcode != null) {
+      data['material_vendorcode'] = materialVendorcode!.toJson();
+    }
+    if (process != null) {
+      data['process'] = process!.map((v) => v.toJson()).toList();
+    }
+    if (movement != null) {
+      data['movement'] = movement!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -282,11 +288,11 @@ class Document {
     dimensionX = json['dimension_x'];
     dimensionY = json['dimension_y'];
     dimensionZ = json['dimension_z'];
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    user = json['user'] != null ?  User.fromJson(json['user']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = this.id;
     data['part_id'] = this.partId;
     data['barcode_link'] = this.barcodeLink;
@@ -303,8 +309,8 @@ class Document {
     data['dimension_x'] = this.dimensionX;
     data['dimension_y'] = this.dimensionY;
     data['dimension_z'] = this.dimensionZ;
-    if (this.user != null) {
-      data['user'] = this.user!.toJson();
+    if (user != null) {
+      data['user'] = user!.toJson();
     }
     return data;
   }
@@ -376,14 +382,14 @@ class Process {
     rfqVendorBool = json['rfq_vendor_bool'];
     reviewed = json['reviewed'];
     manufacturingCapabilities = json['manufacturing_capabilities'] != null
-        ? new ManufacturingCapabilities.fromJson(
+        ?  ManufacturingCapabilities.fromJson(
             json['manufacturing_capabilities'])
         : null;
     vendorcode = json['vendorcode'] != null
-        ? new Vendorcode.fromJson(json['vendorcode'])
+        ?  Vendorcode.fromJson(json['vendorcode'])
         : null;
     paymentDetails = json['payment_details'] != null
-        ? new PaymentDetails.fromJson(json['payment_details'])
+        ?  PaymentDetails.fromJson(json['payment_details'])
         : null;
   }
 

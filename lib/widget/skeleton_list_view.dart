@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class SkeletonOrderListView extends StatelessWidget {
-  const SkeletonOrderListView({super.key});
+class SkeletonListView extends StatelessWidget {
+  const SkeletonListView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +57,7 @@ class SkeletonOrderListView extends StatelessWidget {
                   Shimmer.fromColors(
                     baseColor: Colors.grey.shade200,
                     highlightColor: Colors.white,
-                    period: Duration(milliseconds: 2000),
+                    period: const Duration(milliseconds: 2000),
                     child: Container(
                       width: 100,
                       height: 45,
@@ -80,7 +80,7 @@ class SkeletonOrderListView extends StatelessWidget {
     return Shimmer.fromColors(
       baseColor: Colors.grey.shade200,
       highlightColor: Colors.white,
-      period: Duration(milliseconds: 2000),
+      period: const Duration(milliseconds: 2000),
       child: Container(
         width: width,
         height: height,

@@ -6,42 +6,13 @@ import 'package:staff_flutter_app/models/order_process.dart';
 import 'package:staff_flutter_app/server_url.dart';
 
 class ProcessState with ChangeNotifier {
-  LocalStorage storage = LocalStorage('usertoken');
-  // var token = storage.getItem('token');
-  late OrderProcess _orderProcess;
+  
+  LocalStorage data = LocalStorage('usertoken');
   List<OrderProcess> _orderProcessList = [];
-  List<OrderProcess> _orderprocessnow = [];
-  List<OrderProcess> _orderprocessupcoming = [];
-  List<OrderProcess> _orderprocessoverdue = [];
 
-  Future<void> getProcessDatas() async {
-    String url = '$serversite/api/process/';
-    var token = storage.getItem('token');
-    try {
-      http.Response response = await http.get(Uri.parse(url), headers: {
-        "Authorization": "token $token",
-      });
-      var data = json.decode(response.body) as Map;
-      print("Sucess getProcessDatas");
-      List<OrderProcess> demo = [];
-      if (data['error'] == false) {
-        data['data'].forEach((element) {
-          OrderProcess orderProcess = OrderProcess.fromJson(element);
-
-          demo.add(orderProcess);
-        });
-        _orderProcess = demo[0];
-        notifyListeners();
-      } else {}
-    } catch (e) {
-      print(e);
-      print("error while getting process data");
-    }
-  }
-
-  Future<void> getorderprocesslists() async {
+  Future<void> getOderProcessList() async {
     String url = '$serversite/api/erp-process/';
-    var token = storage.getItem('token');
+    var token = data.getItem('token');
     //print('test2');
     try {
       http.Response response = await http.get(Uri.parse(url), headers: {
@@ -65,89 +36,32 @@ class ProcessState with ChangeNotifier {
       print("error getorderprocesslists");
     }
   }
-  
-  Future<void> getorderprocessnowlists() async {
-    String url = '$serversite/api/process_now/';
-    var token = storage.getItem('token');
-    //print('test2');
-    try {
-      http.Response response = await http.get(Uri.parse(url), headers: {
-        "Authorization": "token $token",
-      });
-      var data = json.decode(response.body) as Map;
-      List<OrderProcess> demo = [];
-      if (data['error'] == false) {
-        data['data'].forEach((element) {
-          OrderProcess orderprocesslist = OrderProcess.fromJson(element);
-          demo.add(orderprocesslist);
-        });
-        _orderprocessnow = demo;
-        notifyListeners();
-      } else {
-        print("something went wrong from server side error=True");
-      }
-    } catch (e) {
-      print("error getorderprocesslists");
-    }
-    
+
+  List<OrderProcess> get orderProcessList {
+    return _orderProcessList;
   }
 
-  Future<void> getorderprocessupcominglists() async {
-    String url = '$serversite/api/process_upcoming/';
-    var token = storage.getItem('token');
-    //print('test2');
-    try {
-      http.Response response = await http.get(Uri.parse(url), headers: {
-        "Authorization": "token $token",
-      });
-      var data = json.decode(response.body) as Map;
-      List<OrderProcess> demo = [];
-      if (data['error'] == false) {
-        data['data'].forEach((element) {
-          OrderProcess orderprocesslist = OrderProcess.fromJson(element);
-          demo.add(orderprocesslist);
-        });
-        print('sucess process data');
-        _orderprocessupcoming = demo;
-        notifyListeners();
-      } else {
-        print("something went wrong from server side error=True");
-      }
-    } catch (e) {
-      print("error getorderprocesslists");
-    }
+  List<OrderProcess> get orderProcessCompletedList {
+    return _orderProcessList
+        .where((element) => element.completed == true)
+        .toList();
   }
 
-  Future<void> getorderprocessoverduelists() async {
-    String url = serversite + '/api/  /';
-    var token = storage.getItem('token');
-    //print('test2');
-    try {
-      http.Response response = await http.get(Uri.parse(url), headers: {
-        "Authorization": "token $token",
-      });
-      var data = json.decode(response.body) as Map;
-      List<OrderProcess> demo = [];
-      if (data['error'] == false) {
-        data['data'].forEach((element) {
-          OrderProcess orderprocesslist = OrderProcess.fromJson(element);
-          demo.add(orderprocesslist);
-        });
-        print('process data');
-        _orderprocessoverdue = demo;
-        notifyListeners();
-      } else {
-        print("something went wrong from server side error=True");
-      }
-    } catch (e) {
-      print("error getorderprocesslists");
-    }
+  List<OrderProcess> get orderProcessPendingList {
+    return _orderProcessList
+        .where((element) => element.completed == false)
+        .toList();
+  }
+
+  OrderProcess singleProcess(int id) {
+    print('id');
+    return _orderProcessList.firstWhere((element) => element.id == id);
   }
 
   Future<http.Response?> updateprocessstatus(
       int id, int val1, String val2) async {
-    String url = serversite + '/api/update_process/$id/';
-    var token = storage.getItem('token');
+    String url = '$serversite/api/update_process/$id/';
+    var token = data.getItem('token');
     print("update process");
     try {
       http.Response response = await http.post(Uri.parse(url),
@@ -167,44 +81,6 @@ class ProcessState with ChangeNotifier {
       print("e favoritButton");
     }
     print('End of future');
-  }
-
-  OrderProcess? get orderProcess {
-    if (_orderProcess != null) {
-      return _orderProcess;
-    } else {
-      return null;
-    }
-  }
-
-  List<OrderProcess> get orderprocesslist {
-    return _orderProcessList;
-  }
-
-  List<OrderProcess> get orderprocesslistnow {
-    return _orderprocessnow;
-  }
-
-  List<OrderProcess> get orderprocesslistupcoming {
-    return _orderprocessupcoming;
-  }
-
-  List<OrderProcess> get orderprocesslistoverdue {
-    return _orderprocessoverdue;
-  }
-
-  List<OrderProcess> get completedorderprocess {
-    return _orderProcessList.where((element) => element.completed == true).toList();
-  }
-
-  List<OrderProcess> get pendingorderprocess {
-    return _orderProcessList
-        .where((element) => element.completed == false)
-        .toList();
-  }
-
-  OrderProcess singleProcess(int id) {
-    print('id');
-    return _orderProcessList.firstWhere((element) => element.id == id);
+    return null;
   }
 }

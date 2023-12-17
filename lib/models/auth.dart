@@ -10,23 +10,24 @@ class User {
   bool? isStaff;
   bool? isActive;
   String? dateJoined;
-  List<Null>? groups;
-  List<Null>? userPermissions;
+  List<dynamic>? groups; // or List if you expect any type
+  List<dynamic>? userPermissions; // or List if you expect any type
 
-  User(
-      {this.id,
-      this.password,
-      this.lastLogin,
-      this.isSuperuser,
-      this.username,
-      this.firstName,
-      this.lastName,
-      this.email,
-      this.isStaff,
-      this.isActive,
-      this.dateJoined,
-      this.groups,
-      this.userPermissions});
+  User({
+    this.id,
+    this.password,
+    this.lastLogin,
+    this.isSuperuser,
+    this.username,
+    this.firstName,
+    this.lastName,
+    this.email,
+    this.isStaff,
+    this.isActive,
+    this.dateJoined,
+    this.groups,
+    this.userPermissions,
+  });
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -43,18 +44,18 @@ class User {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['password'] = this.password;
-    data['last_login'] = this.lastLogin;
-    data['is_superuser'] = this.isSuperuser;
-    data['username'] = this.username;
-    data['first_name'] = this.firstName;
-    data['last_name'] = this.lastName;
-    data['email'] = this.email;
-    data['is_staff'] = this.isStaff;
-    data['is_active'] = this.isActive;
-    data['date_joined'] = this.dateJoined;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['password'] = password;
+    data['last_login'] = lastLogin;
+    data['is_superuser'] = isSuperuser;
+    data['username'] = username;
+    data['first_name'] = firstName;
+    data['last_name'] = lastName;
+    data['email'] = email;
+    data['is_staff'] = isStaff;
+    data['is_active'] = isActive;
+    data['date_joined'] = dateJoined;
     return data;
   }
 }

@@ -41,7 +41,9 @@ class _LoginScreenState extends State<LoginScreen> {
     } else {
       _usernameController.text = "";
       _passwordController.text = "";
-      showErrorMessage(context, 'Incorrect username or password');
+      if (context.mounted) {
+        showErrorMessage(context, 'Incorrect username or password');
+      }
     }
   }
 

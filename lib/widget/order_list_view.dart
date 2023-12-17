@@ -5,24 +5,13 @@ import 'package:staff_flutter_app/models/order.dart';
 import 'package:staff_flutter_app/screens/order/order_detail_screen.dart';
 
 class OrderListView extends StatelessWidget {
-  final ErpOrder dataOrderAllSingle;
-  const OrderListView({super.key, required this.dataOrderAllSingle});
+  final ErpOrder order;
+  const OrderListView({super.key, required this.order});
   String processDate(String rawDate) {
     DateTime dateTime = DateTime.parse(rawDate);
 
     String formattedDate = DateFormat('dd/MM/yyyy').format(dateTime);
     return formattedDate;
-  }
-
-  String totolQuantity() {
-    int count = 0;
-    if (dataOrderAllSingle.itemsNew == null) {
-      return count.toString();
-    }
-    for (ErpOrderItem element in dataOrderAllSingle.itemsNew!) {
-      count += element.quantity ?? 0;
-    }
-    return count.toString();
   }
 
   @override
@@ -40,9 +29,9 @@ class OrderListView extends StatelessWidget {
               Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text('Order id: ${dataOrderAllSingle.id}',
+                    Text('Order id: ${order.id}',
                         style: AppStyles.mondaB.copyWith(fontSize: 20)),
-                    Text(processDate(dataOrderAllSingle.startDate.toString()),
+                    Text(processDate(order.startDate.toString()),
                         style: AppStyles.mondaN.copyWith(fontSize: 16)),
                   ]),
               const SizedBox(
@@ -54,7 +43,7 @@ class OrderListView extends StatelessWidget {
                   Text("Client Id:",
                       style: AppStyles.mondaN
                           .copyWith(fontSize: 15, color: Colors.black54)),
-                  Text(dataOrderAllSingle.quoteNo.toString(),
+                  Text(order.quoteNo.toString(),
                       style: AppStyles.mondaB.copyWith(fontSize: 16)),
                 ],
               ),
@@ -70,17 +59,17 @@ class OrderListView extends StatelessWidget {
                       Text("No. of Parts: ",
                           style: AppStyles.mondaN
                               .copyWith(fontSize: 15, color: Colors.black54)),
-                      Text((dataOrderAllSingle.itemsNew!.length).toString(),
+                      Text((order.itemsNew!.length).toString(),
                           style: AppStyles.mondaB.copyWith(fontSize: 16))
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Total Quantity: ",
+                      Text("Price: ",
                           style: AppStyles.mondaN
                               .copyWith(fontSize: 15, color: Colors.black54)),
-                      Text(totolQuantity(),
+                      Text("####",
                           style: AppStyles.mondaB.copyWith(fontSize: 16)),
                     ],
                   ),
@@ -92,7 +81,7 @@ class OrderListView extends StatelessWidget {
               Text("Status:",
                   style: AppStyles.mondaN
                       .copyWith(fontSize: 16, color: Colors.black54)),
-              dataOrderAllSingle.completed!
+              order.completed!
                   ? Text(
                       ('Completed'),
                       style: AppStyles.mondaB
@@ -114,9 +103,7 @@ class OrderListView extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => OrderDetailScreen(
-                          order: dataOrderAllSingle
-                        ),
+                        builder: (context) => OrderDetailScreen(order: order),
                       ),
                     );
                     // Navigator.of(context).pushNamed(

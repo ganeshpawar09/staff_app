@@ -48,7 +48,7 @@ class ProductSearch extends SearchDelegate<String> {
     );
   }
 
- /* @override
+  /* @override
   Widget buildResults(BuildContext context) {
     //The results shown after the user submits a search from the search page.
   }*/
@@ -56,7 +56,7 @@ class ProductSearch extends SearchDelegate<String> {
   @override
   Widget buildSuggestions(BuildContext context) {
     //Create suggestions, to be shown in the body of the search page while the user types a query into the search field.
-    final data = Provider.of<ProcessState>(context).orderprocesslist;
+    final data = Provider.of<ProcessState>(context).orderProcessList;
     final productNames = data;
     final products = query.isEmpty
         ? productNames

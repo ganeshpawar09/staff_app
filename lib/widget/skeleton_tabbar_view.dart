@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:staff_flutter_app/screens/order/widget/skeleton_order_list_view.dart';
+import 'package:staff_flutter_app/widget/skeleton_list_view.dart';
 
-class SkeletonOrderTabbarView extends StatelessWidget {
-  const SkeletonOrderTabbarView({super.key});
+class SkeletonTabbarView extends StatelessWidget {
+  const SkeletonTabbarView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class SkeletonOrderTabbarView extends StatelessWidget {
           child: ListView.builder(
               itemCount: 10,
               itemBuilder: (BuildContext context, int index) {
-                return SkeletonOrderListView();
+                return SkeletonListView();
               }),
         ),
         Padding(
@@ -21,7 +21,7 @@ class SkeletonOrderTabbarView extends StatelessWidget {
           child: ListView.builder(
               itemCount: 10,
               itemBuilder: (BuildContext context, int index) {
-                return SkeletonOrderListView();
+                return SkeletonListView();
               }),
         ),
         Padding(
@@ -29,7 +29,7 @@ class SkeletonOrderTabbarView extends StatelessWidget {
           child: ListView.builder(
               itemCount: 10,
               itemBuilder: (BuildContext context, int index) {
-                return SkeletonOrderListView();
+                return SkeletonListView();
               }),
         ),
       ],

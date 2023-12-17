@@ -7,7 +7,7 @@ import 'package:staff_flutter_app/state/order_item_state.dart';
 // import 'package:staff_flutter_app/state/order_item_state.dart';
 import 'package:staff_flutter_app/state/process_state.dart';
 import 'package:provider/provider.dart';
-import 'package:staff_flutter_app/widgets/add_drawer.dart';
+import 'package:staff_flutter_app/widget/add_drawer.dart';
 import 'package:staff_flutter_app/screens/process/download_button.dart';
 import 'package:staff_flutter_app/server_url.dart';
 
@@ -16,10 +16,10 @@ class ProcessUpdateScreen extends StatefulWidget {
   const ProcessUpdateScreen({super.key, required this.id});
 
   @override
-  _ProcessUpdateScreen createState() => _ProcessUpdateScreen();
+  State<ProcessUpdateScreen> createState() => _ProcessUpdateScreenState();
 }
 
-class _ProcessUpdateScreen extends State<ProcessUpdateScreen> {
+class _ProcessUpdateScreenState extends State<ProcessUpdateScreen> {
   final costController = TextEditingController();
   final barcodeController = TextEditingController();
   final completedBoolController = TextEditingController();
@@ -56,18 +56,18 @@ class _ProcessUpdateScreen extends State<ProcessUpdateScreen> {
   Widget build(BuildContext context) {
     final process = Provider.of<ProcessState>(context).singleProcess(widget.id);
     final orderitem =
-        Provider.of<OrderitemState>(context).getorderitembyprocess(process);
+        Provider.of<OrderItemState>(context).getorderitembyprocess(process);
     String processid = process.processId!;
     double processcost = process.cost!;
     double processcosttax = processcost * 0.12;
     double processcosttotal = processcost * 1.12;
     String processname = process.processName!;
 
-    var path = process.processDrawing;
-    var split = path!.split('.');
-    var splitname = path.split('/');
-    String filename = splitname.last;
-    String filetype = split.last;
+    // var path = process.processDrawing;
+    // var split = path!.split('.');
+    // var splitname = path.split('/');
+    // String filename = splitname.last;
+    // String filetype = split.last;
 
     return Scaffold(
         appBar: AppBar(
@@ -86,10 +86,8 @@ class _ProcessUpdateScreen extends State<ProcessUpdateScreen> {
                 Padding(
                   padding: const EdgeInsets.only(
                       right: 10, left: 10, top: 5, bottom: 5),
-                  child: Text(
-                    "Process Details:",
-                    style: AppStyles.mondaB.copyWith(fontSize: 16)
-                  ),
+                  child: Text("Process Details:",
+                      style: AppStyles.mondaB.copyWith(fontSize: 16)),
                 ),
                 Container(
                   decoration: BoxDecoration(color: Colors.white),
@@ -107,45 +105,43 @@ class _ProcessUpdateScreen extends State<ProcessUpdateScreen> {
                                     TableCellVerticalAlignment.top,
                                 children: [
                                   TableRow(children: [
-                                    Text(
-                                      "Process ID:",
-                                      style: AppStyles.mondaB.copyWith(fontSize: 12)
-                                    ),
-                                    Text(
-                                      "$processid",
-                                      style: AppStyles.mondaB.copyWith(fontSize: 12)
-                                    )
+                                    Text("Process ID:",
+                                        style: AppStyles.mondaB
+                                            .copyWith(fontSize: 12)),
+                                    Text("$processid",
+                                        style: AppStyles.mondaB
+                                            .copyWith(fontSize: 12))
                                   ]),
                                   TableRow(children: [
                                     Padding(
                                       padding: const EdgeInsets.only(top: 0),
                                       child: Text(
                                         "Process Name:",
-                                        style:AppStyles.mondaB.copyWith(fontSize: 12),
+                                        style: AppStyles.mondaB
+                                            .copyWith(fontSize: 12),
                                       ),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 0),
                                       child: Text(
                                         "$processname",
-                                        style: AppStyles.mondaB.copyWith(fontSize: 12),
+                                        style: AppStyles.mondaB
+                                            .copyWith(fontSize: 12),
                                       ),
                                     )
                                   ]),
                                   TableRow(children: [
                                     Padding(
                                       padding: const EdgeInsets.only(top: 0),
-                                      child: Text(
-                                        "Status:",
-                                        style: AppStyles.mondaB.copyWith(fontSize: 12)
-                                      ),
+                                      child: Text("Status:",
+                                          style: AppStyles.mondaB
+                                              .copyWith(fontSize: 12)),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 0),
-                                      child: Text(
-                                        "Completed",
-                                        style: AppStyles.mondaB.copyWith(fontSize: 12)
-                                      ),
+                                      child: Text("Completed",
+                                          style: AppStyles.mondaB
+                                              .copyWith(fontSize: 12)),
                                     )
                                   ]),
                                   TableRow(children: [
@@ -153,15 +149,16 @@ class _ProcessUpdateScreen extends State<ProcessUpdateScreen> {
                                       padding: const EdgeInsets.only(top: 0),
                                       child: Text(
                                         "Process Drawing:",
-                                        style: AppStyles.mondaB.copyWith(fontSize: 12),
+                                        style: AppStyles.mondaB
+                                            .copyWith(fontSize: 12),
                                       ),
                                     ),
-                                    DownloadButton(
-                                        url:
-                                            '$serversite/api/process_drawing_download/${process.id}/',
-                                        filetype: filetype,
-                                        filename: filename,
-                                        buttonname: 'filename'),
+                                    // DownloadButton(
+                                    //     url:
+                                    //         '$serversite/api/process_drawing_download/${process.id}/',
+                                    //     filetype: filetype,
+                                    //     filename: filename,
+                                    //     buttonname: 'filename'),
                                   ]),
                                 ],
                               )
@@ -199,81 +196,77 @@ class _ProcessUpdateScreen extends State<ProcessUpdateScreen> {
                                   TableRow(children: [
                                     Padding(
                                       padding: const EdgeInsets.only(top: 0),
-                                      child: Text(
-                                        "Part ID:",
-                                        style: AppStyles.mondaB.copyWith(fontSize: 12)
-                                      ),
+                                      child: Text("Part ID:",
+                                          style: AppStyles.mondaB
+                                              .copyWith(fontSize: 12)),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 0),
                                       child: Text(
                                         "${orderitem.document.partId}",
-                                        style: AppStyles.mondaB.copyWith(fontSize: 12),
+                                        style: AppStyles.mondaB
+                                            .copyWith(fontSize: 12),
                                       ),
                                     )
                                   ]),
                                   TableRow(children: [
                                     Padding(
                                       padding: const EdgeInsets.only(top: 0),
-                                      child: Text(
-                                        "Part Name:",
-                                        style: AppStyles.mondaB.copyWith(fontSize: 12)
-                                      ),
+                                      child: Text("Part Name:",
+                                          style: AppStyles.mondaB
+                                              .copyWith(fontSize: 12)),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 0),
                                       child: Text(
                                         "${orderitem.document.description}",
-                                        style:AppStyles.mondaB.copyWith(fontSize: 12),
+                                        style: AppStyles.mondaB
+                                            .copyWith(fontSize: 12),
                                       ),
                                     )
                                   ]),
                                   TableRow(children: [
                                     Padding(
                                       padding: const EdgeInsets.only(top: 0),
-                                      child: Text(
-                                        "Dimension:",
-                                        style: AppStyles.mondaB.copyWith(fontSize: 12)
-                                      ),
+                                      child: Text("Dimension:",
+                                          style: AppStyles.mondaB
+                                              .copyWith(fontSize: 12)),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 0),
                                       child: Text(
-                                        "${orderitem.document.dimensionX} x ${orderitem.document.dimensionY} x ${orderitem.document.dimensionZ} mm",
-                                        style: AppStyles.mondaB.copyWith(fontSize: 12)
-                                      ),
+                                          "${orderitem.document.dimensionX} x ${orderitem.document.dimensionY} x ${orderitem.document.dimensionZ} mm",
+                                          style: AppStyles.mondaB
+                                              .copyWith(fontSize: 12)),
                                     )
                                   ]),
                                   TableRow(children: [
                                     Padding(
                                       padding: const EdgeInsets.only(top: 0),
-                                      child: Text(
-                                        "Material:",
-                                        style: AppStyles.mondaB.copyWith(fontSize: 12)
-                                      ),
+                                      child: Text("Material:",
+                                          style: AppStyles.mondaB
+                                              .copyWith(fontSize: 12)),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 0),
                                       child: Text(
-                                        "${orderitem.materialDetail.materialName}",
-                                        style: AppStyles.mondaB.copyWith(fontSize: 12)
-                                      ),
+                                          "${orderitem.materialDetail.materialName}",
+                                          style: AppStyles.mondaB
+                                              .copyWith(fontSize: 12)),
                                     )
                                   ]),
                                   TableRow(children: [
                                     Padding(
                                       padding: const EdgeInsets.only(top: 0),
-                                      child: Text(
-                                        "Comments:",
-                                        style: AppStyles.mondaB.copyWith(fontSize: 12)
-                                      ),
+                                      child: Text("Comments:",
+                                          style: AppStyles.mondaB
+                                              .copyWith(fontSize: 12)),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 0),
-                                      child: Text(
-                                        "NA",
-                                        style: AppStyles.mondaB.copyWith(fontSize: 12)
-                                      ),
+                                      child: Text("NA",
+                                          style: AppStyles.mondaB
+                                              .copyWith(fontSize: 12)),
                                     )
                                   ]),
                                 ],
@@ -289,10 +282,8 @@ class _ProcessUpdateScreen extends State<ProcessUpdateScreen> {
                 Padding(
                   padding: const EdgeInsets.only(
                       right: 10, left: 10, top: 5, bottom: 5),
-                  child: Text(
-                    "Billing Details:",
-                    style: AppStyles.mondaB.copyWith(fontSize: 16)
-                  ),
+                  child: Text("Billing Details:",
+                      style: AppStyles.mondaB.copyWith(fontSize: 16)),
                 ),
                 Container(
                   padding: const EdgeInsets.only(right: 10, left: 10),
@@ -312,12 +303,12 @@ class _ProcessUpdateScreen extends State<ProcessUpdateScreen> {
                                 children: <Widget>[
                                   Text(
                                     "TOTAL COST",
-                                    style: AppStyles.mondaB.copyWith(fontSize: 12),
+                                    style:
+                                        AppStyles.mondaB.copyWith(fontSize: 12),
                                   ),
-                                  Text(
-                                    "${processcost.toStringAsFixed(2)}",
-                                    style:AppStyles.mondaB.copyWith(fontSize: 12)
-                                  ),
+                                  Text("${processcost.toStringAsFixed(2)}",
+                                      style: AppStyles.mondaB
+                                          .copyWith(fontSize: 12)),
                                 ],
                               ),
                             ),
@@ -330,12 +321,12 @@ class _ProcessUpdateScreen extends State<ProcessUpdateScreen> {
                                 children: <Widget>[
                                   Text(
                                     "GST(12%)",
-                                    style: AppStyles.mondaB.copyWith(fontSize: 12),
+                                    style:
+                                        AppStyles.mondaB.copyWith(fontSize: 12),
                                   ),
-                                  Text(
-                                    "${processcosttax.toStringAsFixed(2)}",
-                                    style: AppStyles.mondaB.copyWith(fontSize: 12)
-                                  ),
+                                  Text("${processcosttax.toStringAsFixed(2)}",
+                                      style: AppStyles.mondaB
+                                          .copyWith(fontSize: 12)),
                                 ],
                               ),
                             ),
@@ -346,14 +337,13 @@ class _ProcessUpdateScreen extends State<ProcessUpdateScreen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
+                                  Text("TOTAL",
+                                      style: AppStyles.mondaB
+                                          .copyWith(fontSize: 12)),
                                   Text(
-                                    "TOTAL",
-                                    style: AppStyles.mondaB.copyWith(fontSize: 12)
-                                  ),
-                                  Text(
-                                    "\u{20B9} ${processcosttotal.toStringAsFixed(2)}",
-                                    style: AppStyles.mondaB.copyWith(fontSize: 12)
-                                  ),
+                                      "\u{20B9} ${processcosttotal.toStringAsFixed(2)}",
+                                      style: AppStyles.mondaB
+                                          .copyWith(fontSize: 12)),
                                 ],
                               ),
                             ),
