@@ -149,8 +149,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 child: Text(
                                   "LOG IN",
                                   textAlign: TextAlign.center,
-                                  style:
-                                      AppStyles.mondaB.copyWith(fontSize: 18),
+                                  style: AppStyles.mondaB.copyWith(
+                                      fontSize: 18, color: Colors.white),
                                 ),
                               ),
                             ),

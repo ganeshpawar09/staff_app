@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 class SkeletonOrderListView extends StatelessWidget {
-  const SkeletonOrderListView({Key? key});
+  const SkeletonOrderListView({super.key});
 
   @override
   Widget build(BuildContext context) {

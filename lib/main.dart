@@ -9,7 +9,9 @@ import 'package:staff_flutter_app/state/process_state.dart';
 import 'package:staff_flutter_app/state/user_state.dart';
 
 main() {
-  runApp(CadAndCart());
+  runApp(
+    CadAndCart()
+  );
 }
 
 class CadAndCart extends StatelessWidget {
@@ -33,6 +35,7 @@ class CadAndCart extends StatelessWidget {
           primaryColorLight: Colors.white,
           primaryColor: Colors.white,
           appBarTheme: const AppBarTheme(
+            scrolledUnderElevation: 0,
             backgroundColor: Colors.white,
           ),
           scaffoldBackgroundColor: const Color.fromRGBO(255, 254, 254, 1),

@@ -16,7 +16,7 @@ class AppDrawer extends StatefulWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
-  LocalStorage storage = new LocalStorage('usertoken');
+  LocalStorage storage =  LocalStorage('usertoken');
 
   void _logoutnew() async {
     await storage.clear();

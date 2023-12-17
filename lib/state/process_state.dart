@@ -9,13 +9,13 @@ class ProcessState with ChangeNotifier {
   LocalStorage storage = LocalStorage('usertoken');
   // var token = storage.getItem('token');
   late OrderProcess _orderProcess;
-  late List<OrderProcess> _orderprocess;
-  late List<OrderProcess> _orderprocessnow;
-  late List<OrderProcess> _orderprocessupcoming;
-  late List<OrderProcess> _orderprocessoverdue;
+  List<OrderProcess> _orderProcessList = [];
+  List<OrderProcess> _orderprocessnow = [];
+  List<OrderProcess> _orderprocessupcoming = [];
+  List<OrderProcess> _orderprocessoverdue = [];
 
   Future<void> getProcessDatas() async {
-    String url = serversite + '/api/process/';
+    String url = '$serversite/api/process/';
     var token = storage.getItem('token');
     try {
       http.Response response = await http.get(Uri.parse(url), headers: {
@@ -40,7 +40,7 @@ class ProcessState with ChangeNotifier {
   }
 
   Future<void> getorderprocesslists() async {
-    String url = serversite + '/api/process/';
+    String url = '$serversite/api/erp-process/';
     var token = storage.getItem('token');
     //print('test2');
     try {
@@ -55,7 +55,7 @@ class ProcessState with ChangeNotifier {
           demo.add(orderprocesslist);
         });
         print('Sucess process data');
-        _orderprocess = demo;
+        _orderProcessList = demo;
         notifyListeners();
       } else {
         print("something went wrong from server side error=True");
@@ -65,9 +65,9 @@ class ProcessState with ChangeNotifier {
       print("error getorderprocesslists");
     }
   }
-
+  
   Future<void> getorderprocessnowlists() async {
-    String url = serversite + '/api/process_now/';
+    String url = '$serversite/api/process_now/';
     var token = storage.getItem('token');
     //print('test2');
     try {
@@ -89,10 +89,11 @@ class ProcessState with ChangeNotifier {
     } catch (e) {
       print("error getorderprocesslists");
     }
+    
   }
 
   Future<void> getorderprocessupcominglists() async {
-    String url = serversite + '/api/process_upcoming/';
+    String url = '$serversite/api/process_upcoming/';
     var token = storage.getItem('token');
     //print('test2');
     try {
@@ -118,7 +119,7 @@ class ProcessState with ChangeNotifier {
   }
 
   Future<void> getorderprocessoverduelists() async {
-    String url = serversite + '/api/process_overdue/';
+    String url = serversite + '/api/  /';
     var token = storage.getItem('token');
     //print('test2');
     try {
@@ -177,7 +178,7 @@ class ProcessState with ChangeNotifier {
   }
 
   List<OrderProcess> get orderprocesslist {
-    return _orderprocess;
+    return _orderProcessList;
   }
 
   List<OrderProcess> get orderprocesslistnow {
@@ -193,17 +194,17 @@ class ProcessState with ChangeNotifier {
   }
 
   List<OrderProcess> get completedorderprocess {
-    return _orderprocess.where((element) => element.completed == true).toList();
+    return _orderProcessList.where((element) => element.completed == true).toList();
   }
 
   List<OrderProcess> get pendingorderprocess {
-    return _orderprocess
+    return _orderProcessList
         .where((element) => element.completed == false)
         .toList();
   }
 
   OrderProcess singleProcess(int id) {
     print('id');
-    return _orderprocess.firstWhere((element) => element.id == id);
+    return _orderProcessList.firstWhere((element) => element.id == id);
   }
 }

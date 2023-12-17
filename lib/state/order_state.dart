@@ -6,12 +6,12 @@ import 'package:staff_flutter_app/server_url.dart';
 import 'package:staff_flutter_app/models/order.dart';
 
 class OrderState with ChangeNotifier {
-  LocalStorage storage =  LocalStorage('usertoken');
+  LocalStorage storage = LocalStorage('usertoken');
 
-  late List<ErpOrder> _erporder;  
+  List<ErpOrder> _erpOrders = [];
 
-  Future<void> geterporderlists() async {
-    String url = serversite + '/api/erp-orders/';
+  Future<void> getErpOrderList() async {
+    String url = '$serversite/api/erp-orders/';
     var token = storage.getItem('token');
     try {
       http.Response response = await http.get(Uri.parse(url), headers: {
@@ -25,7 +25,7 @@ class OrderState with ChangeNotifier {
           demo.add(erporderlist);
         });
         print('success erporderlist data');
-        _erporder = demo;
+        _erpOrders = demo;
         notifyListeners();
       } else {
         print("something went wrong from server side error=True");
@@ -36,25 +36,30 @@ class OrderState with ChangeNotifier {
     }
   }
 
+  void manupulate() {
+    _erpOrders[0].id = 1000000;
+    notifyListeners();
+  }
+
   List<ErpOrder> get erporderlist {
-    return _erporder;
+    return _erpOrders;
   }
 
   List<ErpOrder> get erpordercompletedlist {
-    return _erporder.where((element) => element.completed == true).toList();
+    return _erpOrders.where((element) => element.completed == true).toList();
   }
 
   List<ErpOrder> get erporderpendinglist {
-    return _erporder.where((element) => element.completed == false).toList();
+    return _erpOrders.where((element) => element.completed == false).toList();
   }
 
   ErpOrder singleOrder(int id) {
     print('id${id}');
-    return _erporder.firstWhere((element) => element.id == id);
+    return _erpOrders.firstWhere((element) => element.id == id);
   }
 
   List<ErpOrderItem>? OrderItem(int id) {
-    var order = _erporder.firstWhere((element) => element.id == id);
+    var order = _erpOrders.firstWhere((element) => element.id == id);
     return order.itemsNew;
   }
 
@@ -64,15 +69,15 @@ class OrderState with ChangeNotifier {
   // }
 
   getorderbyprocess(items_new) {
-   for (var order in _erporder) {
-     for (var items_new in {order.itemsNew}) {
-        items_new == items_new ? print('object okay'): print('object okay');
-        if (items_new == items_new){
-            return _erporder.firstWhere((element) => element.id == order.id);      
+    for (var order in _erpOrders) {
+      for (var items_new in {order.itemsNew}) {
+        items_new == items_new ? print('object okay') : print('object okay');
+        if (items_new == items_new) {
+          return _erpOrders.firstWhere((element) => element.id == order.id);
         }
         int? test = order.id;
         print('test is $test');
-     }
+      }
     }
   }
 }

@@ -6,10 +6,10 @@ import 'package:localstorage/localstorage.dart';
 import 'package:staff_flutter_app/server_url.dart';
 
 class UserState with ChangeNotifier {
-  LocalStorage storage = new LocalStorage('usertoken');
+  LocalStorage storage =  LocalStorage('usertoken');
 
   Future<bool> loginNow(String uname, String passw) async {
-    String url = serversite + '/api/login/';
+    String url = '$serversite/api/login/';
     try {
 
       http.Response response = await http.post(Uri.parse(url),
@@ -33,7 +33,7 @@ class UserState with ChangeNotifier {
   }
 
   Future<bool> registernow(String uname, String passw) async {
-    String url = serversite + '/api/register/';
+    String url = '$serversite/api/register/';
     try {
       http.Response response = await http.post(Uri.parse(url),
           headers: {

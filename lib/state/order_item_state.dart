@@ -11,7 +11,7 @@ class OrderitemState with ChangeNotifier {
   late List<ErpOrderItem> _erporderitem;
 
   Future<void> geterporderitemlists() async {
-    String url = serversite + '/api/get_orderitem_list_by_partner/';
+    String url = '$serversite/api/get_orderitem_list_by_partner/';
     var token = storage.getItem('token');
     try {
       http.Response response = await http.get(Uri.parse(url), headers: {

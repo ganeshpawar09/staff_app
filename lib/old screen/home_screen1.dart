@@ -35,7 +35,7 @@ class _HomeScreensState extends State<HomeScreens> {
       Provider.of<ProcessState>(context).getorderprocesslists();
       Provider.of<ProcessState>(context).getorderprocessnowlists();
       Provider.of<ProcessState>(context).getorderprocessupcominglists();
-      Provider.of<OrderState>(context).geterporderlists();
+      Provider.of<OrderState>(context).getErpOrderList();
       Provider.of<OrderitemState>(context).geterporderitemlists();
       _isLoding = true;
       setState(() {});
@@ -85,7 +85,10 @@ class _HomeScreensState extends State<HomeScreens> {
           ),
           actions: [
             IconButton(
-              icon: Icon(Icons.search,color: Colors.white,),
+              icon: Icon(
+                Icons.search,
+                color: Colors.white,
+              ),
               onPressed: () {
                 showSearch(context: context, delegate: ProductSearch());
               },

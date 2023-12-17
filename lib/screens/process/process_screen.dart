@@ -34,6 +34,8 @@ class _ProcessScreen extends State<ProcessScreen> {
         _isLoading = false;
       });
     }
+     return Provider.of<ProcessState>(context, listen: false)
+            .getorderprocesslists();
   }
 
   @override
