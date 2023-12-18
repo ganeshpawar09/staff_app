@@ -187,8 +187,6 @@ class _UpdateVendorState extends State<UpdateVendor> {
                       vendorCode: vendorCodeController.text.isEmpty
                           ? null
                           : vendorCodeController.text,
-                      manufacturingCapabilities: null,
-                      user: null,
                     );
 
                     await context
