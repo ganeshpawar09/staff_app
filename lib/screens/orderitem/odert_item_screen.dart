@@ -3,7 +3,7 @@ import 'package:staff_flutter_app/const/font.dart';
 import 'package:staff_flutter_app/models/order.dart';
 import 'package:staff_flutter_app/screens/home/home_screen.dart';
 import 'package:staff_flutter_app/widget/skeleton_tabbar_view.dart';
-import 'package:staff_flutter_app/widget/order_item_list_view.dart';
+import 'package:staff_flutter_app/screens/order/widget/order_item_list_view.dart';
 import 'package:staff_flutter_app/state/order_item_state.dart';
 import 'package:provider/provider.dart';
 

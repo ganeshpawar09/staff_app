@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:staff_flutter_app/models/grid_item.dart';
 import 'package:staff_flutter_app/screens/movement/movement_screen.dart';
-import 'package:staff_flutter_app/widget/home_grid_view.dart';
+import 'package:staff_flutter_app/screens/vendor/vendor_screen.dart';
+import 'package:staff_flutter_app/screens/home/widget/home_grid_view.dart';
 import 'package:staff_flutter_app/screens/order/order_screen.dart';
 import 'package:staff_flutter_app/screens/orderitem/odert_item_screen.dart';
 import 'package:staff_flutter_app/screens/process/process_screen.dart';
-import 'package:staff_flutter_app/widget/add_drawer.dart';
+import 'package:staff_flutter_app/widget/drawer.dart';
 import 'package:staff_flutter_app/const/font.dart';
 
 class DataFetchStatus {
@@ -54,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
       GridItem(
         title: "View Vendors",
         img: "assets/man.png",
-        widget: ProcessScreen(),
+        widget: VendorScreen(),
       ),
       GridItem(
         title: "View Payments",

@@ -2,49 +2,52 @@ import 'package:flutter/material.dart';
 import 'package:staff_flutter_app/const/font.dart';
 import 'package:staff_flutter_app/models/order.dart';
 import 'package:staff_flutter_app/screens/home/home_screen.dart';
-import 'package:staff_flutter_app/state/movement_state.dart';
-import 'package:staff_flutter_app/screens/movement/widget/movement_list_view.dart';
+import 'package:staff_flutter_app/state/vedor_state.dart';
+import 'package:staff_flutter_app/screens/vendor/update_vendor.dart';
+import 'package:staff_flutter_app/screens/order/widget/order_list_view.dart';
 import 'package:staff_flutter_app/widget/skeleton_tabbar_view.dart';
 import 'package:provider/provider.dart';
+import 'package:staff_flutter_app/screens/vendor/widget/vendor_detail.list_view.dart';
 
-class MovementScreen extends StatelessWidget {
-  const MovementScreen({super.key});
+class VendorScreen extends StatelessWidget {
+  const VendorScreen({super.key});
 
-  Future<List<Movement>> fetchData(BuildContext context) async {
+  Future<List<VendorDetail>> fetchData(BuildContext context) async {
     try {
-      if (!DataFetchStatus.movementDataIsFetched) {
-        await context.read<MovementState>().getMovementList();
-        DataFetchStatus.movementDataIsFetched = true;
+      if (!DataFetchStatus.orderDataIsFetched) {
+        await context.read<VendorState>().getVendorList();
+        DataFetchStatus.orderDataIsFetched = true;
       }
     } catch (error) {
       print('Error fetching data: $error');
     }
 
     if (context.mounted) {
-      return context.read<MovementState>().movementList;
+      return context.read<VendorState>().vendorList();
     }
 
     return [];
   }
 
   void refresh(BuildContext context) {
-    DataFetchStatus.movementDataIsFetched = false;
+    DataFetchStatus.orderDataIsFetched = false;
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => MovementScreen(),
+        builder: (context) => VendorScreen(),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    List<VendorDetail> list = context.watch<VendorState>().vendorList();
     return DefaultTabController(
       length: 3,
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            "View Movement",
+            "View Vendor Details",
             style: AppStyles.mondaB.copyWith(fontSize: 22),
           ),
 
@@ -63,17 +66,6 @@ class MovementScreen extends StatelessWidget {
           //   },
           // ),
 
-          bottom: const TabBar(
-            dividerColor: Colors.white,
-            indicatorColor: Colors.black,
-            labelColor: Colors.black,
-            labelStyle: TextStyle(fontFamily: 'monda', fontSize: 17),
-            tabs: [
-              Tab(text: 'Total'),
-              Tab(text: 'Pending'),
-              Tab(text: 'Completed'),
-            ],
-          ),
           actions: [
             IconButton(
               icon: const Icon(
@@ -91,7 +83,7 @@ class MovementScreen extends StatelessWidget {
             )
           ],
         ),
-        body: FutureBuilder<List<Movement>>(
+        body: FutureBuilder<List<VendorDetail>>(
           future: fetchData(context),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -120,63 +112,22 @@ class MovementScreen extends StatelessWidget {
                 ),
               );
             } else {
-              return TabBarView(
-                children: [
-                  Consumer<MovementState>(
-                    builder: (context, provider, child) => MovementTab(
-                      data: provider.movementList,
-                      refreshFunction: () {
-                        refresh(context);
-                      },
-                    ),
+              return RefreshIndicator(
+                onRefresh: () async {
+                  refresh;
+                },
+                color: Colors.black,
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: ListView.builder(
+                    itemCount: list.length,
+                    itemBuilder: (BuildContext context, int index) =>
+                        VendroDetailListView(vendorDetail: list[index]),
                   ),
-                  Consumer<MovementState>(
-                    builder: (context, provider, child) => MovementTab(
-                      data: provider.movementPendingList,
-                      refreshFunction: () {
-                        refresh(context);
-                      },
-                    ),
-                  ),
-                  Consumer<MovementState>(
-                    builder: (context, provider, child) => MovementTab(
-                      data: provider.movementCompletedList,
-                      refreshFunction: () {
-                        refresh(context);
-                      },
-                    ),
-                  ),
-                ],
+                ),
               );
             }
           },
-        ),
-      ),
-    );
-  }
-}
-
-class MovementTab extends StatelessWidget {
-  final List<Movement> data;
-  final VoidCallback refreshFunction;
-
-  const MovementTab(
-      {Key? key, required this.data, required this.refreshFunction})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: () async {
-        refreshFunction();
-      },
-      color: Colors.black,
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: ListView.builder(
-          itemCount: data.length,
-          itemBuilder: (BuildContext context, int index) =>
-              MovementListView(movement: data[index]),
         ),
       ),
     );

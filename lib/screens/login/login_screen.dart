@@ -39,8 +39,6 @@ class _LoginScreenState extends State<LoginScreen> {
     if (istoken) {
       navig();
     } else {
-      _usernameController.text = "";
-      _passwordController.text = "";
       if (context.mounted) {
         showErrorMessage(context, 'Incorrect username or password');
       }
@@ -55,12 +53,14 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void showErrorMessage(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        duration: Duration(seconds: 3), // Adjust the duration as needed
-      ),
-    );
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          duration: Duration(seconds: 3),
+        ),
+      );
+    }
   }
 
   void navig() {

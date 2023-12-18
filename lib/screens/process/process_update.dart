@@ -6,12 +6,8 @@ import 'package:staff_flutter_app/const/font.dart';
 import 'package:staff_flutter_app/state/order_item_state.dart';
 import 'package:staff_flutter_app/state/process_state.dart';
 import 'package:provider/provider.dart';
-import 'package:staff_flutter_app/widget/add_drawer.dart';
-import 'package:staff_flutter_app/download/download_button.dart';
-import 'package:staff_flutter_app/server_url.dart';
 
 class ProcessUpdateScreen extends StatefulWidget {
-  // Declare the id as a required parameter for the constructor
   final int id;
   const ProcessUpdateScreen({Key? key, required this.id}) : super(key: key);
 

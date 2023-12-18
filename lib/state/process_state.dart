@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:http/http.dart' as http;
-import 'package:staff_flutter_app/models/order_process.dart';
+import 'package:staff_flutter_app/models/order.dart';
 import 'package:staff_flutter_app/server_url.dart';
 
 class ProcessState extends ChangeNotifier {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:provider/provider.dart';
+import 'package:staff_flutter_app/models/order.dart';
 import 'package:staff_flutter_app/screens/home/home_screen.dart';
 import 'package:staff_flutter_app/screens/login/login_screen.dart';
 import 'package:staff_flutter_app/state/movement_state.dart';
@@ -8,6 +9,7 @@ import 'package:staff_flutter_app/state/order_item_state.dart';
 import 'package:staff_flutter_app/state/order_state.dart';
 import 'package:staff_flutter_app/state/process_state.dart';
 import 'package:staff_flutter_app/state/user_state.dart';
+import 'package:staff_flutter_app/state/vedor_state.dart';
 
 main() {
   runApp(const CadAndCart());
@@ -28,6 +30,7 @@ class CadAndCart extends StatelessWidget {
         ChangeNotifierProvider(create: (ctx) => OrderState()),
         ChangeNotifierProvider(create: (ctx) => OrderItemState()),
         ChangeNotifierProvider(create: (ctx) => MovementState()),
+        ChangeNotifierProvider(create: (ctx) => VendorState()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

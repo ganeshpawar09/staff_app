@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:staff_flutter_app/const/font.dart';
-import 'package:staff_flutter_app/models/data.dart';
+import 'package:staff_flutter_app/models/order.dart';
 
 class MaterialListView extends StatelessWidget {
-  final PartMaterial material;
+  final MaterialDetail material;
   const MaterialListView({super.key, required this.material});
 
   @override

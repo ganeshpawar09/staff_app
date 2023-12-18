@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:staff_flutter_app/const/font.dart';
 import 'package:staff_flutter_app/models/order.dart';
-import 'package:staff_flutter_app/widget/order_item_list_view.dart';
+import 'package:staff_flutter_app/screens/order/widget/order_item_list_view.dart';
 
 class OrderDetailScreen extends StatefulWidget {
   final ErpOrder order;

@@ -1,6 +1,4 @@
 import 'package:staff_flutter_app/models/auth.dart';
-import 'package:staff_flutter_app/models/data.dart';
-import 'package:staff_flutter_app/models/material_vendor.dart';
 
 class ErpOrder {
   int? id;
@@ -43,15 +41,15 @@ class ErpOrder {
     status = json['status'];
     closed = json['closed'];
     completed = json['completed'];
-   
+
     if (json['items_new'] != null) {
       itemsNew = <ErpOrderItem>[];
       json['items_new'].forEach((v) {
-        itemsNew!.add( ErpOrderItem.fromJson(v));
+        itemsNew!.add(ErpOrderItem.fromJson(v));
       });
     }
   }
- Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['ref_code'] = refCode;
@@ -94,7 +92,7 @@ class ErpOrderItem {
   String? trackStatus;
   User? user;
   Document? document;
-  PartMaterial? materialDetail;
+  MaterialDetail? materialDetail;
   ManufacturingCapabilities? manufacturingTech;
   MaterialVendor? materialVendorcode;
   List<Process>? process;
@@ -150,35 +148,34 @@ class ErpOrderItem {
     erpStage = json['erp_stage'];
     trackSlug = json['track_slug'];
     trackStatus = json['track_status'];
-    user = json['user'] != null ?  User.fromJson(json['user']) : null;
-    document = json['document'] != null
-        ?  Document.fromJson(json['document'])
-        : null;
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
+    document =
+        json['document'] != null ? Document.fromJson(json['document']) : null;
     materialDetail = json['material_detail'] != null
-        ?  PartMaterial.fromJson(json['material_detail'])
+        ? MaterialDetail.fromJson(json['material_detail'])
         : null;
     manufacturingTech = json['manufacturing_tech'] != null
-        ?  ManufacturingCapabilities.fromJson(json['manufacturing_tech'])
+        ? ManufacturingCapabilities.fromJson(json['manufacturing_tech'])
         : null;
     materialVendorcode = json['material_vendorcode'] != null
-        ?  MaterialVendor.fromJson(json['material_vendorcode'])
+        ? MaterialVendor.fromJson(json['material_vendorcode'])
         : null;
     if (json['process'] != null) {
       process = <Process>[];
       json['process'].forEach((v) {
-        process!.add( Process.fromJson(v));
+        process!.add(Process.fromJson(v));
       });
     }
     if (json['movement'] != null) {
       movement = <Movement>[];
       json['movement'].forEach((v) {
-        movement!.add( Movement.fromJson(v));
+        movement!.add(Movement.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-     final Map<String, dynamic> data = <String, dynamic>{};
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['ordered'] = ordered;
     data['quantity'] = quantity;
@@ -288,7 +285,7 @@ class Document {
     dimensionX = json['dimension_x'];
     dimensionY = json['dimension_y'];
     dimensionZ = json['dimension_z'];
-    user = json['user'] != null ?  User.fromJson(json['user']) : null;
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -336,7 +333,7 @@ class Process {
   bool? rfqVendorBool;
   bool? reviewed;
   ManufacturingCapabilities? manufacturingCapabilities;
-  Vendorcode? vendorcode;
+  VendorDetail? vendorcode;
   PaymentDetails? paymentDetails;
 
   Process(
@@ -382,14 +379,13 @@ class Process {
     rfqVendorBool = json['rfq_vendor_bool'];
     reviewed = json['reviewed'];
     manufacturingCapabilities = json['manufacturing_capabilities'] != null
-        ?  ManufacturingCapabilities.fromJson(
-            json['manufacturing_capabilities'])
+        ? ManufacturingCapabilities.fromJson(json['manufacturing_capabilities'])
         : null;
     vendorcode = json['vendorcode'] != null
-        ?  Vendorcode.fromJson(json['vendorcode'])
+        ? VendorDetail.fromJson(json['vendorcode'])
         : null;
     paymentDetails = json['payment_details'] != null
-        ?  PaymentDetails.fromJson(json['payment_details'])
+        ? PaymentDetails.fromJson(json['payment_details'])
         : null;
   }
 
@@ -427,14 +423,11 @@ class Process {
   }
 }
 
-class Vendorcode {
+class VendorDetail {
+  int? id;
   String? vendorCode;
   String? companyName;
   String? processName;
-  String? machineName;
-  double? bedSizeX;
-  double? bedSizeY;
-  double? bedSizeZ;
   String? gstNo;
   String? bankAccountNo;
   String? ifscCode;
@@ -454,14 +447,11 @@ class Vendorcode {
   User? user;
   List<ManufacturingCapabilities>? manufacturingCapabilities;
 
-  Vendorcode(
-      {this.vendorCode,
+  VendorDetail(
+      {this.id,
+      this.vendorCode,
       this.companyName,
       this.processName,
-      this.machineName,
-      this.bedSizeX,
-      this.bedSizeY,
-      this.bedSizeZ,
       this.gstNo,
       this.bankAccountNo,
       this.ifscCode,
@@ -481,14 +471,11 @@ class Vendorcode {
       this.user,
       this.manufacturingCapabilities});
 
-  Vendorcode.fromJson(Map<String, dynamic> json) {
+  VendorDetail.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     vendorCode = json['vendor_code'];
     companyName = json['company_name'];
     processName = json['process_name'];
-    machineName = json['machine_name'];
-    bedSizeX = json['bed_size_x'];
-    bedSizeY = json['bed_size_y'];
-    bedSizeZ = json['bed_size_z'];
     gstNo = json['gst_no'];
     bankAccountNo = json['bank_account_no'];
     ifscCode = json['ifsc_code'];
@@ -505,25 +492,21 @@ class Vendorcode {
     contPersonNumber = json['cont_person_number'];
     latitude = json['latitude'];
     longitude = json['longitude'];
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
     if (json['manufacturing_capabilities'] != null) {
       manufacturingCapabilities = <ManufacturingCapabilities>[];
       json['manufacturing_capabilities'].forEach((v) {
-        manufacturingCapabilities!
-            .add(new ManufacturingCapabilities.fromJson(v));
+        manufacturingCapabilities!.add(ManufacturingCapabilities.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = this.id;
     data['vendor_code'] = this.vendorCode;
     data['company_name'] = this.companyName;
     data['process_name'] = this.processName;
-    data['machine_name'] = this.machineName;
-    data['bed_size_x'] = this.bedSizeX;
-    data['bed_size_y'] = this.bedSizeY;
-    data['bed_size_z'] = this.bedSizeZ;
     data['gst_no'] = this.gstNo;
     data['bank_account_no'] = this.bankAccountNo;
     data['ifsc_code'] = this.ifscCode;
@@ -561,7 +544,7 @@ class ManufacturingCapabilities {
   String? capType;
   bool? priceCalculator;
   bool? instantQuote;
-  List<PartMaterial>? material;
+  List<MaterialDetail>? material;
 
   ManufacturingCapabilities(
       {this.capId,
@@ -588,9 +571,9 @@ class ManufacturingCapabilities {
 
     // Check if 'material' is present in the JSON and is a List
     if (json['material'] != null && json['material'] is List) {
-      material = List<PartMaterial>.from(
+      material = List<MaterialDetail>.from(
         (json['material'] as List)
-            .map((materialJson) => PartMaterial.fromJson(materialJson)),
+            .map((materialJson) => MaterialDetail.fromJson(materialJson)),
       );
     } else {
       material = null; // or an empty list, depending on your use case
@@ -805,5 +788,261 @@ class Rider {
       data['user'] = this.user!.toJson();
     }
     return data;
+  }
+}
+
+class MaterialDetail {
+  int? materialId;
+  String? materialTypeName;
+  String? materialName;
+  String? materialRefName;
+  double? density;
+  String? billetType;
+  double? machiningFactor1;
+  double? rate;
+
+  MaterialDetail({
+    this.materialId,
+    this.materialTypeName,
+    this.materialName,
+    this.materialRefName,
+    this.density,
+    this.billetType,
+    this.machiningFactor1,
+    this.rate,
+  });
+
+  MaterialDetail.fromJson(Map<String, dynamic> json) {
+    materialId = json['material_id'];
+    materialTypeName = json['material_type_name'];
+    materialName = json['material_name'];
+    materialRefName = json['material_ref_name'];
+    density = json['density']?.toDouble();
+    billetType = json['billet_type'];
+    machiningFactor1 = json['machining_factor1']
+        ?.toDouble(); // Handle nullable and convert to double
+    rate = json['rate']?.toDouble(); // Handle nullable and convert to double
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {
+      'material_id': materialId,
+      'material_type_name': materialTypeName,
+      'material_name': materialName,
+      'material_ref_name': materialRefName,
+      'density': density,
+      'billet_type': billetType,
+      'machining_factor1': machiningFactor1,
+      'rate': rate,
+    };
+
+    data.removeWhere((key, value) => value == null);
+
+    return data;
+  }
+}
+
+class OrderProcess {
+  int? id;
+  int? srNo;
+  String? processName;
+  String? processId;
+  String? barcodeLink;
+  String? barcodeImg;
+  String? processBill;
+  double? targetCost;
+  double? cost;
+  double? incTaxCost;
+  String? processPartFile;
+  String? processDrawing;
+  String? startDate;
+  String? endDate;
+  bool? completed;
+  String? woDate;
+  bool? rfqVendorBool;
+  bool? reviewed;
+  bool? proceed;
+  ManufacturingCapabilities? manufacturingCapabilities;
+  VendorDetail? vendorDetail;
+  PaymentDetails? paymentDetails;
+
+  OrderProcess(
+      {this.id,
+      this.srNo,
+      this.processName,
+      this.processId,
+      this.barcodeLink,
+      this.barcodeImg,
+      this.processBill,
+      this.targetCost,
+      this.cost,
+      this.incTaxCost,
+      this.processPartFile,
+      this.processDrawing,
+      this.startDate,
+      this.endDate,
+      this.completed,
+      this.woDate,
+      this.rfqVendorBool,
+      this.reviewed,
+      this.proceed,
+      this.manufacturingCapabilities,
+      this.vendorDetail,
+      this.paymentDetails});
+
+  OrderProcess.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    srNo = json['sr_no'];
+    processName = json['process_name'];
+    processId = json['process_id'];
+    barcodeLink = json['barcode_link'];
+    barcodeImg = json['barcode_img'];
+    processBill = json['process_bill'];
+    targetCost = json['target_cost'];
+    cost = json['cost'];
+    incTaxCost = json['inc_tax_cost'];
+    processPartFile = json['process_part_file'];
+    processDrawing = json['process_drawing'];
+    startDate = json['start_date'];
+    endDate = json['end_date'];
+    completed = json['completed'];
+    woDate = json['wo_date'];
+    rfqVendorBool = json['rfq_vendor_bool'];
+    reviewed = json['reviewed'];
+    proceed = json['proceed'];
+    manufacturingCapabilities = json['manufacturing_capabilities'] != null
+        ? ManufacturingCapabilities.fromJson(json['manufacturing_capabilities'])
+        : null;
+    vendorDetail = json['vendor_detail'] != null
+        ? VendorDetail.fromJson(json['vendor_detail'])
+        : null;
+    paymentDetails = json['payment_details'] != null
+        ? PaymentDetails.fromJson(json['payment_details'])
+        : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['sr_no'] = srNo;
+    data['process_name'] = processName;
+    data['process_id'] = processId;
+    data['barcode_link'] = barcodeLink;
+    data['barcode_img'] = barcodeImg;
+    data['process_bill'] = processBill;
+    data['target_cost'] = targetCost;
+    data['cost'] = cost;
+    data['inc_tax_cost'] = incTaxCost;
+    data['process_part_file'] = processPartFile;
+    data['process_drawing'] = processDrawing;
+    data['start_date'] = startDate;
+    data['end_date'] = endDate;
+    data['completed'] = completed;
+    data['wo_date'] = woDate;
+    data['rfq_vendor_bool'] = rfqVendorBool;
+    data['reviewed'] = reviewed;
+    data['proceed'] = proceed;
+    if (manufacturingCapabilities != null) {
+      data['manufacturing_capabilities'] = manufacturingCapabilities!.toJson();
+    }
+    if (vendorDetail != null) {
+      data['vendor_detail'] = vendorDetail!.toJson();
+    }
+    if (paymentDetails != null) {
+      data['payment_details'] = paymentDetails!.toJson();
+    }
+    return data;
+  }
+}
+
+class MaterialVendor {
+  String? vendorCode;
+  String? companyName;
+  String? materialSpec;
+  String? gstNo;
+  String? bankAccountNo;
+  String? ifscCode;
+  String? nameOnCheck;
+  String? upiId;
+  String? billingAdd1;
+  String? billingAdd2;
+  String? city;
+  String? state;
+  String? country;
+  int? pin;
+  String? email;
+  String? contPersonName;
+  int? contPersonNumber;
+  String? latitude;
+  String? longitude;
+  User? user;
+
+  MaterialVendor(
+      {this.vendorCode,
+      this.companyName,
+      this.materialSpec,
+      this.gstNo,
+      this.bankAccountNo,
+      this.ifscCode,
+      this.nameOnCheck,
+      this.upiId,
+      this.billingAdd1,
+      this.billingAdd2,
+      this.city,
+      this.state,
+      this.country,
+      this.pin,
+      this.email,
+      this.contPersonName,
+      this.contPersonNumber,
+      this.latitude,
+      this.longitude,
+      this.user});
+
+  MaterialVendor.fromJson(Map<String, dynamic> json) {
+    vendorCode = json['vendor_code'];
+    companyName = json['company_name'];
+    materialSpec = json['material_spec'];
+    gstNo = json['gst_no'];
+    bankAccountNo = json['bank_account_no'];
+    ifscCode = json['ifsc_code'];
+    nameOnCheck = json['name_on_check'];
+    upiId = json['upi_id'];
+    billingAdd1 = json['billing_add_1'];
+    billingAdd2 = json['billing_add_2'];
+    city = json['city'];
+    state = json['state'];
+    country = json['country'];
+    pin = json['pin'];
+    email = json['email'];
+    contPersonName = json['cont_person_name'];
+    contPersonNumber = json['cont_person_number'];
+    latitude = json['latitude'];
+    longitude = json['longitude'];
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
+  }
+  Map<String, dynamic> toJson() {
+    return {
+      'vendor_code': vendorCode,
+      'company_name': companyName,
+      'material_spec': materialSpec,
+      'gst_no': gstNo,
+      'bank_account_no': bankAccountNo,
+      'ifsc_code': ifscCode,
+      'name_on_check': nameOnCheck,
+      'upi_id': upiId,
+      'billing_add_1': billingAdd1,
+      'billing_add_2': billingAdd2,
+      'city': city,
+      'state': state,
+      'country': country,
+      'pin': pin,
+      'email': email,
+      'cont_person_name': contPersonName,
+      'cont_person_number': contPersonNumber,
+      'latitude': latitude,
+      'longitude': longitude,
+      'user': user?.toJson(), // This will handle null gracefully
+    };
   }
 }
