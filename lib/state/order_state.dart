@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:http/http.dart' as http;
 import 'package:staff_flutter_app/server_url.dart';
-import 'package:staff_flutter_app/models/order.dart';
+import 'package:staff_flutter_app/models/combine_data.dart';
 
 class OrderState extends ChangeNotifier {
   LocalStorage storage = LocalStorage('usertoken');

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:staff_flutter_app/const/font.dart';
-import 'package:staff_flutter_app/models/grid_item.dart';
+import 'package:staff_flutter_app/models/combine_data.dart';
 
 class HomeScreenGridView extends StatelessWidget {
   final GridItem item;

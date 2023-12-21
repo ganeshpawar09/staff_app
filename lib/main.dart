@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:provider/provider.dart';
-import 'package:staff_flutter_app/models/order.dart';
+import 'package:staff_flutter_app/models/combine_data.dart';
 import 'package:staff_flutter_app/screens/home/home_screen.dart';
 import 'package:staff_flutter_app/screens/login/login_screen.dart';
+import 'package:staff_flutter_app/screens/spalsh/spalsh_screen.dart';
 import 'package:staff_flutter_app/state/movement_state.dart';
 import 'package:staff_flutter_app/state/order_item_state.dart';
 import 'package:staff_flutter_app/state/order_state.dart';
@@ -20,7 +21,7 @@ class CadAndCart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LocalStorage storage = LocalStorage('usertoken');
+    // LocalStorage storage = LocalStorage('usertoken');
 
     return MultiProvider(
       providers: [
@@ -43,22 +44,23 @@ class CadAndCart extends StatelessWidget {
           ),
           scaffoldBackgroundColor: const Color.fromRGBO(255, 254, 254, 1),
         ),
-        home: FutureBuilder(
-          future: storage.ready,
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.data == null) {
-              return const Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            }
-            if (storage.getItem('token') == null) {
-              return LoginScreen();
-            }
-            return HomeScreen();
-          },
-        ),
+        home: SplashScreen(),
+        // home: FutureBuilder(
+        //   future: storage.ready,
+        //   builder: (BuildContext context, AsyncSnapshot snapshot) {
+        //     if (snapshot.data == null) {
+        //       return const Scaffold(
+        //         body: Center(
+        //           child: CircularProgressIndicator(),
+        //         ),
+        //       );
+        //     }
+        //     if (storage.getItem('token') == null) {
+        //       return LoginScreen();
+        //     }
+        //     return HomeScreen();
+        //   },
+        // ),
         // routes: {
         //   HomeScreens.routeName: (ctx) => HomeScreens(),
         //   LoginScrrens.routeName: (ctx) => LoginScrrens(),

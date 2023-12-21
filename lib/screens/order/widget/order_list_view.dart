@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:staff_flutter_app/const/font.dart';
-import 'package:staff_flutter_app/models/order.dart';
+import 'package:staff_flutter_app/models/combine_data.dart';
 import 'package:staff_flutter_app/screens/order/order_detail_screen.dart';
 
 class OrderListView extends StatelessWidget {

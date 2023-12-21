@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:localstorage/localstorage.dart';
-import 'package:staff_flutter_app/models/order.dart';
+import 'package:staff_flutter_app/models/combine_data.dart';
 import 'package:staff_flutter_app/server_url.dart';
 
 class VendorState with ChangeNotifier {
