@@ -16,7 +16,6 @@ class _LoginScreenState extends State<LoginScreen> {
   String username = '';
   String password = '';
   bool visibility = true;
-  FocusNode focusNode = FocusNode();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
@@ -137,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: [
                             ElevatedButton(
                               onPressed: () {
-                                focusNode.unfocus();
+                                FocusScope.of(context).unfocus();
                                 loginNew(context);
                               },
                               style: ElevatedButton.styleFrom(

@@ -24,16 +24,18 @@ class _SplashScreenState extends State<SplashScreen> {
   void navigate() async {
     await storage.ready;
 
-    if (storage.getItem('token') == null) {
+    if (storage.getItem('token') == null ||
+        storage.getItem('token').toString().isEmpty) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => LoginScreen()),
       );
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
     }
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => HomeScreen()),
-    );
   }
 
   @override
