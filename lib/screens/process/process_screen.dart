@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:staff_flutter_app/barcode_scan/widgets/product_search.dart';
+import 'package:staff_flutter_app/widget/product_search.dart';
 import 'package:staff_flutter_app/const/font.dart';
 import 'package:staff_flutter_app/models/combine_data.dart';
 import 'package:staff_flutter_app/screens/home/home_screen.dart';
 import 'package:staff_flutter_app/widget/skeleton_tabbar_view.dart';
-import 'package:staff_flutter_app/screens/process/widget/order_process_list_view.dart';
+import 'package:staff_flutter_app/screens/process/widget/process_list_view.dart';
 import 'package:staff_flutter_app/state/order_item_state.dart';
 import 'package:staff_flutter_app/state/process_state.dart';
 import 'package:provider/provider.dart';
@@ -85,11 +85,11 @@ class ProcessScreen extends StatelessWidget {
             IconButton(
               icon: const Icon(
                 Icons.search,
-                color: Colors.white,
+                color: Colors.black,
                 size: 30,
               ),
               onPressed: () {
-                showSearch(context: context, delegate: ProductSearch());
+                showSearch(context: context, delegate: ProductSearch(screen: "process"));
               },
             ),
             const SizedBox(

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:staff_flutter_app/barcode_scan/widgets/product_search.dart';
+import 'package:staff_flutter_app/screens/process/widget/order_button.dart';
+import 'package:staff_flutter_app/widget/product_search.dart';
 import 'package:staff_flutter_app/const/font.dart';
 import 'package:staff_flutter_app/models/combine_data.dart';
 import 'package:staff_flutter_app/screens/order/order_item_detail_screen.dart';
+import 'package:staff_flutter_app/screens/process/widget/order_item_button.dart';
 import 'package:staff_flutter_app/state/order_item_state.dart';
 import 'package:staff_flutter_app/state/process_state.dart';
 import 'package:provider/provider.dart';
@@ -102,11 +104,12 @@ class _ProcessDetailScreenState extends State<ProcessDetailScreen> {
           IconButton(
             icon: const Icon(
               Icons.search,
-              color: Colors.white,
+              color: Colors.black,
               size: 30,
             ),
             onPressed: () {
-              showSearch(context: context, delegate: ProductSearch());
+              showSearch(
+                  context: context, delegate: ProductSearch(screen: "process"));
             },
           ),
           const SizedBox(
@@ -177,33 +180,8 @@ class _ProcessDetailScreenState extends State<ProcessDetailScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                        child: Text(
-                          "Go to OrderItem",
-                          textAlign: TextAlign.center,
-                          style: AppStyles.mondaB.copyWith(fontSize: 15),
-                        ),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.black,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(24),
-                          ),
-                        ),
-                        child: Text("Go to Order",
-                            textAlign: TextAlign.center,
-                            style: AppStyles.mondaB
-                                .copyWith(fontSize: 15, color: Colors.white)),
-                      ),
+                      OrderItemButton(orderProcess: widget.orderProcess),
+                      OrderButton(orderProcess: widget.orderProcess)
                     ],
                   ),
                   const SizedBox(

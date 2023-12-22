@@ -43,6 +43,10 @@ class VendorState with ChangeNotifier {
     return _vendorList;
   }
 
+  VendorDetail singleVendor(String vendorCode) {
+    return _vendorList.firstWhere((element) => element.vendorCode == vendorCode);
+  }
+
   Future<void> updateVendor(VendorDetail updatedVendor) async {
     var token = data.getItem('token');
     final String url = '$serversite/api/vendor-details/${updatedVendor.id}/';

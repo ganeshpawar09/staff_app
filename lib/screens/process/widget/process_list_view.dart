@@ -29,20 +29,18 @@ class OrderProcessListView extends StatelessWidget {
               Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text('Process id: ${orderProcess.id}',
+                    Text('Process Id: ${orderProcess.id}',
                         style: AppStyles.mondaB.copyWith(fontSize: 20)),
-                    // Text(processDate(orderProcess.startDate.toString()),
-                    //     style: AppStyles.mondaN.copyWith(fontSize: 16)),
                   ]),
               const SizedBox(
                 height: 8,
               ),
               Row(
                 children: [
-                  Text("Process Name:",
+                  Text("Process Name: ",
                       style: AppStyles.mondaN
                           .copyWith(fontSize: 15, color: Colors.black54)),
-                  Text(orderProcess.processName!,
+                  Text(orderProcess.processName!.toUpperCase(),
                       style: AppStyles.mondaB.copyWith(fontSize: 16)),
                 ],
               ),
@@ -86,8 +84,9 @@ class OrderProcessListView extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            ProcessDetailScreen(orderProcess: orderProcess,),
+                        builder: (context) => ProcessDetailScreen(
+                          orderProcess: orderProcess,
+                        ),
                       ),
                     );
                   },

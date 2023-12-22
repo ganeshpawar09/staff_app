@@ -4,7 +4,7 @@ import 'package:staff_flutter_app/screens/movement/movement_screen.dart';
 import 'package:staff_flutter_app/screens/vendor/vendor_screen.dart';
 import 'package:staff_flutter_app/screens/home/widget/home_grid_view.dart';
 import 'package:staff_flutter_app/screens/order/order_screen.dart';
-import 'package:staff_flutter_app/screens/orderitem/odert_item_screen.dart';
+import 'package:staff_flutter_app/screens/orderitem/order_item_screen.dart';
 import 'package:staff_flutter_app/screens/process/process_screen.dart';
 import 'package:staff_flutter_app/widget/drawer.dart';
 import 'package:staff_flutter_app/const/font.dart';
@@ -86,19 +86,6 @@ class _HomeScreenState extends State<HomeScreen> {
           "Dashboard",
           style: AppStyles.mondaB.copyWith(fontSize: 22),
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.search,
-              color: Colors.black,
-              size: 30,
-            ),
-            onPressed: () {},
-          ),
-          const SizedBox(
-            width: 30,
-          ),
-        ],
       ),
       body: Column(
         children: [

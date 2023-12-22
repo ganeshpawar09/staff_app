@@ -52,9 +52,8 @@ class ProcessState extends ChangeNotifier {
         .toList();
   }
 
-  OrderProcess singleProcess(int id) {
-    print('id');
-    return _orderProcessList.firstWhere((element) => element.id == id);
+  OrderProcess singleProcess(String processId) {
+    return _orderProcessList.firstWhere((element) => element.processId == processId);
   }
 
   Future<http.Response?> updateProcessStatus(

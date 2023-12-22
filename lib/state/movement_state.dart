@@ -35,6 +35,11 @@ class MovementState extends ChangeNotifier {
     }
   }
 
+  OrderMovement singleMovement(String movementId) {
+    return _movementList
+        .firstWhere((element) => element.movementId == movementId);
+  }
+
   List<OrderMovement> get movementList {
     return _movementList;
   }

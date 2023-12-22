@@ -3,6 +3,7 @@ import 'package:staff_flutter_app/const/font.dart';
 import 'package:staff_flutter_app/models/combine_data.dart';
 import 'package:staff_flutter_app/screens/home/home_screen.dart';
 import 'package:staff_flutter_app/screens/order/widget/order_list_view.dart';
+import 'package:staff_flutter_app/widget/product_search.dart';
 import 'package:staff_flutter_app/widget/skeleton_tabbar_view.dart';
 import 'package:staff_flutter_app/state/order_state.dart';
 import 'package:provider/provider.dart';
@@ -47,22 +48,6 @@ class OrderScreen extends StatelessWidget {
             "View Order",
             style: AppStyles.mondaB.copyWith(fontSize: 22),
           ),
-
-          // leading: Builder(
-          //   builder: (BuildContext context) {
-          //     return IconButton(
-          //       icon: const Icon(
-          //         Icons.menu,
-          //         color: Colors.black,
-          //         size: 30,
-          //       ),
-          //       onPressed: () {
-          //         Scaffold.of(context).openDrawer();
-          //       },
-          //     );
-          //   },
-          // ),
-
           bottom: const TabBar(
             dividerColor: Colors.white,
             indicatorColor: Colors.black,
@@ -82,7 +67,7 @@ class OrderScreen extends StatelessWidget {
                 size: 30,
               ),
               onPressed: () {
-                // showSearch(context: context, delegate: ProductSearch());
+                showSearch(context: context, delegate: ProductSearch(screen: "order"));
               },
             ),
             const SizedBox(
@@ -93,7 +78,7 @@ class OrderScreen extends StatelessWidget {
         body: FutureBuilder<List<ErpOrder>>(
           future: fetchData(context),
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting ) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
               return const SkeletonTabbarView();
             } else if (snapshot.hasError || !snapshot.hasData) {
               return Center(

@@ -9,6 +9,7 @@ class OrderState extends ChangeNotifier {
   LocalStorage storage = LocalStorage('usertoken');
 
   List<ErpOrder> _erpOrders = [];
+  late ErpOrder _singleErpOrder;
 
   Future<void> getErpOrderList() async {
     String url = '$serversite/api/erp-orders/';
@@ -35,10 +36,36 @@ class OrderState extends ChangeNotifier {
       print("error erporderlist");
     }
   }
+  Future<void> getErpOrderByProcess(OrderProcess orderProcess) async {
+    String url =
+        '$serversite/api/erp-order-by-processid/${orderProcess.processId}';
+    var token = storage.getItem('token');
+    try {
+      http.Response response = await http.get(Uri.parse(url), headers: {
+        "Authorization": "token $token",
+      });
+      var data = json.decode(response.body) as Map;
+      List<ErpOrder> demo = [];
+      if (data['error'] == false) {
+        data['data'].forEach((element) {
+          ErpOrder erporderitemlist = ErpOrder.fromJson(element);
+          demo.add(erporderitemlist);
+        });
+        print('success erporderitemlist data');
+        _singleErpOrder = demo[0];
+        notifyListeners();
+      } else {
+        print("something went wrong from server side error=True");
+      }
+    } catch (e) {
+      print(e);
+      print("error erporderitemlist");
+    }
+  }
 
-  void manupulate() {
-    _erpOrders[0].id = 1000000;
-    notifyListeners();
+  ErpOrder get singleErpOrderByProcess
+  {
+    return _singleErpOrder;
   }
 
   List<ErpOrder> get erporderlist {
@@ -53,9 +80,8 @@ class OrderState extends ChangeNotifier {
     return _erpOrders.where((element) => element.completed == false).toList();
   }
 
-  ErpOrder singleOrder(int id) {
-    print('id${id}');
-    return _erpOrders.firstWhere((element) => element.id == id);
+  ErpOrder singleOrder(String quoteNo) {
+    return _erpOrders.firstWhere((element) => element.quoteNo == quoteNo);
   }
 
   List<ErpOrderItem>? OrderItem(int id) {

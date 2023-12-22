@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:staff_flutter_app/const/font.dart';
 import 'package:staff_flutter_app/models/combine_data.dart';
 import 'package:staff_flutter_app/screens/home/home_screen.dart';
+import 'package:staff_flutter_app/widget/product_search.dart';
 import 'package:staff_flutter_app/widget/skeleton_tabbar_view.dart';
 import 'package:staff_flutter_app/screens/order/widget/order_item_list_view.dart';
 import 'package:staff_flutter_app/state/order_item_state.dart';
@@ -82,8 +83,9 @@ class OrderItemScreen extends StatelessWidget {
                 size: 30,
               ),
               onPressed: () {
-                // Provider.of<OrderState>(context, listen: false).manupulate();
-                // showSearch(context: context, delegate: ProductSearch());
+                showSearch(
+                    context: context,
+                    delegate: ProductSearch(screen: "orderItem"));
               },
             ),
             const SizedBox(
@@ -94,7 +96,7 @@ class OrderItemScreen extends StatelessWidget {
         body: FutureBuilder<List<ErpOrderItem>>(
           future: fetchData(context),
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting ) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
               return const SkeletonTabbarView();
             } else if (snapshot.hasError || !snapshot.hasData) {
               return Center(

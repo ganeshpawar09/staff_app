@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:staff_flutter_app/const/font.dart';
 import 'package:staff_flutter_app/models/combine_data.dart';
-import 'package:staff_flutter_app/screens/order/widget/material_list_view.dart';
+import 'package:staff_flutter_app/widget/product_search.dart';
 
 class OrderItemDetailScreen extends StatelessWidget {
   final ErpOrderItem orderItem;
@@ -36,6 +36,21 @@ class OrderItemDetailScreen extends StatelessWidget {
         elevation: 0,
         title: Text("OrderItem Detail View",
             style: AppStyles.mondaB.copyWith(fontSize: 22)),
+            actions: [
+            IconButton(
+              icon: const Icon(
+                Icons.search,
+                color: Colors.black,
+                size: 30,
+              ),
+              onPressed: () {
+                showSearch(context: context, delegate: ProductSearch(screen: "order"));
+              },
+            ),
+            const SizedBox(
+              width: 20,
+            )
+          ],
       ),
       body: Column(
         children: [

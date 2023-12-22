@@ -63,6 +63,9 @@ class OrderItemState extends ChangeNotifier {
       print("error erporderitemlist");
     }
   }
+  ErpOrderItem singleOrderItem(String partId) {
+    return _erporderitem.firstWhere((element) => element.document!.partId == partId);
+  }
 
   ErpOrderItem get erpOrderItemByProcess {
     return _singleerporderitem;
