@@ -95,8 +95,8 @@ class ErpOrderItem {
   MaterialDetail? materialDetail;
   ManufacturingCapabilities? manufacturingTech;
   MaterialVendor? materialVendorcode;
-  List<Process>? process;
-  List<Movement>? movement;
+  List<OrderProcess>? process;
+  List<OrderMovement>? movement;
 
   ErpOrderItem(
       {this.id,
@@ -161,15 +161,15 @@ class ErpOrderItem {
         ? MaterialVendor.fromJson(json['material_vendorcode'])
         : null;
     if (json['process'] != null) {
-      process = <Process>[];
+      process = <OrderProcess>[];
       json['process'].forEach((v) {
-        process!.add(Process.fromJson(v));
+        process!.add(OrderProcess.fromJson(v));
       });
     }
     if (json['movement'] != null) {
-      movement = <Movement>[];
+      movement = <OrderMovement>[];
       json['movement'].forEach((v) {
-        movement!.add(Movement.fromJson(v));
+        movement!.add(OrderMovement.fromJson(v));
       });
     }
   }
@@ -308,116 +308,6 @@ class Document {
     data['dimension_z'] = this.dimensionZ;
     if (user != null) {
       data['user'] = user!.toJson();
-    }
-    return data;
-  }
-}
-
-class Process {
-  int? id;
-  int? srNo;
-  String? processName;
-  String? processId;
-  String? barcodeLink;
-  String? barcodeImg;
-  String? processBill;
-  double? targetCost;
-  double? cost;
-  double? incTaxCost;
-  String? processPartFile;
-  String? processDrawing;
-  String? startDate;
-  String? endDate;
-  bool? completed;
-  String? woDate;
-  bool? rfqVendorBool;
-  bool? reviewed;
-  ManufacturingCapabilities? manufacturingCapabilities;
-  VendorDetail? vendorcode;
-  PaymentDetails? paymentDetails;
-
-  Process(
-      {this.id,
-      this.srNo,
-      this.processName,
-      this.processId,
-      this.barcodeLink,
-      this.barcodeImg,
-      this.processBill,
-      this.targetCost,
-      this.cost,
-      this.incTaxCost,
-      this.processPartFile,
-      this.processDrawing,
-      this.startDate,
-      this.endDate,
-      this.completed,
-      this.woDate,
-      this.rfqVendorBool,
-      this.reviewed,
-      this.manufacturingCapabilities,
-      this.vendorcode,
-      this.paymentDetails});
-
-  Process.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    srNo = json['sr_no'];
-    processName = json['process_name'];
-    processId = json['process_id'];
-    barcodeLink = json['barcode_link'];
-    barcodeImg = json['barcode_img'];
-    processBill = json['process_bill'];
-    targetCost = json['target_cost'];
-    cost = json['cost'];
-    incTaxCost = json['inc_tax_cost'];
-    processPartFile = json['process_part_file'];
-    processDrawing = json['process_drawing'];
-    startDate = json['start_date'];
-    endDate = json['end_date'];
-    completed = json['completed'];
-    woDate = json['wo_date'];
-    rfqVendorBool = json['rfq_vendor_bool'];
-    reviewed = json['reviewed'];
-    manufacturingCapabilities = json['manufacturing_capabilities'] != null
-        ? ManufacturingCapabilities.fromJson(json['manufacturing_capabilities'])
-        : null;
-    vendorcode = json['vendorcode'] != null
-        ? VendorDetail.fromJson(json['vendorcode'])
-        : null;
-    paymentDetails = json['payment_details'] != null
-        ? PaymentDetails.fromJson(json['payment_details'])
-        : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['sr_no'] = this.srNo;
-    data['process_name'] = this.processName;
-    data['process_id'] = this.processId;
-    data['barcode_link'] = this.barcodeLink;
-    data['barcode_img'] = this.barcodeImg;
-    data['process_bill'] = this.processBill;
-    data['target_cost'] = this.targetCost;
-    data['cost'] = this.cost;
-    data['inc_tax_cost'] = this.incTaxCost;
-    data['process_part_file'] = this.processPartFile;
-    data['process_drawing'] = this.processDrawing;
-    data['start_date'] = this.startDate;
-    data['end_date'] = this.endDate;
-    data['completed'] = this.completed;
-    data['wo_date'] = this.woDate;
-    data['rfq_vendor_bool'] = this.rfqVendorBool;
-    data['reviewed'] = this.reviewed;
-    if (this.manufacturingCapabilities != null) {
-      data['manufacturing_capabilities'] =
-          this.manufacturingCapabilities!.toJson();
-    }
-    if (this.vendorcode != null) {
-      data['vendorcode'] = this.vendorcode!.toJson();
-    }
-    if (this.paymentDetails != null) {
-      data['payment_details'] = this.paymentDetails!.toJson();
     }
     return data;
   }
@@ -641,7 +531,7 @@ class PaymentDetails {
   }
 }
 
-class Movement {
+class OrderMovement {
   int? id;
   int? srNo;
   String? movementId;
@@ -661,7 +551,7 @@ class Movement {
   bool? picked;
   Rider? rider;
 
-  Movement(
+  OrderMovement(
       {this.id,
       this.srNo,
       this.movementId,
@@ -681,7 +571,7 @@ class Movement {
       this.picked,
       this.rider});
 
-  Movement.fromJson(Map<String, dynamic> json) {
+  OrderMovement.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     srNo = json['sr_no'];
     movementId = json['movement_id'];

@@ -8,60 +8,44 @@ class OrderDetailScreen extends StatefulWidget {
   const OrderDetailScreen({Key? key, required this.order}) : super(key: key);
 
   @override
-  _OrderDetailScreenState createState() => _OrderDetailScreenState();
+  State<OrderDetailScreen> createState() => _OrderDetailScreenState();
 }
 
 class _OrderDetailScreenState extends State<OrderDetailScreen> {
-  // final costController = TextEditingController();
-  // final barcodeController = TextEditingController();
-  // final completedBoolController = TextEditingController();
-  // String barcodeScanRes = '';
-
-  // Future scanBarcode(BuildContext context) async {
-  //   String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-  //     "#ff6666",
-  //     "Cancel",
-  //     true,
-  //     ScanMode.BARCODE,
-  //   );
-  //   setState(() {
-  //     completedBoolController.text = barcodeScanRes;
-  //     this.barcodeScanRes = barcodeScanRes;
-  //     print("barcode text");
-  //     print(this.barcodeScanRes);
-  //   });
-  // }
-
-  // void onAdd() {
-  //   final String val1 = costController.text;
-  //   final String val2 = completedBoolController.text;
-
-  //   final dynamic id = ModalRoute.of(context)!.settings.arguments;
-  //   print("barcode value is");
-  //   print(val2);
-  //   if (val1.isNotEmpty && val2.isNotEmpty) {
-  //     Provider.of<ProcessState>(context, listen: false)
-  //         .updateprocessstatus(id, int.parse(val1), val2);
-  //   }
-  // }
+  double calculateTotalPriceOrder() {
+    double totalPrice = 0;
+    if (widget.order.itemsNew != null) {
+      for (ErpOrderItem orderItem in widget.order.itemsNew!) {
+        if (orderItem.materialDetail != null &&
+            orderItem.materialDetail!.rate != null) {
+          totalPrice += orderItem.quantity! * orderItem.materialDetail!.rate!;
+        }
+        if (orderItem.process != null) {
+          for (OrderProcess orderProcess in orderItem.process!) {
+            totalPrice += orderProcess.cost ?? 0;
+          }
+        }
+        if (orderItem.movement != null) {
+          for (OrderMovement orderMovement in orderItem.movement!) {
+            totalPrice += orderMovement.transportCost ?? 0;
+          }
+        }
+      }
+    }
+    return totalPrice;
+  }
 
   @override
   Widget build(BuildContext context) {
-    final orderitem = widget.order.itemsNew;
-    // print(orderitem);
-    // String orderid = order.quoteNo!;
-
-    double processcost = 40;
-    double processcosttax = processcost * 0.12;
-    double processcosttotal = processcost * 1.12;
-    // print(orderid);
-    // String processname = process.processName!;
-
-    // var path = process.processDrawing;
-    // var split = path!.split('.');
-    // var splitname = path.split('/');
-    // String filename = splitname.last;
-    // String filetype = split.last;
+    List<ErpOrderItem> orderitem = widget.order.itemsNew ?? [];
+    String orderId = widget.order.quoteNo.toString();
+    String orderRefId = widget.order.refCode.toString();
+    String totalParts =
+        ((widget.order.itemsNew != null) ? widget.order.itemsNew!.length : 0)
+            .toString();
+    double totalPrice = calculateTotalPriceOrder();
+    double tax12 = totalPrice * .12;
+    double totalPriceAndTax = totalPrice + tax12;
 
     return Scaffold(
       appBar: AppBar(
@@ -104,7 +88,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                         Text("Order ID",
                             style: AppStyles.mondaB
                                 .copyWith(fontSize: 15, color: Colors.black54)),
-                        Text(widget.order.quoteNo!,
+                        Text(orderId,
                             style: AppStyles.mondaB.copyWith(fontSize: 17)),
                       ],
                     ),
@@ -114,7 +98,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                         Text("Order Ref ID",
                             style: AppStyles.mondaB
                                 .copyWith(fontSize: 15, color: Colors.black54)),
-                        Text(widget.order.refCode.toString(),
+                        Text(orderRefId,
                             style: AppStyles.mondaB.copyWith(fontSize: 17)),
                       ],
                     ),
@@ -124,7 +108,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                         Text("Total Parts",
                             style: AppStyles.mondaB
                                 .copyWith(fontSize: 15, color: Colors.black54)),
-                        Text(orderitem!.length.toString(),
+                        Text(totalParts,
                             style: AppStyles.mondaB.copyWith(fontSize: 17)),
                       ],
                     ),
@@ -134,7 +118,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                         Text("Total Cost",
                             style: AppStyles.mondaB
                                 .copyWith(fontSize: 15, color: Colors.black54)),
-                        Text("${processcost.toStringAsFixed(2)}",
+                        Text(totalPrice.toStringAsFixed(2),
                             style: AppStyles.mondaB.copyWith(fontSize: 17)),
                       ],
                     ),
@@ -144,7 +128,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                         Text("Taxes(12%)",
                             style: AppStyles.mondaB
                                 .copyWith(fontSize: 15, color: Colors.black54)),
-                        Text("${processcosttax.toStringAsFixed(2)}",
+                        Text(tax12.toStringAsFixed(2),
                             style: AppStyles.mondaB.copyWith(fontSize: 17)),
                       ],
                     ),
@@ -154,7 +138,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                         Text("TOTAL",
                             style: AppStyles.mondaB
                                 .copyWith(fontSize: 18, color: Colors.black54)),
-                        Text("\u{20B9} ${processcosttotal.toStringAsFixed(2)}",
+                        Text("\u{20B9} ${totalPriceAndTax.toStringAsFixed(2)}",
                             style: AppStyles.mondaB.copyWith(fontSize: 20)),
                       ],
                     ),
@@ -162,9 +146,6 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                 ),
               ),
             ),
-          ),
-          const SizedBox(
-            height: 20,
           ),
           Row(
             children: [
@@ -178,70 +159,21 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
           const SizedBox(
             height: 20,
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: orderitem.length,
-                itemBuilder: (BuildContext context, int index) =>
-                    OrderItemListView(
-                  orderItem: orderitem[index],
-                ),
-              ),
-            ),
-          ),
-          // Container(
-          //     padding: EdgeInsets.all(10),
-          //     child: Column(
-          //       children: [
-          //         TextField(
-          //           style: TextStyle(fontSize: 12, color: Colors.black),
-          //           controller: costController,
-          //           keyboardType: TextInputType.number,
-          //           inputFormatters: [
-          //             FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))
-          //           ],
-          //           decoration: InputDecoration(
-          //             labelText: "Enter Cost",
-          //             prefixIcon: IconButton(
-          //               icon: Icon(Icons.money),
-          //               onPressed: () => {},
-          //             ),
-          //           ),
-          //         ),
-          //         TextField(
-          //           style: TextStyle(fontSize: 12, color: Colors.black),
-          //           controller: completedBoolController,
-          //           decoration: InputDecoration(
-          //             labelText: "Scan Barcode",
-          //             prefixIcon: IconButton(
-          //               icon: Icon(Icons.scanner_outlined),
-          //               onPressed: () {
-          //                 setState(() {
-          //                   scanBarcode(context);
-          //                   completedBoolController.text = barcodeScanRes;
-          //                 });
-          //               },
-          //             ),
-          //           ),
-          //         ),
-          //         Padding(
-          //           padding: EdgeInsets.all(10),
-          //           child: ElevatedButton(
-          //               child: Text('#change this'),
-          //               onPressed: () {
-          //                 onAdd();
-          //                 // Navigator.push(
-          //                 //     context,
-          //                 //     MaterialPageRoute(
-          //                 //         builder: (context) =>
-          //                 //             PendingOrderProcessScreen()));
-          //               }),
-          //         ),
-          //         // change this
-          //       ],
-          //     ),)
+          (widget.order.itemsNew != null)
+              ? Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      itemCount: orderitem.length,
+                      itemBuilder: (BuildContext context, int index) =>
+                          OrderItemListView(
+                        orderItem: orderitem[index],
+                      ),
+                    ),
+                  ),
+                )
+              : const SizedBox(),
         ],
       ),
     );

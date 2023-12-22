@@ -7,7 +7,7 @@ import 'package:staff_flutter_app/server_url.dart';
 
 class MovementState extends ChangeNotifier {
   LocalStorage data = LocalStorage('usertoken');
-  List<Movement> _movementList = [];
+  List<OrderMovement> _movementList = [];
 
   Future<void> getMovementList() async {
     String url = '$serversite/api/erp-movement/';
@@ -17,10 +17,10 @@ class MovementState extends ChangeNotifier {
         "Authorization": "token $token",
       });
       var data = json.decode(response.body) as Map;
-      List<Movement> demo = [];
+      List<OrderMovement> demo = [];
       if (data['error'] == false) {
         data['data'].forEach((element) {
-          Movement movementList = Movement.fromJson(element);
+          OrderMovement movementList = OrderMovement.fromJson(element);
           demo.add(movementList);
         });
         print('Sucess process data');
@@ -35,15 +35,15 @@ class MovementState extends ChangeNotifier {
     }
   }
 
-  List<Movement> get movementList {
+  List<OrderMovement> get movementList {
     return _movementList;
   }
 
-  List<Movement> get movementCompletedList {
+  List<OrderMovement> get movementCompletedList {
     return _movementList.where((element) => element.completed == true).toList();
   }
 
-  List<Movement> get movementPendingList {
+  List<OrderMovement> get movementPendingList {
     return _movementList
         .where((element) => element.completed == false)
         .toList();

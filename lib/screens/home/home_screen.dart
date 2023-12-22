@@ -105,12 +105,12 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(height: 20),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(15.0),
               child: GridView.builder(
                 itemCount: items.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  mainAxisExtent: 200,
+                  mainAxisExtent: 180,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
                 ),

@@ -44,7 +44,7 @@ class CadAndCart extends StatelessWidget {
           ),
           scaffoldBackgroundColor: const Color.fromRGBO(255, 254, 254, 1),
         ),
-        home: SplashScreen(),
+        home: const SplashScreen(),
         // home: FutureBuilder(
         //   future: storage.ready,
         //   builder: (BuildContext context, AsyncSnapshot snapshot) {

@@ -3,22 +3,26 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:staff_flutter_app/barcode_scan/widgets/product_search.dart';
 import 'package:staff_flutter_app/const/font.dart';
+import 'package:staff_flutter_app/models/combine_data.dart';
+import 'package:staff_flutter_app/screens/order/order_item_detail_screen.dart';
 import 'package:staff_flutter_app/state/order_item_state.dart';
 import 'package:staff_flutter_app/state/process_state.dart';
 import 'package:provider/provider.dart';
 
-class ProcessUpdateScreen extends StatefulWidget {
-  final int id;
-  const ProcessUpdateScreen({Key? key, required this.id}) : super(key: key);
+class ProcessDetailScreen extends StatefulWidget {
+  final OrderProcess orderProcess;
+  const ProcessDetailScreen({Key? key, required this.orderProcess})
+      : super(key: key);
 
   @override
-  State<ProcessUpdateScreen> createState() => _ProcessUpdateScreenState();
+  State<ProcessDetailScreen> createState() => _ProcessDetailScreenState();
 }
 
-class _ProcessUpdateScreenState extends State<ProcessUpdateScreen> {
+class _ProcessDetailScreenState extends State<ProcessDetailScreen> {
   final costController = TextEditingController();
   final completedBoolController = TextEditingController();
   String barcodeScanRes = '';
+  late ErpOrderItem orderitem;
 
   Future scanBarcode(BuildContext context) async {
     String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
@@ -42,16 +46,29 @@ class _ProcessUpdateScreenState extends State<ProcessUpdateScreen> {
     print("barcode value is");
     print(val2);
     if (val1.isNotEmpty && val2.isNotEmpty) {
-      Provider.of<ProcessState>(context, listen: false)
-          .updateProcessStatus(widget.id, int.parse(val1), val2);
+      Provider.of<ProcessState>(context, listen: false).updateProcessStatus(
+          int.parse(widget.orderProcess.processId!), int.parse(val1), val2);
     }
+  }
+
+  Future<void> fetchData(BuildContext context) async {
+    try {
+      print('Before fetching data');
+
+      await context
+          .read<OrderItemState>()
+          .getErpOrderItemByProcess(widget.orderProcess);
+
+      print('After fetching data');
+    } catch (error) {
+      print('Error fetching data: $error');
+    }
+    orderitem = context.read<OrderItemState>().erpOrderItemByProcess;
   }
 
   @override
   Widget build(BuildContext context) {
-    final process = Provider.of<ProcessState>(context).singleProcess(widget.id);
-    final orderitem =
-        Provider.of<OrderItemState>(context).getorderitembyprocess(process);
+    OrderProcess process = widget.orderProcess;
 
     String processid = process.processId!;
     double processcost = process.cost!;
@@ -117,7 +134,7 @@ class _ProcessUpdateScreenState extends State<ProcessUpdateScreen> {
                     height: 10,
                   ),
                   customRow("Process Id: ", processid),
-                  customRow("Process Name: ", processname),
+                  customRow("Process Name: ", processname.toUpperCase()),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -154,13 +171,41 @@ class _ProcessUpdateScreenState extends State<ProcessUpdateScreen> {
                       // ),
                     ],
                   ),
-                  customRow("Part ID:", "${orderitem.document.partId}"),
-                  customRow("Part Name:", "${orderitem.document.description}"),
-                  customRow("Dimension:",
-                      "${orderitem.document.dimensionX} x ${orderitem.document.dimensionY} x ${orderitem.document.dimensionZ} mm"),
-                  customRow(
-                      "Material:", "${orderitem.materialDetail.materialName}"),
-                  customRow("Comments:", "NA"),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        child: Text(
+                          "Go to OrderItem",
+                          textAlign: TextAlign.center,
+                          style: AppStyles.mondaB.copyWith(fontSize: 15),
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.black,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(24),
+                          ),
+                        ),
+                        child: Text("Go to Order",
+                            textAlign: TextAlign.center,
+                            style: AppStyles.mondaB
+                                .copyWith(fontSize: 15, color: Colors.white)),
+                      ),
+                    ],
+                  ),
                   const SizedBox(
                     height: 20,
                   ),

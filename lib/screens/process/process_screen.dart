@@ -20,11 +20,7 @@ class ProcessScreen extends StatelessWidget {
 
         DataFetchStatus.processDataIsFetched = true;
       }
-      if (!DataFetchStatus.orderItemDataIsFetched) {
-        await context.read<OrderItemState>().getErpOrderItemList();
-
-        DataFetchStatus.orderItemDataIsFetched = true;
-      }
+   
 
       print('After fetching data');
     } catch (error) {
@@ -41,7 +37,6 @@ class ProcessScreen extends StatelessWidget {
 
   void refresh(BuildContext context) {
     DataFetchStatus.orderDataIsFetched = false;
-    DataFetchStatus.orderItemDataIsFetched = false;
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(

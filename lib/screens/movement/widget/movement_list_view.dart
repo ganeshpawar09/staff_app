@@ -3,7 +3,7 @@ import 'package:staff_flutter_app/const/font.dart';
 import 'package:staff_flutter_app/models/combine_data.dart';
 
 class MovementListView extends StatelessWidget {
-  final Movement movement;
+  final OrderMovement movement;
   const MovementListView({super.key, required this.movement});
 
   @override
@@ -79,7 +79,7 @@ class MovementListView extends StatelessWidget {
               Text("Status:",
                   style: AppStyles.mondaN
                       .copyWith(fontSize: 16, color: Colors.black54)),
-              movement.completed??false 
+              movement.completed ?? false
                   ? Text(
                       ('Completed'),
                       style: AppStyles.mondaB

@@ -23,20 +23,21 @@ class HomeScreenGridView extends StatelessWidget {
             );
           },
           child: Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(item.title,
-                    style: AppStyles.mondaN.copyWith(fontSize: 18)),
+                    textAlign: TextAlign.center,
+                    style: AppStyles.mondaN.copyWith(fontSize: 17)),
                 const SizedBox(
                   height: 20,
                 ),
                 Image.asset(
                   item.img,
-                  width: 100,
-                  height: 100,
+                  width: 80,
+                  height: 80,
                 ),
               ],
             ),

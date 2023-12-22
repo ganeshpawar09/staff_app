@@ -9,6 +9,7 @@ class OrderItemState extends ChangeNotifier {
   LocalStorage storage = LocalStorage('usertoken');
 
   List<ErpOrderItem> _erporderitem = [];
+  late ErpOrderItem _singleerporderitem;
 
   Future<void> getErpOrderItemList() async {
     String url = '$serversite/api/erp-orderitem/';
@@ -36,28 +37,46 @@ class OrderItemState extends ChangeNotifier {
     }
   }
 
+  Future<void> getErpOrderItemByProcess(OrderProcess orderProcess) async {
+    String url =
+        '$serversite/api/erp-orderitem-by-processid/${orderProcess.processId}';
+    var token = storage.getItem('token');
+    try {
+      http.Response response = await http.get(Uri.parse(url), headers: {
+        "Authorization": "token $token",
+      });
+      var data = json.decode(response.body) as Map;
+      List<ErpOrderItem> demo = [];
+      if (data['error'] == false) {
+        data['data'].forEach((element) {
+          ErpOrderItem erporderitemlist = ErpOrderItem.fromJson(element);
+          demo.add(erporderitemlist);
+        });
+        print('success erporderitemlist data');
+        _singleerporderitem = demo[0];
+        notifyListeners();
+      } else {
+        print("something went wrong from server side error=True");
+      }
+    } catch (e) {
+      print(e);
+      print("error erporderitemlist");
+    }
+  }
+
+  ErpOrderItem get erpOrderItemByProcess {
+    return _singleerporderitem;
+  }
+
   List<ErpOrderItem> get erporderitemlist {
     return _erporderitem;
   }
+
   List<ErpOrderItem> get erporderitemcompletedlist {
     return _erporderitem.where((element) => element.ordered == true).toList();
   }
 
   List<ErpOrderItem> get erporderitempendinglist {
     return _erporderitem.where((element) => element.ordered == false).toList();
-  }
-
-  getorderitembyprocess(process) {
-    for (var orderitem in _erporderitem) {
-      for (var process in {orderitem.process}) {
-        process == process ? print('object okay') : print('object okay');
-        if (process == process) {
-          return _erporderitem
-              .firstWhere((element) => element.id == orderitem.id);
-        }
-        int? test = orderitem.id;
-        print('test is $test');
-      }
-    }
   }
 }

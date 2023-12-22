@@ -4,15 +4,37 @@ import 'package:staff_flutter_app/models/combine_data.dart';
 import 'package:staff_flutter_app/screens/order/widget/material_list_view.dart';
 
 class OrderItemDetailScreen extends StatelessWidget {
-  final ErpOrderItem part;
-  const OrderItemDetailScreen({super.key, required this.part});
+  final ErpOrderItem orderItem;
+  const OrderItemDetailScreen({super.key, required this.orderItem});
+  double calculateTotalPriceOrderItem() {
+    double totalPrice = 0;
+
+    totalPrice += orderItem.quantity! * orderItem.materialDetail!.rate!;
+
+    for (OrderProcess orderProcess in orderItem.process!) {
+      totalPrice += orderProcess.cost ?? 0;
+    }
+    for (OrderMovement orderMovement in orderItem.movement!) {
+      totalPrice += orderMovement.transportCost ?? 0;
+    }
+    return totalPrice;
+  }
 
   @override
   Widget build(BuildContext context) {
+    String orderItemId = (orderItem.document!.partId!);
+    String orderItemQuantity = (orderItem.quantity ?? 0).toString();
+    String orderItemMaterialType = orderItem.materialDetail!.materialTypeName!;
+    String orderItemMaterialName = orderItem.materialDetail!.materialName!;
+    String orderItemMaterialRate =
+        orderItem.materialDetail!.rate!.toStringAsFixed(2);
+    double orderItemCost = calculateTotalPriceOrderItem();
+    double tax12 = orderItemCost * .12;
+    double totalCost = orderItemCost + tax12;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: Text("Part Detail View",
+        title: Text("OrderItem Detail View",
             style: AppStyles.mondaB.copyWith(fontSize: 22)),
       ),
       body: Column(
@@ -25,7 +47,7 @@ class OrderItemDetailScreen extends StatelessWidget {
               const SizedBox(
                 width: 20,
               ),
-              Text("Part Details:",
+              Text("OrderItem Details:",
                   style: AppStyles.mondaB.copyWith(fontSize: 20)),
             ],
           ),
@@ -39,7 +61,7 @@ class OrderItemDetailScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -47,10 +69,10 @@ class OrderItemDetailScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text("Part No",
+                        Text("OrderItem Id",
                             style: AppStyles.mondaB
                                 .copyWith(fontSize: 15, color: Colors.black54)),
-                        Text(part.document!.partId.toString(),
+                        Text(orderItemId,
                             style: AppStyles.mondaB.copyWith(fontSize: 17)),
                       ],
                     ),
@@ -67,30 +89,20 @@ class OrderItemDetailScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text("Part Name",
-                            style: AppStyles.mondaB
-                                .copyWith(fontSize: 15, color: Colors.black54)),
-                        Text("# ",
-                            style: AppStyles.mondaB.copyWith(fontSize: 17)),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
                         Text("Quantity",
                             style: AppStyles.mondaB
                                 .copyWith(fontSize: 15, color: Colors.black54)),
-                        Text(part.quantity.toString(),
+                        Text(orderItemQuantity,
                             style: AppStyles.mondaB.copyWith(fontSize: 17)),
                       ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text("Total Cost(without tax)",
+                        Text("Total Cost",
                             style: AppStyles.mondaB
                                 .copyWith(fontSize: 15, color: Colors.black54)),
-                        Text("#",
+                        Text(orderItemCost.toStringAsFixed(2),
                             style: AppStyles.mondaB.copyWith(fontSize: 17)),
                       ],
                     ),
@@ -100,7 +112,7 @@ class OrderItemDetailScreen extends StatelessWidget {
                         Text("Taxes(12%)",
                             style: AppStyles.mondaB
                                 .copyWith(fontSize: 15, color: Colors.black54)),
-                        Text("#",
+                        Text(tax12.toStringAsFixed(2),
                             style: AppStyles.mondaB.copyWith(fontSize: 17)),
                       ],
                     ),
@@ -110,7 +122,7 @@ class OrderItemDetailScreen extends StatelessWidget {
                         Text("TOTAL",
                             style: AppStyles.mondaB
                                 .copyWith(fontSize: 18, color: Colors.black54)),
-                        Text("\u{20B9} #",
+                        Text("\u{20B9} ${totalCost.toStringAsFixed(2)}",
                             style: AppStyles.mondaB.copyWith(fontSize: 20)),
                       ],
                     ),
@@ -127,22 +139,59 @@ class OrderItemDetailScreen extends StatelessWidget {
               const SizedBox(
                 width: 20,
               ),
-              Text("Material List:",
+              Text("Material Details:",
                   style: AppStyles.mondaB.copyWith(fontSize: 20)),
             ],
           ),
           const SizedBox(
-            height: 20,
+            height: 10,
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: part.manufacturingTech!.material!.length,
-                itemBuilder: (BuildContext context, int index) =>
-                    MaterialListView(
-                  material: part.manufacturingTech!.material![index],
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Card(
+              elevation: 3,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text("Material Type Name",
+                            style: AppStyles.mondaB
+                                .copyWith(fontSize: 15, color: Colors.black54)),
+                        Text(orderItemMaterialType,
+                            style: AppStyles.mondaB.copyWith(fontSize: 17)),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text("Material Name",
+                            style: AppStyles.mondaB
+                                .copyWith(fontSize: 15, color: Colors.black54)),
+                        Text(orderItemMaterialName,
+                            style: AppStyles.mondaB.copyWith(fontSize: 17)),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text("Material Rate",
+                            style: AppStyles.mondaB
+                                .copyWith(fontSize: 15, color: Colors.black54)),
+                        Text(orderItemMaterialRate,
+                            style: AppStyles.mondaB.copyWith(fontSize: 17)),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),

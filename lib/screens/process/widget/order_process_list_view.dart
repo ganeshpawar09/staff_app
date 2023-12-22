@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:staff_flutter_app/const/font.dart';
 import 'package:staff_flutter_app/models/combine_data.dart';
-import 'package:staff_flutter_app/screens/process/process_update.dart';
+import 'package:staff_flutter_app/screens/process/process_detail_screen.dart';
 
 class OrderProcessListView extends StatelessWidget {
   final OrderProcess orderProcess;
@@ -87,7 +87,7 @@ class OrderProcessListView extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            ProcessUpdateScreen(id: orderProcess.id!),
+                            ProcessDetailScreen(orderProcess: orderProcess,),
                       ),
                     );
                   },

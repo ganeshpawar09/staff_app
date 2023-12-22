@@ -9,6 +9,11 @@ class OrderItemListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String orderItemId = (orderItem.document!.partId!);
+    String orderItemQuantity = (orderItem.quantity ?? 0).toString();
+    String orderItemMaterialType = orderItem.materialDetail!.materialTypeName!;
+    bool orderItemStatus = orderItem.ordered ?? false;
+
     return Card(
       elevation: 3,
       child: Container(
@@ -22,7 +27,7 @@ class OrderItemListView extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text('Part id: ${orderItem.document!.partId}',
+                  Text('OrderItem Id: $orderItemId',
                       style: AppStyles.mondaB.copyWith(fontSize: 18)),
                 ],
               ),
@@ -34,7 +39,7 @@ class OrderItemListView extends StatelessWidget {
                   Text("Quantity: ",
                       style: AppStyles.mondaN
                           .copyWith(fontSize: 15, color: Colors.black54)),
-                  Text(orderItem.quantity.toString(),
+                  Text(orderItemQuantity,
                       style: AppStyles.mondaB.copyWith(fontSize: 16)),
                 ],
               ),
@@ -47,24 +52,11 @@ class OrderItemListView extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("No. of Materials: ",
+                      Text("Material Type: ",
                           style: AppStyles.mondaN
                               .copyWith(fontSize: 15, color: Colors.black54)),
-                      Text(
-                          (orderItem.manufacturingTech!.material!.length
-                                  .toString())
-                              .toString(),
+                      Text(orderItemMaterialType,
                           style: AppStyles.mondaB.copyWith(fontSize: 16))
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("No of Process: ",
-                          style: AppStyles.mondaN
-                              .copyWith(fontSize: 15, color: Colors.black54)),
-                      Text(orderItem.process!.length.toString(),
-                          style: AppStyles.mondaB.copyWith(fontSize: 16)),
                     ],
                   ),
                 ],
@@ -75,7 +67,7 @@ class OrderItemListView extends StatelessWidget {
               Text("Status:",
                   style: AppStyles.mondaN
                       .copyWith(fontSize: 16, color: Colors.black54)),
-              orderItem.ordered!
+              orderItemStatus
                   ? Text(
                       ('Completed'),
                       style: AppStyles.mondaB
@@ -98,7 +90,7 @@ class OrderItemListView extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => OrderItemDetailScreen(
-                          part: orderItem,
+                          orderItem: orderItem,
                         ),
                       ),
                     );
