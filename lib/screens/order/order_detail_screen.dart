@@ -53,128 +53,49 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
         elevation: 0,
         title: Text("Order Detail View",
             style: AppStyles.mondaB.copyWith(fontSize: 22)),
-            actions: [
-            IconButton(
-              icon: const Icon(
-                Icons.search,
-                color: Colors.black,
-                size: 30,
-              ),
-              onPressed: () {
-                showSearch(context: context, delegate: ProductSearch(screen: "order"));
-              },
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.search,
+              color: Colors.black,
+              size: 30,
             ),
-            const SizedBox(
-              width: 20,
-            )
-          ],
+            onPressed: () {
+              showSearch(
+                  context: context, delegate: ProductSearch(screen: "order"));
+            },
+          ),
+          const SizedBox(
+            width: 20,
+          )
+        ],
       ),
       body: Column(
         children: [
           const SizedBox(
             height: 10,
           ),
-          Row(
-            children: [
-              const SizedBox(
-                width: 20,
-              ),
-              Text("Order Details:",
-                  style: AppStyles.mondaB.copyWith(fontSize: 20)),
-            ],
-          ),
+          customTitle("Order Details:"),
           Padding(
-            padding: const EdgeInsets.all(10),
-            child: Card(
-              elevation: 3,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text("Order ID",
-                            style: AppStyles.mondaB
-                                .copyWith(fontSize: 15, color: Colors.black54)),
-                        Text(orderId,
-                            style: AppStyles.mondaB.copyWith(fontSize: 17)),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text("Order Ref ID",
-                            style: AppStyles.mondaB
-                                .copyWith(fontSize: 15, color: Colors.black54)),
-                        Text(orderRefId,
-                            style: AppStyles.mondaB.copyWith(fontSize: 17)),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text("Total Parts",
-                            style: AppStyles.mondaB
-                                .copyWith(fontSize: 15, color: Colors.black54)),
-                        Text(totalParts,
-                            style: AppStyles.mondaB.copyWith(fontSize: 17)),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text("Total Cost",
-                            style: AppStyles.mondaB
-                                .copyWith(fontSize: 15, color: Colors.black54)),
-                        Text(totalPrice.toStringAsFixed(2),
-                            style: AppStyles.mondaB.copyWith(fontSize: 17)),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text("Taxes(12%)",
-                            style: AppStyles.mondaB
-                                .copyWith(fontSize: 15, color: Colors.black54)),
-                        Text(tax12.toStringAsFixed(2),
-                            style: AppStyles.mondaB.copyWith(fontSize: 17)),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text("TOTAL",
-                            style: AppStyles.mondaB
-                                .copyWith(fontSize: 18, color: Colors.black54)),
-                        Text("\u{20B9} ${totalPriceAndTax.toStringAsFixed(2)}",
-                            style: AppStyles.mondaB.copyWith(fontSize: 20)),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                customRow("Order Id", orderId),
+                customRow("Order Ref Id", orderRefId),
+                customRow("Total Parts", totalParts),
+                customRow("Total Cost", totalPrice.toStringAsFixed(2)),
+                customRow("Taxes(12%)", tax12.toStringAsFixed(2)),
+                customRow(
+                    "TOTAL", "\u{20B9} ${totalPriceAndTax.toStringAsFixed(2)}"),
+              ],
             ),
           ),
-          Row(
-            children: [
-              const SizedBox(
-                width: 20,
-              ),
-              Text("Order Item List:",
-                  style: AppStyles.mondaB.copyWith(fontSize: 20)),
-            ],
-          ),
           const SizedBox(
-            height: 20,
+            height: 10,
           ),
+          customTitle("Order Item List:"),
           (widget.order.itemsNew != null)
               ? Expanded(
                   child: Padding(
@@ -194,4 +115,41 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
       ),
     );
   }
+}
+
+Widget customTitle(String text) {
+  return Column(
+    children: [
+      Row(
+        children: [
+          const SizedBox(
+            width: 10,
+          ),
+          Text(text, style: AppStyles.mondaB.copyWith(fontSize: 20)),
+        ],
+      ),
+      const SizedBox(
+        height: 10,
+      ),
+    ],
+  );
+}
+
+Widget customRow(String title, String value) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: <Widget>[
+      Text(
+        title,
+        style: AppStyles.mondaB.copyWith(fontSize: 17, color: Colors.black54),
+      ),
+      Expanded(
+        child: Text(
+          value,
+          textAlign: TextAlign.end,
+          style: AppStyles.mondaB.copyWith(fontSize: 18),
+        ),
+      ),
+    ],
+  );
 }

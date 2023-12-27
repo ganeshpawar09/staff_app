@@ -9,7 +9,7 @@ class HomeScreenGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 5,
+      elevation: 2,
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,

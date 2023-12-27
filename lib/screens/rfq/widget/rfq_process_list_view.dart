@@ -2,27 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:staff_flutter_app/const/font.dart';
 import 'package:staff_flutter_app/models/combine_data.dart';
-import 'package:staff_flutter_app/screens/order/order_detail_screen.dart';
+import 'package:staff_flutter_app/screens/process/process_detail_screen.dart';
+import 'package:staff_flutter_app/screens/rfq/rfq_detail.dart';
 
-class OrderListView extends StatelessWidget {
-  final ErpOrder order;
-  const OrderListView({super.key, required this.order});
+class RFQProcessListView extends StatelessWidget {
+  final OrderProcess orderProcess;
+  const RFQProcessListView({super.key, required this.orderProcess});
 
-  String processDate(String rawDate) {
-    DateTime dateTime = DateTime.parse(rawDate);
-    String formattedDate = DateFormat('dd/MM/yyyy').format(dateTime);
+  String processDate(String dateString) {
+    DateTime dateTime = DateTime.parse(dateString);
+    String formattedDate = DateFormat('dd-MM-yyyy').format(dateTime);
     return formattedDate;
   }
 
   @override
   Widget build(BuildContext context) {
-    String orderId = order.quoteNo.toString();
-    String clientId = order.refCode.toString();
-    String startingDate = processDate(order.startDate.toString());
-    String noOfParts =
-        ((order.itemsNew != null) ? order.itemsNew!.length : 0).toString();
-    bool orderStatus = order.completed ?? false;
-
     return Card(
       elevation: 3,
       child: Container(
@@ -33,26 +27,22 @@ class OrderListView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text('Order Id: $orderId',
-                  style: AppStyles.mondaB.copyWith(fontSize: 18)),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text('Process Id: ${orderProcess.processId}',
+                        style: AppStyles.mondaB.copyWith(fontSize: 18)),
+                  ]),
               const SizedBox(
                 height: 8,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      Text("Client Id: ",
-                          style: AppStyles.mondaN
-                              .copyWith(fontSize: 15, color: Colors.black54)),
-                      Text(clientId,
-                          style: AppStyles.mondaB.copyWith(fontSize: 16)),
-                    ],
-                  ),
-                  Text(startingDate,
+                  Text("Process Name: ",
                       style: AppStyles.mondaN
                           .copyWith(fontSize: 15, color: Colors.black54)),
+                  Text(orderProcess.processName!.toUpperCase(),
+                      style: AppStyles.mondaB.copyWith(fontSize: 16)),
                 ],
               ),
               const SizedBox(
@@ -60,11 +50,11 @@ class OrderListView extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Text("No. of Parts: ",
+                  Text("Taget Cost: ",
                       style: AppStyles.mondaN
                           .copyWith(fontSize: 15, color: Colors.black54)),
-                  Text(noOfParts,
-                      style: AppStyles.mondaB.copyWith(fontSize: 16))
+                  Text(orderProcess.targetCost.toString(),
+                      style: AppStyles.mondaB.copyWith(fontSize: 16)),
                 ],
               ),
               const SizedBox(
@@ -73,13 +63,13 @@ class OrderListView extends StatelessWidget {
               Text("Status:",
                   style: AppStyles.mondaN
                       .copyWith(fontSize: 16, color: Colors.black54)),
-              orderStatus
+              orderProcess.completed!
                   ? Text(
-                      ('Completed'),
+                      ('Offer Given'),
                       style: AppStyles.mondaB
                           .copyWith(fontSize: 18, color: Colors.green),
                     )
-                  : Text(('Not Completed'),
+                  : Text(('Offer Left'),
                       style: AppStyles.mondaB
                           .copyWith(fontSize: 18, color: Colors.red)),
               Row(children: <Widget>[
@@ -95,7 +85,9 @@ class OrderListView extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => OrderDetailScreen(order: order),
+                        builder: (context) => RFQDetailScreen(
+                          orderProcess: orderProcess,
+                        ),
                       ),
                     );
                   },
@@ -111,42 +103,4 @@ class OrderListView extends StatelessWidget {
       ),
     );
   }
-}
-
-Widget customTitle(String text) {
-  return Column(
-    children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Text(
-            text,
-            style: AppStyles.mondaB.copyWith(fontSize: 18),
-          ),
-        ],
-      ),
-      const SizedBox(
-        height: 10,
-      ),
-    ],
-  );
-}
-
-Widget customRow(String title, String value) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      Text(
-        title,
-        style: AppStyles.mondaN.copyWith(fontSize: 16, color: Colors.black54),
-      ),
-      Expanded(
-        child: Text(
-          value,
-          textAlign: TextAlign.end,
-          style: AppStyles.mondaB.copyWith(fontSize: 16),
-        ),
-      ),
-    ],
-  );
 }

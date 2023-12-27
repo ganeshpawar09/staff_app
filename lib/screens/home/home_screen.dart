@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:staff_flutter_app/models/combine_data.dart';
 import 'package:staff_flutter_app/screens/movement/movement_screen.dart';
+import 'package:staff_flutter_app/screens/rfq/rfq_screen.dart';
 import 'package:staff_flutter_app/screens/vendor/vendor_screen.dart';
 import 'package:staff_flutter_app/screens/home/widget/home_grid_view.dart';
 import 'package:staff_flutter_app/screens/order/order_screen.dart';
@@ -14,6 +15,8 @@ class DataFetchStatus {
   static bool processDataIsFetched = false;
   static bool orderItemDataIsFetched = false;
   static bool movementDataIsFetched = false;
+  static bool vendorDataIsFetched = false;
+  static bool rfqProcessDataIsFetched = false;
 }
 
 class HomeScreen extends StatefulWidget {
@@ -48,9 +51,9 @@ class _HomeScreenState extends State<HomeScreen> {
         widget: MovementScreen(),
       ),
       GridItem(
-        title: "View RFQ Vendor",
+        title: "View RFQ Process",
         img: "assets/group.png",
-        widget: ProcessScreen(),
+        widget: RFQScreen(),
       ),
       GridItem(
         title: "View Vendors",

@@ -7,7 +7,7 @@ import 'package:staff_flutter_app/screens/order/order_item_detail_screen.dart';
 import 'package:staff_flutter_app/screens/process/process_detail_screen.dart';
 import 'package:staff_flutter_app/state/order_item_state.dart';
 import 'package:staff_flutter_app/state/order_state.dart';
-import 'package:staff_flutter_app/state/process_state.dart';
+import 'package:staff_flutter_app/state/order_process_state.dart';
 
 class ProductSearch extends SearchDelegate<String> {
   final String screen;
@@ -83,7 +83,7 @@ class ProductSearch extends SearchDelegate<String> {
                   .startsWith(query.toLowerCase()))
               .toList();
     } else if (screen == "process") {
-      data = context.read<ProcessState>().orderProcessList;
+      data = context.read<OrderProcessState>().orderProcessList;
       productNames = data;
       products = query.isEmpty
           ? productNames
@@ -139,7 +139,7 @@ class ProductSearch extends SearchDelegate<String> {
               );
             } else if (screen == "process") {
               OrderProcess orderProcess = context
-                  .read<ProcessState>()
+                  .read<OrderProcessState>()
                   .singleProcess(products.elementAt(index).processId!);
               Navigator.push(
                 context,

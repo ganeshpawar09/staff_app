@@ -135,27 +135,6 @@ class OrderScreen extends StatelessWidget {
             }
           },
         ),
-
-        // drawer: AppDrawer(),
-        // body: (_isLoading)
-        //     ? const SkeletonOrderTabbarView()
-        //     : TabBarView(
-        //         children: [
-        //           OrderTab(
-        //             data: Provider.of<OrderState>(context).erporderlist,
-        //             refreshFunction: refresh,
-        //           ),
-        //           OrderTab(
-        //             data: Provider.of<OrderState>(context).erporderpendinglist,
-        //             refreshFunction: refresh,
-        //           ),
-        //           OrderTab(
-        //             data:
-        //                 Provider.of<OrderState>(context).erpordercompletedlist,
-        //             refreshFunction: refresh,
-        //           ),
-        //         ],
-        //       ),
       ),
     );
   }

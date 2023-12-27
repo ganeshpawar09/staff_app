@@ -47,22 +47,6 @@ class MovementScreen extends StatelessWidget {
             "View Movement",
             style: AppStyles.mondaB.copyWith(fontSize: 22),
           ),
-
-          // leading: Builder(
-          //   builder: (BuildContext context) {
-          //     return IconButton(
-          //       icon: const Icon(
-          //         Icons.menu,
-          //         color: Colors.black,
-          //         size: 30,
-          //       ),
-          //       onPressed: () {
-          //         Scaffold.of(context).openDrawer();
-          //       },
-          //     );
-          //   },
-          // ),
-
           bottom: const TabBar(
             dividerColor: Colors.white,
             indicatorColor: Colors.black,
@@ -82,8 +66,7 @@ class MovementScreen extends StatelessWidget {
                 size: 30,
               ),
               onPressed: () {
-                // Provider.of<OrderState>(context, listen: false).manupulate();
-                // showSearch(context: context, delegate: ProductSearch());
+                
               },
             ),
             const SizedBox(

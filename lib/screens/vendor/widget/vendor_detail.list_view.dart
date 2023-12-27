@@ -22,13 +22,18 @@ class VendroDetailListView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text('Id: ${vendorDetail.id}',
-                  style: AppStyles.mondaB.copyWith(fontSize: 17)),
-              const SizedBox(
-                height: 8,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Vendor Code:",
+                      style: AppStyles.mondaN
+                          .copyWith(fontSize: 15, color: Colors.black54)),
+                  Expanded(
+                    child: Text("${vendorDetail.vendorCode}",
+                        style: AppStyles.mondaB.copyWith(fontSize: 16)),
+                  ),
+                ],
               ),
-              Text('Vendor Code: ${vendorDetail.vendorCode}',
-                  style: AppStyles.mondaB.copyWith(fontSize: 17)),
               const SizedBox(
                 height: 8,
               ),

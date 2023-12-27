@@ -36,114 +36,52 @@ class OrderItemDetailScreen extends StatelessWidget {
         elevation: 0,
         title: Text("OrderItem Detail View",
             style: AppStyles.mondaB.copyWith(fontSize: 22)),
-            actions: [
-            IconButton(
-              icon: const Icon(
-                Icons.search,
-                color: Colors.black,
-                size: 30,
-              ),
-              onPressed: () {
-                showSearch(context: context, delegate: ProductSearch(screen: "order"));
-              },
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.search,
+              color: Colors.black,
+              size: 30,
             ),
-            const SizedBox(
-              width: 20,
-            )
-          ],
+            onPressed: () {
+              showSearch(
+                  context: context, delegate: ProductSearch(screen: "order"));
+            },
+          ),
+          const SizedBox(
+            width: 20,
+          )
+        ],
       ),
       body: Column(
         children: [
           const SizedBox(
             height: 10,
           ),
-          Row(
-            children: [
-              const SizedBox(
-                width: 20,
-              ),
-              Text("OrderItem Details:",
-                  style: AppStyles.mondaB.copyWith(fontSize: 20)),
-            ],
-          ),
+          customTitle("OrderItem Details:"),
           Padding(
-            padding: const EdgeInsets.all(10),
-            child: Card(
-              elevation: 3,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                customRow("OrderItem Id", orderItemId),
+                customRow("Tracking Number", orderItemId),
+                customRow("Quantity", orderItemQuantity),
+                customRow("Total Cost", orderItemCost.toStringAsFixed(2)),
+                customRow("Taxes(12%)", tax12.toStringAsFixed(2)),
+                customRow("TOTAL", orderItemCost.toStringAsFixed(2)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text("OrderItem Id",
-                            style: AppStyles.mondaB
-                                .copyWith(fontSize: 15, color: Colors.black54)),
-                        Text(orderItemId,
-                            style: AppStyles.mondaB.copyWith(fontSize: 17)),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text("Tracking Number",
-                            style: AppStyles.mondaB
-                                .copyWith(fontSize: 15, color: Colors.black54)),
-                        Text("#",
-                            style: AppStyles.mondaB.copyWith(fontSize: 17)),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text("Quantity",
-                            style: AppStyles.mondaB
-                                .copyWith(fontSize: 15, color: Colors.black54)),
-                        Text(orderItemQuantity,
-                            style: AppStyles.mondaB.copyWith(fontSize: 17)),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text("Total Cost",
-                            style: AppStyles.mondaB
-                                .copyWith(fontSize: 15, color: Colors.black54)),
-                        Text(orderItemCost.toStringAsFixed(2),
-                            style: AppStyles.mondaB.copyWith(fontSize: 17)),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text("Taxes(12%)",
-                            style: AppStyles.mondaB
-                                .copyWith(fontSize: 15, color: Colors.black54)),
-                        Text(tax12.toStringAsFixed(2),
-                            style: AppStyles.mondaB.copyWith(fontSize: 17)),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text("TOTAL",
-                            style: AppStyles.mondaB
-                                .copyWith(fontSize: 18, color: Colors.black54)),
-                        Text("\u{20B9} ${totalCost.toStringAsFixed(2)}",
-                            style: AppStyles.mondaB.copyWith(fontSize: 20)),
-                      ],
-                    ),
+                    Text("TOTAL",
+                        style: AppStyles.mondaB
+                            .copyWith(fontSize: 18, color: Colors.black54)),
+                    Text("\u{20B9} ${totalCost.toStringAsFixed(2)}",
+                        style: AppStyles.mondaB.copyWith(fontSize: 20)),
                   ],
                 ),
-              ),
+              ],
             ),
           ),
           const SizedBox(
@@ -162,57 +100,56 @@ class OrderItemDetailScreen extends StatelessWidget {
             height: 10,
           ),
           Padding(
-            padding: const EdgeInsets.all(10),
-            child: Card(
-              elevation: 3,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text("Material Type Name",
-                            style: AppStyles.mondaB
-                                .copyWith(fontSize: 15, color: Colors.black54)),
-                        Text(orderItemMaterialType,
-                            style: AppStyles.mondaB.copyWith(fontSize: 17)),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text("Material Name",
-                            style: AppStyles.mondaB
-                                .copyWith(fontSize: 15, color: Colors.black54)),
-                        Text(orderItemMaterialName,
-                            style: AppStyles.mondaB.copyWith(fontSize: 17)),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text("Material Rate",
-                            style: AppStyles.mondaB
-                                .copyWith(fontSize: 15, color: Colors.black54)),
-                        Text(orderItemMaterialRate,
-                            style: AppStyles.mondaB.copyWith(fontSize: 17)),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                customRow("Material Type Name", orderItemMaterialType),
+                customRow("Material Name", orderItemMaterialName),
+                customRow("Material Rate", orderItemMaterialRate),
+              ],
             ),
           ),
         ],
       ),
     );
   }
+}
+
+Widget customTitle(String text) {
+  return Column(
+    children: [
+      Row(
+        children: [
+          const SizedBox(
+            width: 10,
+          ),
+          Text(text, style: AppStyles.mondaB.copyWith(fontSize: 20)),
+        ],
+      ),
+      const SizedBox(
+        height: 10,
+      ),
+    ],
+  );
+}
+
+Widget customRow(String title, String value) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: <Widget>[
+      Text(
+        title,
+        style: AppStyles.mondaB.copyWith(fontSize: 16, color: Colors.black54),
+      ),
+      Expanded(
+        child: Text(
+          value,
+          textAlign: TextAlign.end,
+          style: AppStyles.mondaB.copyWith(fontSize: 17),
+        ),
+      ),
+    ],
+  );
 }

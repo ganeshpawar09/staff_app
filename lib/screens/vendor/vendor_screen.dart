@@ -14,9 +14,9 @@ class VendorScreen extends StatelessWidget {
 
   Future<List<VendorDetail>> fetchData(BuildContext context) async {
     try {
-      if (!DataFetchStatus.orderDataIsFetched) {
+      if (!DataFetchStatus.vendorDataIsFetched) {
         await context.read<VendorState>().getVendorList();
-        DataFetchStatus.orderDataIsFetched = true;
+        DataFetchStatus.vendorDataIsFetched = true;
       }
     } catch (error) {
       print('Error fetching data: $error');
@@ -30,7 +30,7 @@ class VendorScreen extends StatelessWidget {
   }
 
   void refresh(BuildContext context) {
-    DataFetchStatus.orderDataIsFetched = false;
+    DataFetchStatus.vendorDataIsFetched = false;
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
