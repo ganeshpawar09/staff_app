@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:staff_flutter_app/screens/process/widget/order_button.dart';
-import 'package:staff_flutter_app/widget/product_search.dart';
 import 'package:staff_flutter_app/const/font.dart';
 import 'package:staff_flutter_app/models/combine_data.dart';
 import 'package:staff_flutter_app/screens/process/widget/order_item_button.dart';
-import 'package:staff_flutter_app/state/order_process_state.dart';
-import 'package:provider/provider.dart';
 
 class RFQDetailScreen extends StatefulWidget {
   final OrderProcess orderProcess;

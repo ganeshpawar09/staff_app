@@ -53,8 +53,8 @@ class MovementScreen extends StatelessWidget {
             labelColor: Colors.black,
             labelStyle: TextStyle(fontFamily: 'monda', fontSize: 17),
             tabs: [
-              Tab(text: 'Total'),
-              Tab(text: 'Pending'),
+              Tab(text: 'Not Started'),
+              Tab(text: 'Started'),
               Tab(text: 'Completed'),
             ],
           ),
@@ -65,9 +65,7 @@ class MovementScreen extends StatelessWidget {
                 color: Colors.black,
                 size: 30,
               ),
-              onPressed: () {
-                
-              },
+              onPressed: () {},
             ),
             const SizedBox(
               width: 20,
@@ -107,7 +105,7 @@ class MovementScreen extends StatelessWidget {
                 children: [
                   Consumer<MovementState>(
                     builder: (context, provider, child) => MovementTab(
-                      data: provider.movementList,
+                      data: provider.movementNotStartedList,
                       refreshFunction: () {
                         refresh(context);
                       },
@@ -115,7 +113,7 @@ class MovementScreen extends StatelessWidget {
                   ),
                   Consumer<MovementState>(
                     builder: (context, provider, child) => MovementTab(
-                      data: provider.movementPendingList,
+                      data: provider.movementStartedList,
                       refreshFunction: () {
                         refresh(context);
                       },

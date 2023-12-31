@@ -18,7 +18,7 @@ class MovementListView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text('Movement id: ${movement.id}',
+              Text('Movement Id: ${movement.movementId}',
                   style: AppStyles.mondaB.copyWith(fontSize: 18)),
 
               const SizedBox(
@@ -76,44 +76,24 @@ class MovementListView extends StatelessWidget {
               // const SizedBox(
               //   height: 8,
               // ),
+
               Text("Status:",
                   style: AppStyles.mondaN
                       .copyWith(fontSize: 16, color: Colors.black54)),
-              movement.completed ?? false
+              ((movement.completed ?? false))
                   ? Text(
                       ('Completed'),
                       style: AppStyles.mondaB
                           .copyWith(fontSize: 18, color: Colors.green),
                     )
-                  : Text(('Not Completed'),
-                      style: AppStyles.mondaB
-                          .copyWith(fontSize: 18, color: Colors.red)),
-              // Row(children: <Widget>[
-              //   const Spacer(),
-              //   TextButton(
-              //     style: TextButton.styleFrom(
-              //       shape: RoundedRectangleBorder(
-              //         side: const BorderSide(color: Colors.black),
-              //         borderRadius: BorderRadius.circular(20),
-              //       ),
-              //     ),
-              //     onPressed: () async {
-              //       Navigator.push(
-              //         context,
-              //         MaterialPageRoute(
-              //           builder: (context) => ItemDetailScreen(
-              //             part: orderItem,
-              //           ),
-              //         ),
-              //       );
-              //     },
-              //     child: Text(
-              //       'View Details',
-              //       style: AppStyles.mondaB.copyWith(fontSize: 17),
-              //     ),
-              //   ),
-              // ]
-              // ),
+                  : (movement.picked ?? false)
+                      ? Text(('Started'),
+                          style: AppStyles.mondaB
+                              .copyWith(fontSize: 18, color: Colors.red))
+                      : Text(('Not Started'),
+                          style: AppStyles.mondaB
+                              .copyWith(fontSize: 18, color: Colors.red)),
+            
             ],
           ),
         ),

@@ -44,13 +44,19 @@ class MovementState extends ChangeNotifier {
     return _movementList;
   }
 
+
   List<OrderMovement> get movementCompletedList {
     return _movementList.where((element) => element.completed == true).toList();
   }
 
-  List<OrderMovement> get movementPendingList {
+  List<OrderMovement> get movementNotStartedList {
     return _movementList
-        .where((element) => element.completed == false)
+        .where((element) => element.picked == false && element.completed==false)
+        .toList();
+  }
+  List<OrderMovement> get movementStartedList {
+    return _movementList
+        .where((element) => element.picked == true)
         .toList();
   }
 }

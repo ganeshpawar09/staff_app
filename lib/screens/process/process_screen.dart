@@ -5,7 +5,6 @@ import 'package:staff_flutter_app/models/combine_data.dart';
 import 'package:staff_flutter_app/screens/home/home_screen.dart';
 import 'package:staff_flutter_app/widget/skeleton_tabbar_view.dart';
 import 'package:staff_flutter_app/screens/process/widget/process_list_view.dart';
-import 'package:staff_flutter_app/state/order_item_state.dart';
 import 'package:staff_flutter_app/state/order_process_state.dart';
 import 'package:provider/provider.dart';
 

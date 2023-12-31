@@ -13,7 +13,7 @@ class VendroDetailListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 3,
+      elevation: 2,
       child: Container(
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(10)),
@@ -25,9 +25,9 @@ class VendroDetailListView extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Vendor Code:",
+                  Text("Vendor Code: ",
                       style: AppStyles.mondaN
-                          .copyWith(fontSize: 15, color: Colors.black54)),
+                          .copyWith(fontSize: 15, color: Colors.black)),
                   Expanded(
                     child: Text("${vendorDetail.vendorCode}",
                         style: AppStyles.mondaB.copyWith(fontSize: 16)),
@@ -40,7 +40,7 @@ class VendroDetailListView extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Company Name:",
+                  Text("Company Name: ",
                       style: AppStyles.mondaN
                           .copyWith(fontSize: 15, color: Colors.black54)),
                   Expanded(
@@ -50,12 +50,12 @@ class VendroDetailListView extends StatelessWidget {
                 ],
               ),
               const SizedBox(
-                height: 8,
+                height: 15,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ElevatedButton(
+                  TextButton(
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -65,15 +65,15 @@ class VendroDetailListView extends StatelessWidget {
                         ),
                       );
                     },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
+                    style: TextButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(24),
+                        side: const BorderSide(color: Colors.black),
+                        borderRadius: BorderRadius.circular(20),
                       ),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 5),
+                          horizontal: 10, vertical: 2),
                       child: Text(
                         "Update",
                         textAlign: TextAlign.center,
@@ -82,22 +82,23 @@ class VendroDetailListView extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    width: 20,
+                    width: 30,
                   ),
-                  ElevatedButton(
+                  TextButton(
                     onPressed: () async {
                       await Provider.of<VendorState>(context)
                           .deleteVendor(vendorDetail.id!);
                     },
-                    style: ElevatedButton.styleFrom(
+                    style: TextButton.styleFrom(
                       backgroundColor: Colors.black,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(24),
+                        side: const BorderSide(color: Colors.black),
+                        borderRadius: BorderRadius.circular(20),
                       ),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 5),
+                          horizontal: 10, vertical: 2),
                       child: Text("Delete",
                           textAlign: TextAlign.center,
                           style: AppStyles.mondaB

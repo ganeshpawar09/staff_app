@@ -38,7 +38,7 @@ class _ProcessUpdateSectionState extends State<ProcessUpdateSection> {
   void onAdd() async {
     final String cost = costController.text;
     final String barcodeLink = completedBoolController.text;
-    final String processId = widget.orderProcess.processId!;
+    final String processId = widget.orderProcess.id.toString();
 
     print("barcode value is");
     print(barcodeLink);

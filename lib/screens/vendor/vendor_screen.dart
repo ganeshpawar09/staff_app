@@ -7,7 +7,7 @@ import 'package:staff_flutter_app/screens/vendor/update_vendor.dart';
 import 'package:staff_flutter_app/screens/order/widget/order_list_view.dart';
 import 'package:staff_flutter_app/widget/skeleton_tabbar_view.dart';
 import 'package:provider/provider.dart';
-import 'package:staff_flutter_app/screens/vendor/widget/vendor_detail.list_view.dart';
+import 'package:staff_flutter_app/screens/vendor/widget/vendor_list_view.dart';
 
 class VendorScreen extends StatelessWidget {
   const VendorScreen({super.key});

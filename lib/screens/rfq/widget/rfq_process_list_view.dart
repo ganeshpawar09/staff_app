@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:staff_flutter_app/const/font.dart';
 import 'package:staff_flutter_app/models/combine_data.dart';
-import 'package:staff_flutter_app/screens/process/process_detail_screen.dart';
 import 'package:staff_flutter_app/screens/rfq/rfq_detail.dart';
 
 class RFQProcessListView extends StatelessWidget {

@@ -3,8 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:staff_flutter_app/const/font.dart';
 import 'package:staff_flutter_app/models/combine_data.dart';
 import 'package:staff_flutter_app/screens/order/order_detail_screen.dart';
-import 'package:staff_flutter_app/screens/order/order_item_detail_screen.dart';
-import 'package:staff_flutter_app/state/order_item_state.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:staff_flutter_app/state/order_state.dart';
 

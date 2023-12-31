@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:staff_flutter_app/const/font.dart';
 import 'package:staff_flutter_app/models/combine_data.dart';
+import 'package:staff_flutter_app/screens/process/widget/order_button.dart';
+import 'package:staff_flutter_app/screens/process/widget/order_item_button.dart';
 import 'package:staff_flutter_app/screens/process/widget/process_update_section.dart';
 import 'package:staff_flutter_app/widget/product_search.dart';
 
@@ -71,6 +73,16 @@ class ProcessDetailScreen extends StatelessWidget {
                       //   filename: filename,
                       //   buttonname: 'filename',
                       // ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      OrderItemButton(orderProcess: orderProcess),
+                      OrderButton(orderProcess: orderProcess)
                     ],
                   ),
                   const SizedBox(

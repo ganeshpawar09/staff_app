@@ -80,7 +80,7 @@ class OrderProcessState extends ChangeNotifier {
       if (response.statusCode == 200 && !data['error']) {
         print(data["error"]);
         OrderProcess process = _orderProcessList
-            .firstWhere((element) => element.processId == processId);
+            .firstWhere((element) => element.id.toString() == processId);
         process.barcodeLink = barcodeLink;
         process.completed = true;
         process.cost = cost;
