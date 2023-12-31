@@ -23,7 +23,7 @@ class VendorScreen extends StatelessWidget {
     }
 
     if (context.mounted) {
-      return context.read<VendorState>().vendorList();
+      return context.read<VendorState>().vendorList;
     }
 
     return [];
@@ -41,7 +41,7 @@ class VendorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<VendorDetail> list = context.watch<VendorState>().vendorList();
+    List<VendorDetail> list = context.watch<VendorState>().vendorList;
     return DefaultTabController(
       length: 3,
       child: Scaffold(

@@ -11,7 +11,6 @@ class OrderItemListView extends StatelessWidget {
   Widget build(BuildContext context) {
     String orderItemId = (orderItem.document!.partId!);
     String orderItemQuantity = (orderItem.quantity ?? 0).toString();
-    String orderItemMaterialType = orderItem.materialDetail!.materialTypeName!;
     bool orderItemStatus = orderItem.ordered ?? false;
 
     return Card(
@@ -46,6 +45,7 @@ class OrderItemListView extends StatelessWidget {
               const SizedBox(
                 height: 8,
               ),
+              (orderItem.materialDetail!=null)?
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -55,12 +55,12 @@ class OrderItemListView extends StatelessWidget {
                       Text("Material Type: ",
                           style: AppStyles.mondaN
                               .copyWith(fontSize: 15, color: Colors.black54)),
-                      Text(orderItemMaterialType,
+                      Text(orderItem.materialDetail!.materialTypeName!,
                           style: AppStyles.mondaB.copyWith(fontSize: 16))
                     ],
                   ),
                 ],
-              ),
+              ):const SizedBox(),
               const SizedBox(
                 height: 8,
               ),

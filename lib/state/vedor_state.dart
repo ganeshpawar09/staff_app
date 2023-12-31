@@ -39,7 +39,7 @@ class VendorState with ChangeNotifier {
     }
   }
 
-  List<VendorDetail> vendorList() {
+  List<VendorDetail> get vendorList {
     return _vendorList;
   }
 

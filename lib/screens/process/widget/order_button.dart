@@ -52,12 +52,13 @@ class _OrderButtonState extends State<OrderButton> {
 
     setState(() {
       _loading = false;
-      if (!_error) {
+      if (!_error &&
+          context.read<OrderState>().singleErpOrderByProcess != null) {
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => OrderDetailScreen(
-              order: context.read<OrderState>().singleErpOrderByProcess,
+              order: context.read<OrderState>().singleErpOrderByProcess!,
             ),
           ),
         );

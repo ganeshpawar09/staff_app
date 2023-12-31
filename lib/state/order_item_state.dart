@@ -9,7 +9,7 @@ class OrderItemState extends ChangeNotifier {
   LocalStorage storage = LocalStorage('usertoken');
 
   List<ErpOrderItem> _erporderitem = [];
-  late ErpOrderItem _singleerporderitem;
+   ErpOrderItem? _singleerporderitem;
 
   Future<void> getErpOrderItemList() async {
     String url = '$serversite/api/erp-orderitem/';
@@ -67,7 +67,7 @@ class OrderItemState extends ChangeNotifier {
     return _erporderitem.firstWhere((element) => element.document!.partId == partId);
   }
 
-  ErpOrderItem get erpOrderItemByProcess {
+  ErpOrderItem? get erpOrderItemByProcess {
     return _singleerporderitem;
   }
 

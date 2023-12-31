@@ -8,9 +8,9 @@ class OrderItemDetailScreen extends StatelessWidget {
   const OrderItemDetailScreen({super.key, required this.orderItem});
   double calculateTotalPriceOrderItem() {
     double totalPrice = 0;
-
-    totalPrice += orderItem.quantity! * orderItem.materialDetail!.rate!;
-
+    if (orderItem.materialDetail != null) {
+      totalPrice += orderItem.quantity! * orderItem.materialDetail!.rate!;
+    }
     for (OrderProcess orderProcess in orderItem.process!) {
       totalPrice += orderProcess.cost ?? 0;
     }
@@ -24,10 +24,7 @@ class OrderItemDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     String orderItemId = (orderItem.document!.partId!);
     String orderItemQuantity = (orderItem.quantity ?? 0).toString();
-    String orderItemMaterialType = orderItem.materialDetail!.materialTypeName!;
-    String orderItemMaterialName = orderItem.materialDetail!.materialName!;
-    String orderItemMaterialRate =
-        orderItem.materialDetail!.rate!.toStringAsFixed(2);
+
     double orderItemCost = calculateTotalPriceOrderItem();
     double tax12 = orderItemCost * .12;
     double totalCost = orderItemCost + tax12;
@@ -87,30 +84,42 @@ class OrderItemDetailScreen extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          Row(
-            children: [
-              const SizedBox(
-                width: 20,
-              ),
-              Text("Material Details:",
-                  style: AppStyles.mondaB.copyWith(fontSize: 20)),
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                customRow("Material Type Name", orderItemMaterialType),
-                customRow("Material Name", orderItemMaterialName),
-                customRow("Material Rate", orderItemMaterialRate),
-              ],
-            ),
-          ),
+          (orderItem.materialDetail != null)
+              ? Column(
+                  children: [
+                    Row(
+                      children: [
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Text("Material Details:",
+                            style: AppStyles.mondaB.copyWith(fontSize: 20)),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          customRow("Material Type Name",
+                              orderItem.materialDetail!.materialTypeName!),
+                          customRow("Material Name",
+                              orderItem.materialDetail!.materialName!),
+                          customRow(
+                              "Material Rate",
+                              orderItem.materialDetail!.rate!
+                                  .toStringAsFixed(2)),
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+              : const SizedBox()
         ],
       ),
     );

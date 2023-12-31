@@ -8,6 +8,7 @@ import 'package:staff_flutter_app/screens/process/process_detail_screen.dart';
 import 'package:staff_flutter_app/state/order_item_state.dart';
 import 'package:staff_flutter_app/state/order_state.dart';
 import 'package:staff_flutter_app/state/order_process_state.dart';
+import 'package:staff_flutter_app/state/vedor_state.dart';
 
 class ProductSearch extends SearchDelegate<String> {
   final String screen;
@@ -69,40 +70,38 @@ class ProductSearch extends SearchDelegate<String> {
   @override
   Widget buildSuggestions(BuildContext context) {
     dynamic data;
-    dynamic productNames;
-    dynamic products;
     if (screen == "order") {
-      data = context.read<OrderState>().erporderlist;
-      productNames = data;
-      products = query.isEmpty
-          ? productNames
-          : productNames
+      data = query.isEmpty
+          ? context.watch<OrderState>().erporderlist
+          : context
+              .watch<OrderState>()
+              .erporderlist
               .where((p) => p.quoteNo!
                   .toString()
                   .toLowerCase()
-                  .startsWith(query.toLowerCase()))
+                  .contains(query.toLowerCase()))
               .toList();
     } else if (screen == "process") {
-      data = context.read<OrderProcessState>().orderProcessList;
-      productNames = data;
-      products = query.isEmpty
-          ? productNames
-          : productNames
+      data = query.isEmpty
+          ? context.watch<OrderProcessState>().orderProcessList
+          : context
+              .watch<OrderProcessState>()
+              .orderProcessList
               .where((p) => p.processId!
                   .toString()
                   .toLowerCase()
-                  .startsWith(query.toLowerCase()))
+                  .contains(query.toLowerCase()))
               .toList();
     } else if (screen == "orderItem") {
-      data = context.read<OrderItemState>().erporderitemlist;
-      productNames = data;
-      products = query.isEmpty
-          ? productNames
-          : productNames
-              .where((p) => p.document.partId!
+      data = query.isEmpty
+          ? context.watch<OrderItemState>().erporderitemlist
+          : context
+              .watch<OrderItemState>()
+              .erporderitemlist
+              .where((p) => p.document!.partId!
                   .toString()
                   .toLowerCase()
-                  .startsWith(query.toLowerCase()))
+                  .contains(query.toLowerCase()))
               .toList();
     }
     // else if (screen == "movement") {
@@ -113,14 +112,14 @@ class ProductSearch extends SearchDelegate<String> {
     //       : productNames.where((p) =>
     //           p.movementId!.toString().toLowerCase().startsWith(query.toLowerCase()));
     // }
-    // else if (screen == "vendor") {
-    //   data = context.read<VendorState>().vendorList;
-    //   productNames = data;
-    //   products = query.isEmpty
-    //       ? productNames
-    //       : productNames.where((p) =>
-    //           p.vendorCode!.toString().toLowerCase().startsWith(query.toLowerCase()));
-    // }
+    else if (screen == "vendor") {
+      data = query.isEmpty
+          ? context.watch<VendorState>().vendorList
+          : context.watch<VendorState>().vendorList.where((p) => p.vendorCode!
+              .toString()
+              .toLowerCase()
+              .contains(query.toLowerCase()));
+    }
 
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
@@ -128,7 +127,7 @@ class ProductSearch extends SearchDelegate<String> {
             if (screen == "order") {
               ErpOrder order = context
                   .read<OrderState>()
-                  .singleOrder(products.elementAt(index).quoteNo!);
+                  .singleOrder(data.elementAt(index).quoteNo!);
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -140,7 +139,7 @@ class ProductSearch extends SearchDelegate<String> {
             } else if (screen == "process") {
               OrderProcess orderProcess = context
                   .read<OrderProcessState>()
-                  .singleProcess(products.elementAt(index).processId!);
+                  .singleProcess(data.elementAt(index).processId!);
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -152,7 +151,7 @@ class ProductSearch extends SearchDelegate<String> {
             } else if (screen == "orderItem") {
               ErpOrderItem erpOrderItem = context
                   .read<OrderItemState>()
-                  .singleOrderItem(products.elementAt(index).document.partId!);
+                  .singleOrderItem(data.elementAt(index).document.partId!);
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -174,28 +173,28 @@ class ProductSearch extends SearchDelegate<String> {
             //     ),
             //   );
             // }
-            // else if(screen=="vendor") {
-            //   VendorDetail vendorDetail = context
-            //       .read<VendorState>()
-            //       .singleVendor(products.elementAt(index).vendorCode!);
-            //   Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //       builder: (context) => (
+            //   else if(screen=="vendor") {
+            //     VendorDetail vendorDetail = context
+            //         .read<VendorState>()
+            //         .singleVendor(products.elementAt(index).vendorCode!);
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //         builder: (context) => (
 
+            //         ),
             //       ),
-            //     ),
-            //   );
-            // }
+            //     );
+            //   }
           },
           title: Text(
             (screen == "order")
-                ? products[index].quoteNo!
+                ? data[index].quoteNo!
                 : (screen == "process")
-                    ? products[index].processId!.toString()
-                    : products[index].document.partId!.toString(),
+                    ? data[index].processId!.toString()
+                    : data[index].document.partId!.toString(),
           )),
-      itemCount: products.length,
+      itemCount: data.length,
     );
   }
 

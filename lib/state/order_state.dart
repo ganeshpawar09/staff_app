@@ -9,7 +9,7 @@ class OrderState extends ChangeNotifier {
   LocalStorage storage = LocalStorage('usertoken');
 
   List<ErpOrder> _erpOrders = [];
-  late ErpOrder _singleErpOrder;
+   ErpOrder? _singleErpOrder;
 
   Future<void> getErpOrderList() async {
     String url = '$serversite/api/erp-orders/';
@@ -63,7 +63,7 @@ class OrderState extends ChangeNotifier {
     }
   }
 
-  ErpOrder get singleErpOrderByProcess
+  ErpOrder? get singleErpOrderByProcess
   {
     return _singleErpOrder;
   }
