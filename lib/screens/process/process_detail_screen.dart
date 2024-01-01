@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:staff_flutter_app/const/font.dart';
 import 'package:staff_flutter_app/models/combine_data.dart';
+import 'package:staff_flutter_app/screens/pdf/pdf_button.dart';
 import 'package:staff_flutter_app/screens/process/widget/order_button.dart';
 import 'package:staff_flutter_app/screens/process/widget/order_item_button.dart';
 import 'package:staff_flutter_app/screens/process/widget/process_update_section.dart';
@@ -56,24 +57,8 @@ class ProcessDetailScreen extends StatelessWidget {
                   customRow("Process Id: ", processId),
                   customRow("Process Name: ", processName),
                   status(processStatus),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Process Drawing: ",
-                        style: AppStyles.mondaN.copyWith(
-                          fontSize: 16,
-                          color: Colors.black54,
-                        ),
-                      ),
-                      // DownloadButton(
-                      //   url:
-                      //       '$serversite/api/process_drawing_download/${process.id}/',
-                      //   filetype: filetype,
-                      //   filename: filename,
-                      //   buttonname: 'filename',
-                      // ),
-                    ],
+                  const SizedBox(
+                    height: 10,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -85,15 +70,15 @@ class ProcessDetailScreen extends StatelessWidget {
                           color: Colors.black54,
                         ),
                       ),
-                      // ElevatedButton(
-                      //     onPressed: () {}, child: const Text("hello"))
-                      // DownloadButton(
-                      //   url:
-                      //       '$serversite/api/process_drawing_download/${process.id}/',
-                      //   filetype: filetype,
-                      //   filename: filename,
-                      //   buttonname: 'filename',
-                      // ),
+                      (process.processDrawing != null)
+                          ? PDFButton(
+                              url: process.processDrawing!,
+                            )
+                          : Text(
+                              "Not Available",
+                              textAlign: TextAlign.end,
+                              style: AppStyles.mondaB.copyWith(fontSize: 17),
+                            ),
                     ],
                   ),
                   const SizedBox(

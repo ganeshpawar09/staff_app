@@ -1,31 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:staff_flutter_app/const/font.dart';
-import 'package:staff_flutter_app/models/combine_data.dart';
-import 'package:staff_flutter_app/screens/order/order_item_detail_screen.dart';
-import 'package:staff_flutter_app/state/erp_order_item_state.dart';
+import 'package:staff_flutter_app/screens/pdf/pdf_api.dart';
+import 'package:staff_flutter_app/screens/pdf/pdf_page.dart';
 import 'package:connectivity/connectivity.dart';
 
-class OrderItemButton extends StatefulWidget {
-  final ErpOrderProcess orderProcess;
-  const OrderItemButton({super.key, required this.orderProcess});
+class PDFButton extends StatefulWidget {
+  final String url;
+  const PDFButton({Key? key, required this.url}) : super(key: key);
 
   @override
-  State<OrderItemButton> createState() => _OrderItemButtonState();
+  State<PDFButton> createState() => _PDFButtonState();
 }
 
-class _OrderItemButtonState extends State<OrderItemButton> {
+class _PDFButtonState extends State<PDFButton> {
   bool _loading = false;
   bool _error = false;
 
   Future<bool> checkInternetConnectivity() async {
-    var connectivityResult = await (Connectivity().checkConnectivity());
+    var connectivityResult = await Connectivity().checkConnectivity();
     return connectivityResult != ConnectivityResult.none;
   }
 
   void fetchData(BuildContext context) async {
     try {
-      print('Before fetching data');
+      print('Before fetching PDF data');
 
       bool isConnected = await checkInternetConnectivity();
 
@@ -38,33 +36,33 @@ class _OrderItemButtonState extends State<OrderItemButton> {
         _loading = true;
       });
 
-      await context
-          .read<ErpOrderItemState>()
-          .getErpOrderItemByProcess(widget.orderProcess);
+      final file = await PDFApi.loadNetwork(widget.url);
 
-      print('After fetching data');
-    } catch (error) {
-      print('Error fetching data: $error');
-      setState(() {
-        _error = true;
-      });
-    }
-
-    setState(() {
-      _loading = false;
-      if (!_error &&
-          context.read<ErpOrderItemState>().erpOrderItemByProcess != null) {
+      if (file != null) {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => OrderItemDetailScreen(
-              orderItem:
-                  context.read<ErpOrderItemState>().erpOrderItemByProcess!,
-            ),
+            builder: (context) => PDFViewerPage(file: file),
           ),
         );
+      } else {
+        print('Error loading PDF file');
+        setState(() {
+          _error = true;
+        });
       }
-    });
+
+      print('After fetching PDF data');
+    } catch (error) {
+      print('Error fetching PDF data: $error');
+      setState(() {
+        _error = true;
+      });
+    } finally {
+      setState(() {
+        _loading = false;
+      });
+    }
   }
 
   void onPressedCallback(BuildContext context) async {
@@ -85,15 +83,14 @@ class _OrderItemButtonState extends State<OrderItemButton> {
         onPressedCallback(context);
       },
       style: TextButton.styleFrom(
-        backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(
           side: const BorderSide(color: Colors.black),
           borderRadius: BorderRadius.circular(20),
         ),
       ),
-      child: (_loading)
+      child: _loading
           ? const SizedBox(
-              width: 130,
+              width: 80,
               child: Center(
                 child: SizedBox(
                   height: 25,
@@ -105,15 +102,12 @@ class _OrderItemButtonState extends State<OrderItemButton> {
               ),
             )
           : SizedBox(
-              width: 130,
-              child: Center(
-                child: Text(
-                  "Go to OrderItem",
-                  textAlign: TextAlign.center,
-                  style: AppStyles.mondaB.copyWith(
-                    fontSize: 15,
-                  ),
-                ),
+              width: 80,
+              child: Text(
+                "View PDF",
+                textAlign: TextAlign.center,
+                style: AppStyles.mondaB
+                    .copyWith(fontSize: 16, color: Colors.black),
               ),
             ),
     );

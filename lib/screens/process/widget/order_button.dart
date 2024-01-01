@@ -79,11 +79,11 @@ class _OrderButtonState extends State<OrderButton> {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return TextButton(
       onPressed: () {
         onPressedCallback(context);
       },
-      style: ElevatedButton.styleFrom(
+      style: TextButton.styleFrom(
         backgroundColor: Colors.black,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
@@ -91,20 +91,26 @@ class _OrderButtonState extends State<OrderButton> {
       ),
       child: (_loading)
           ? const SizedBox(
-              width: 90,
+              width: 120,
               child: Center(
-                child: CircularProgressIndicator(
-                  color: Colors.white,
+                child: SizedBox(
+                  height: 25,
+                  width: 25,
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                  ),
                 ),
               ),
             )
           : SizedBox(
-              width: 90,
-              child: Text(
-                "Go to Order",
-                textAlign: TextAlign.center,
-                style: AppStyles.mondaB
-                    .copyWith(fontSize: 15, color: Colors.white),
+              width: 120,
+              child: Center(
+                child: Text(
+                  "Go to Order",
+                  textAlign: TextAlign.center,
+                  style: AppStyles.mondaB
+                      .copyWith(fontSize: 15, color: Colors.white),
+                ),
               ),
             ),
     );
