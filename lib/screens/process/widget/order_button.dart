@@ -4,7 +4,7 @@ import 'package:staff_flutter_app/const/font.dart';
 import 'package:staff_flutter_app/models/combine_data.dart';
 import 'package:staff_flutter_app/screens/order/order_detail_screen.dart';
 import 'package:connectivity/connectivity.dart';
-import 'package:staff_flutter_app/state/order_state.dart';
+import 'package:staff_flutter_app/state/erp_order_state.dart';
 
 class OrderButton extends StatefulWidget {
   final ErpOrderProcess orderProcess;
@@ -39,7 +39,7 @@ class _OrderButtonState extends State<OrderButton> {
       });
 
       await context
-          .read<OrderState>()
+          .read<ErpOrderState>()
           .getErpOrderByProcess(widget.orderProcess);
 
       print('After fetching data');
@@ -53,12 +53,12 @@ class _OrderButtonState extends State<OrderButton> {
     setState(() {
       _loading = false;
       if (!_error &&
-          context.read<OrderState>().singleErpOrderByProcess != null) {
+          context.read<ErpOrderState>().singleErpOrderByProcess != null) {
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => OrderDetailScreen(
-              order: context.read<OrderState>().singleErpOrderByProcess!,
+              order: context.read<ErpOrderState>().singleErpOrderByProcess!,
             ),
           ),
         );

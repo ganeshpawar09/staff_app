@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:staff_flutter_app/const/font.dart';
 import 'package:staff_flutter_app/models/combine_data.dart';
 import 'package:staff_flutter_app/screens/home/home_screen.dart';
-import 'package:staff_flutter_app/state/erp_order_movement_state.dart';
 import 'package:staff_flutter_app/screens/movement/widget/movement_list_view.dart';
+import 'package:staff_flutter_app/state/erp_order_movement_state.dart';
 import 'package:staff_flutter_app/widget/skeleton_tabbar_view.dart';
 import 'package:provider/provider.dart';
 
@@ -47,22 +47,15 @@ class MovementScreen extends StatelessWidget {
             "View Movement",
             style: AppStyles.mondaB.copyWith(fontSize: 22),
           ),
-          bottom: TabBar(
-            labelPadding: EdgeInsets.zero,
+          bottom: const TabBar(
             dividerColor: Colors.white,
             indicatorColor: Colors.black,
             labelColor: Colors.black,
-            labelStyle: const TextStyle(fontFamily: 'monda', fontSize: 17),
+            labelStyle: TextStyle(fontFamily: 'monda', fontSize: 17),
             tabs: [
-              Tab(
-                  text:
-                      '(${context.watch<ErpOrderMovementState>().movementNotStartedList.length})Not Started'),
-              Tab(
-                  text:
-                      '(${context.watch<ErpOrderMovementState>().movementStartedList.length})Started'),
-              Tab(
-                  text:
-                      '(${context.watch<ErpOrderMovementState>().movementCompletedList.length})Completed'),
+              Tab(text: 'Not Started'),
+              Tab(text: 'Started'),
+              Tab(text: 'Completed'),
             ],
           ),
           actions: [

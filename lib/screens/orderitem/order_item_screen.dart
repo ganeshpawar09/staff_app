@@ -5,7 +5,7 @@ import 'package:staff_flutter_app/screens/home/home_screen.dart';
 import 'package:staff_flutter_app/widget/product_search.dart';
 import 'package:staff_flutter_app/widget/skeleton_tabbar_view.dart';
 import 'package:staff_flutter_app/screens/order/widget/order_item_list_view.dart';
-import 'package:staff_flutter_app/state/order_item_state.dart';
+import 'package:staff_flutter_app/state/erp_order_item_state.dart';
 import 'package:provider/provider.dart';
 
 class OrderItemScreen extends StatelessWidget {
@@ -14,7 +14,7 @@ class OrderItemScreen extends StatelessWidget {
   Future<List<ErpOrderItem>> fetchData(BuildContext context) async {
     try {
       if (!DataFetchStatus.orderItemDataIsFetched) {
-        await context.read<OrderItemState>().getErpOrderItemList();
+        await context.read<ErpOrderItemState>().getErpOrderItemList();
         DataFetchStatus.orderItemDataIsFetched = true;
       }
     } catch (error) {
@@ -22,7 +22,7 @@ class OrderItemScreen extends StatelessWidget {
     }
 
     if (context.mounted) {
-      return context.read<OrderItemState>().erporderitemlist;
+      return context.read<ErpOrderItemState>().erporderitemlist;
     }
 
     return [];
@@ -33,7 +33,7 @@ class OrderItemScreen extends StatelessWidget {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => OrderItemScreen(),
+        builder: (context) => const OrderItemScreen(),
       ),
     );
   }
@@ -48,22 +48,6 @@ class OrderItemScreen extends StatelessWidget {
             "View Order Item",
             style: AppStyles.mondaB.copyWith(fontSize: 22),
           ),
-
-          // leading: Builder(
-          //   builder: (BuildContext context) {
-          //     return IconButton(
-          //       icon: const Icon(
-          //         Icons.menu,
-          //         color: Colors.black,
-          //         size: 30,
-          //       ),
-          //       onPressed: () {
-          //         Scaffold.of(context).openDrawer();
-          //       },
-          //     );
-          //   },
-          // ),
-
           bottom: TabBar(
             labelPadding: EdgeInsets.zero,
             dividerColor: Colors.white,
@@ -73,13 +57,13 @@ class OrderItemScreen extends StatelessWidget {
             tabs: [
               Tab(
                   text:
-                      '(${context.watch<OrderItemState>().erporderitemlist.length})Total'),
+                      '(${context.watch<ErpOrderItemState>().erporderitemlist.length})Total'),
               Tab(
                   text:
-                      '(${context.watch<OrderItemState>().erporderitempendinglist.length})Upcoming'),
+                      '(${context.watch<ErpOrderItemState>().erporderitempendinglist.length})Upcoming'),
               Tab(
                   text:
-                      '(${context.watch<OrderItemState>().erporderitemcompletedlist.length})Completed'),
+                      '(${context.watch<ErpOrderItemState>().erporderitemcompletedlist.length})Completed'),
             ],
           ),
           actions: [
@@ -133,7 +117,7 @@ class OrderItemScreen extends StatelessWidget {
             } else {
               return TabBarView(
                 children: [
-                  Consumer<OrderItemState>(
+                  Consumer<ErpOrderItemState>(
                     builder: (context, provider, child) => OrderItemTab(
                       data: provider.erporderitemlist,
                       refreshFunction: () {
@@ -141,7 +125,7 @@ class OrderItemScreen extends StatelessWidget {
                       },
                     ),
                   ),
-                  Consumer<OrderItemState>(
+                  Consumer<ErpOrderItemState>(
                     builder: (context, provider, child) => OrderItemTab(
                       data: provider.erporderitempendinglist,
                       refreshFunction: () {
@@ -149,7 +133,7 @@ class OrderItemScreen extends StatelessWidget {
                       },
                     ),
                   ),
-                  Consumer<OrderItemState>(
+                  Consumer<ErpOrderItemState>(
                     builder: (context, provider, child) => OrderItemTab(
                       data: provider.erporderitemcompletedlist,
                       refreshFunction: () {

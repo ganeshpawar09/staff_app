@@ -11,8 +11,9 @@ class OrderProcessListView extends StatelessWidget {
   Widget build(BuildContext context) {
     String processId = orderProcess.processId ?? "Not Found";
     String processName = orderProcess.processName ?? "Not Found";
+
     String processCost = (orderProcess.cost != null)
-        ? "\u{20B9} ${orderProcess.cost.toString()}"
+        ? "${AppStyles.rupeesSymbol} ${orderProcess.cost.toString()}"
         : "Not Found";
     bool processStatus = orderProcess.completed ?? false;
 

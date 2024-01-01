@@ -5,7 +5,7 @@ import 'package:staff_flutter_app/screens/home/home_screen.dart';
 import 'package:staff_flutter_app/screens/order/widget/order_list_view.dart';
 import 'package:staff_flutter_app/widget/product_search.dart';
 import 'package:staff_flutter_app/widget/skeleton_tabbar_view.dart';
-import 'package:staff_flutter_app/state/order_state.dart';
+import 'package:staff_flutter_app/state/erp_order_state.dart';
 import 'package:provider/provider.dart';
 
 class OrderScreen extends StatelessWidget {
@@ -14,7 +14,7 @@ class OrderScreen extends StatelessWidget {
   Future<List<ErpOrder>> fetchData(BuildContext context) async {
     try {
       if (!DataFetchStatus.orderDataIsFetched) {
-        await context.read<OrderState>().getErpOrderList();
+        await context.read<ErpOrderState>().getErpOrderList();
         DataFetchStatus.orderDataIsFetched = true;
       }
     } catch (error) {
@@ -22,7 +22,7 @@ class OrderScreen extends StatelessWidget {
     }
 
     if (context.mounted) {
-      return context.read<OrderState>().erporderlist;
+      return context.read<ErpOrderState>().erporderlist;
     }
 
     return [];
@@ -33,7 +33,7 @@ class OrderScreen extends StatelessWidget {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => OrderScreen(),
+        builder: (context) => const OrderScreen(),
       ),
     );
   }
@@ -57,13 +57,13 @@ class OrderScreen extends StatelessWidget {
             tabs: [
               Tab(
                   text:
-                      '(${context.watch<OrderState>().erporderlist.length})Total'),
+                      '(${context.watch<ErpOrderState>().erporderlist.length})Total'),
               Tab(
                   text:
-                      '(${context.watch<OrderState>().erporderpendinglist.length})Upcoming'),
+                      '(${context.watch<ErpOrderState>().erporderpendinglist.length})Upcoming'),
               Tab(
                   text:
-                      '(${context.watch<OrderState>().erpordercompletedlist.length})Completed'),
+                      '(${context.watch<ErpOrderState>().erpordercompletedlist.length})Completed'),
             ],
           ),
           actions: [
@@ -116,7 +116,7 @@ class OrderScreen extends StatelessWidget {
             } else {
               return TabBarView(
                 children: [
-                  Consumer<OrderState>(
+                  Consumer<ErpOrderState>(
                     builder: (context, provider, child) => OrderTab(
                       data: provider.erporderlist,
                       refreshFunction: () {
@@ -124,7 +124,7 @@ class OrderScreen extends StatelessWidget {
                       },
                     ),
                   ),
-                  Consumer<OrderState>(
+                  Consumer<ErpOrderState>(
                     builder: (context, provider, child) => OrderTab(
                       data: provider.erporderpendinglist,
                       refreshFunction: () {
@@ -132,7 +132,7 @@ class OrderScreen extends StatelessWidget {
                       },
                     ),
                   ),
-                  Consumer<OrderState>(
+                  Consumer<ErpOrderState>(
                     builder: (context, provider, child) => OrderTab(
                       data: provider.erpordercompletedlist,
                       refreshFunction: () {

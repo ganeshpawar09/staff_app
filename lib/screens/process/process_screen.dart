@@ -5,7 +5,7 @@ import 'package:staff_flutter_app/models/combine_data.dart';
 import 'package:staff_flutter_app/screens/home/home_screen.dart';
 import 'package:staff_flutter_app/widget/skeleton_tabbar_view.dart';
 import 'package:staff_flutter_app/screens/process/widget/process_list_view.dart';
-import 'package:staff_flutter_app/state/order_process_state.dart';
+import 'package:staff_flutter_app/state/erp_order_process_state.dart';
 import 'package:provider/provider.dart';
 
 class ProcessScreen extends StatelessWidget {
@@ -15,7 +15,7 @@ class ProcessScreen extends StatelessWidget {
     try {
       print('Before fetching data');
       if (!DataFetchStatus.processDataIsFetched) {
-        await context.read<OrderProcessState>().getOrderProcessList();
+        await context.read<ErpOrderProcessState>().getOrderProcessList();
 
         DataFetchStatus.processDataIsFetched = true;
       }
@@ -27,7 +27,7 @@ class ProcessScreen extends StatelessWidget {
 
     if (context.mounted) {
       print('Returning orderProcessList');
-      return context.read<OrderProcessState>().orderProcessList;
+      return context.read<ErpOrderProcessState>().orderProcessList;
     }
 
     return [];
@@ -38,7 +38,7 @@ class ProcessScreen extends StatelessWidget {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => ProcessScreen(),
+        builder: (context) => const ProcessScreen(),
       ),
     );
   }
@@ -62,13 +62,13 @@ class ProcessScreen extends StatelessWidget {
             tabs: [
               Tab(
                   text:
-                      '(${context.watch<OrderProcessState>().orderProcessList.length})Total'),
+                      '(${context.watch<ErpOrderProcessState>().orderProcessList.length})Total'),
               Tab(
                   text:
-                      '(${context.watch<OrderProcessState>().orderProcessPendingList.length})Upcoming'),
+                      '(${context.watch<ErpOrderProcessState>().orderProcessPendingList.length})Upcoming'),
               Tab(
                   text:
-                      '(${context.watch<OrderProcessState>().orderProcessCompletedList.length})Completed'),
+                      '(${context.watch<ErpOrderProcessState>().orderProcessCompletedList.length})Completed'),
             ],
           ),
           actions: [
@@ -122,7 +122,7 @@ class ProcessScreen extends StatelessWidget {
             } else {
               return TabBarView(
                 children: [
-                  Consumer<OrderProcessState>(
+                  Consumer<ErpOrderProcessState>(
                     builder: (context, provider, child) => OrderProcessTab(
                       data: provider.orderProcessList,
                       refreshFunction: () {
@@ -130,7 +130,7 @@ class ProcessScreen extends StatelessWidget {
                       },
                     ),
                   ),
-                  Consumer<OrderProcessState>(
+                  Consumer<ErpOrderProcessState>(
                     builder: (context, provider, child) => OrderProcessTab(
                       data: provider.orderProcessPendingList,
                       refreshFunction: () {
@@ -138,7 +138,7 @@ class ProcessScreen extends StatelessWidget {
                       },
                     ),
                   ),
-                  Consumer<OrderProcessState>(
+                  Consumer<ErpOrderProcessState>(
                     builder: (context, provider, child) => OrderProcessTab(
                       data: provider.orderProcessCompletedList,
                       refreshFunction: () {

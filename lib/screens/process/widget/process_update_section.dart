@@ -4,7 +4,7 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:provider/provider.dart';
 import 'package:staff_flutter_app/const/font.dart';
 import 'package:staff_flutter_app/models/combine_data.dart';
-import 'package:staff_flutter_app/state/order_process_state.dart';
+import 'package:staff_flutter_app/state/erp_order_process_state.dart';
 
 class ProcessUpdateSection extends StatefulWidget {
   final ErpOrderProcess orderProcess;
@@ -30,8 +30,6 @@ class _ProcessUpdateSectionState extends State<ProcessUpdateSection> {
     setState(() {
       completedBoolController.text = barcodeScanRes;
       this.barcodeScanRes = barcodeScanRes;
-      print("barcode text");
-      print(this.barcodeScanRes);
     });
   }
 
@@ -40,10 +38,8 @@ class _ProcessUpdateSectionState extends State<ProcessUpdateSection> {
     final String barcodeLink = completedBoolController.text;
     final String processId = widget.orderProcess.id.toString();
 
-    print("barcode value is");
-    print(barcodeLink);
     if (cost.isNotEmpty && barcodeLink.isNotEmpty) {
-      await Provider.of<OrderProcessState>(context, listen: false)
+      await Provider.of<ErpOrderProcessState>(context, listen: false)
           .updateProcessStatus(processId, double.parse(cost), barcodeLink);
     }
     if (context.mounted) {

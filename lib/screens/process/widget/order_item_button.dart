@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:staff_flutter_app/const/font.dart';
 import 'package:staff_flutter_app/models/combine_data.dart';
 import 'package:staff_flutter_app/screens/order/order_item_detail_screen.dart';
-import 'package:staff_flutter_app/state/order_item_state.dart';
+import 'package:staff_flutter_app/state/erp_order_item_state.dart';
 import 'package:connectivity/connectivity.dart';
 
 class OrderItemButton extends StatefulWidget {
@@ -39,7 +39,7 @@ class _OrderItemButtonState extends State<OrderItemButton> {
       });
 
       await context
-          .read<OrderItemState>()
+          .read<ErpOrderItemState>()
           .getErpOrderItemByProcess(widget.orderProcess);
 
       print('After fetching data');
@@ -53,12 +53,13 @@ class _OrderItemButtonState extends State<OrderItemButton> {
     setState(() {
       _loading = false;
       if (!_error &&
-          context.read<OrderItemState>().erpOrderItemByProcess != null) {
+          context.read<ErpOrderItemState>().erpOrderItemByProcess != null) {
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => OrderItemDetailScreen(
-              orderItem: context.read<OrderItemState>().erpOrderItemByProcess!,
+              orderItem:
+                  context.read<ErpOrderItemState>().erpOrderItemByProcess!,
             ),
           ),
         );

@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:staff_flutter_app/models/combine_data.dart';
 import 'package:staff_flutter_app/server_url.dart';
 
-class MovementState extends ChangeNotifier {
+class ErpOrderMovementState extends ChangeNotifier {
   LocalStorage data = LocalStorage('usertoken');
   List<ErpOrderMovement> _movementList = [];
 

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:staff_flutter_app/screens/const/font.dart';
+import 'package:staff_flutter_app/const/font.dart';
 import 'package:provider/provider.dart';
 import 'package:staff_flutter_app/screens/home/home_screen.dart';
 import 'package:staff_flutter_app/state/user_state.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
-
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -57,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(message),
-          duration: Duration(seconds: 3),
+          duration: const Duration(seconds: 3),
         ),
       );
     }
@@ -67,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => HomeScreen(),
+        builder: (context) => const HomeScreen(),
       ),
     );
   }

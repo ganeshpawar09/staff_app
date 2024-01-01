@@ -3,8 +3,6 @@ import 'package:staff_flutter_app/const/font.dart';
 import 'package:staff_flutter_app/models/combine_data.dart';
 import 'package:staff_flutter_app/screens/home/home_screen.dart';
 import 'package:staff_flutter_app/state/vedor_state.dart';
-import 'package:staff_flutter_app/screens/vendor/update_vendor.dart';
-import 'package:staff_flutter_app/screens/order/widget/order_list_view.dart';
 import 'package:staff_flutter_app/widget/skeleton_tabbar_view.dart';
 import 'package:provider/provider.dart';
 import 'package:staff_flutter_app/screens/vendor/widget/vendor_list_view.dart';
@@ -100,7 +98,7 @@ class VendorScreen extends StatelessWidget {
             } else {
               return RefreshIndicator(
                 onRefresh: () async {
-                  refresh;
+                  refresh(context);
                 },
                 color: Colors.black,
                 child: Padding(

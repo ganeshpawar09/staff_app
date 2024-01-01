@@ -16,10 +16,10 @@ class ProcessDetailScreen extends StatelessWidget {
     ErpOrderProcess process = orderProcess;
 
     String processId = process.processId!;
-    double processCost = process.cost!;
+    double processCost = process.cost ?? 0;
     double processCostTax = processCost * 0.12;
     double processCostTotal = processCost * 1.12;
-    String processName = process.processName!;
+    String processName = (process.processName ?? "Not Found").toUpperCase();
     bool processStatus = process.completed ?? false;
 
     return Scaffold(
@@ -54,7 +54,7 @@ class ProcessDetailScreen extends StatelessWidget {
                 children: <Widget>[
                   customTitle("Process Details:"),
                   customRow("Process Id: ", processId),
-                  customRow("Process Name: ", processName.toUpperCase()),
+                  customRow("Process Name: ", processName),
                   status(processStatus),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -85,7 +85,8 @@ class ProcessDetailScreen extends StatelessWidget {
                           color: Colors.black54,
                         ),
                       ),
-                      ElevatedButton(onPressed: () {}, child: Text("hello"))
+                      // ElevatedButton(
+                      //     onPressed: () {}, child: const Text("hello"))
                       // DownloadButton(
                       //   url:
                       //       '$serversite/api/process_drawing_download/${process.id}/',

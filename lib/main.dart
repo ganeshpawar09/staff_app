@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:staff_flutter_app/screens/spalsh/spalsh_screen.dart';
-import 'package:staff_flutter_app/state/movement_state.dart';
-import 'package:staff_flutter_app/state/order_item_state.dart';
-import 'package:staff_flutter_app/state/order_state.dart';
-import 'package:staff_flutter_app/state/order_process_state.dart';
+import 'package:staff_flutter_app/state/erp_order_movement_state.dart';
+import 'package:staff_flutter_app/state/erp_order_item_state.dart';
+import 'package:staff_flutter_app/state/erp_order_state.dart';
+import 'package:staff_flutter_app/state/erp_order_process_state.dart';
 import 'package:staff_flutter_app/state/user_state.dart';
 import 'package:staff_flutter_app/state/vedor_state.dart';
 import 'package:staff_flutter_app/widget/process_rfq_state.dart';
@@ -23,11 +23,11 @@ class CadAndCart extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (ctx) => UserState()),
-        ChangeNotifierProvider(create: (ctx) => OrderState()),
-        ChangeNotifierProvider(create: (ctx) => OrderProcessState()),
-        ChangeNotifierProvider(create: (ctx) => OrderState()),
-        ChangeNotifierProvider(create: (ctx) => OrderItemState()),
-        ChangeNotifierProvider(create: (ctx) => MovementState()),
+        ChangeNotifierProvider(create: (ctx) => ErpOrderState()),
+        ChangeNotifierProvider(create: (ctx) => ErpOrderProcessState()),
+        ChangeNotifierProvider(create: (ctx) => ErpOrderState()),
+        ChangeNotifierProvider(create: (ctx) => ErpOrderItemState()),
+        ChangeNotifierProvider(create: (ctx) => ErpOrderMovementState()),
         ChangeNotifierProvider(create: (ctx) => VendorState()),
         ChangeNotifierProvider(create: (ctx) => ProcessRFQState()),
       ],

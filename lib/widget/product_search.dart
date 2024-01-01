@@ -5,9 +5,9 @@ import 'package:staff_flutter_app/models/combine_data.dart';
 import 'package:staff_flutter_app/screens/order/order_detail_screen.dart';
 import 'package:staff_flutter_app/screens/order/order_item_detail_screen.dart';
 import 'package:staff_flutter_app/screens/process/process_detail_screen.dart';
-import 'package:staff_flutter_app/state/order_item_state.dart';
-import 'package:staff_flutter_app/state/order_state.dart';
-import 'package:staff_flutter_app/state/order_process_state.dart';
+import 'package:staff_flutter_app/state/erp_order_item_state.dart';
+import 'package:staff_flutter_app/state/erp_order_state.dart';
+import 'package:staff_flutter_app/state/erp_order_process_state.dart';
 import 'package:staff_flutter_app/state/vedor_state.dart';
 
 class ProductSearch extends SearchDelegate<String> {
@@ -72,9 +72,9 @@ class ProductSearch extends SearchDelegate<String> {
     dynamic data;
     if (screen == "order") {
       data = query.isEmpty
-          ? context.watch<OrderState>().erporderlist
+          ? context.watch<ErpOrderState>().erporderlist
           : context
-              .watch<OrderState>()
+              .watch<ErpOrderState>()
               .erporderlist
               .where((p) => p.quoteNo!
                   .toString()
@@ -83,9 +83,9 @@ class ProductSearch extends SearchDelegate<String> {
               .toList();
     } else if (screen == "process") {
       data = query.isEmpty
-          ? context.watch<OrderProcessState>().orderProcessList
+          ? context.watch<ErpOrderProcessState>().orderProcessList
           : context
-              .watch<OrderProcessState>()
+              .watch<ErpOrderProcessState>()
               .orderProcessList
               .where((p) => p.processId!
                   .toString()
@@ -94,9 +94,9 @@ class ProductSearch extends SearchDelegate<String> {
               .toList();
     } else if (screen == "orderItem") {
       data = query.isEmpty
-          ? context.watch<OrderItemState>().erporderitemlist
+          ? context.watch<ErpOrderItemState>().erporderitemlist
           : context
-              .watch<OrderItemState>()
+              .watch<ErpOrderItemState>()
               .erporderitemlist
               .where((p) => p.document!.partId!
                   .toString()
@@ -126,7 +126,7 @@ class ProductSearch extends SearchDelegate<String> {
           onTap: () {
             if (screen == "order") {
               ErpOrder order = context
-                  .read<OrderState>()
+                  .read<ErpOrderState>()
                   .singleOrder(data.elementAt(index).quoteNo!);
               Navigator.push(
                 context,
@@ -138,7 +138,7 @@ class ProductSearch extends SearchDelegate<String> {
               );
             } else if (screen == "process") {
               ErpOrderProcess orderProcess = context
-                  .read<OrderProcessState>()
+                  .read<ErpOrderProcessState>()
                   .singleProcess(data.elementAt(index).processId!);
               Navigator.push(
                 context,
@@ -150,7 +150,7 @@ class ProductSearch extends SearchDelegate<String> {
               );
             } else if (screen == "orderItem") {
               ErpOrderItem erpOrderItem = context
-                  .read<OrderItemState>()
+                  .read<ErpOrderItemState>()
                   .singleOrderItem(data.elementAt(index).document.partId!);
               Navigator.push(
                 context,

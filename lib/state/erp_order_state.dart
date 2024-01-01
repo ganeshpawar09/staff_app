@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:staff_flutter_app/server_url.dart';
 import 'package:staff_flutter_app/models/combine_data.dart';
 
-class OrderState extends ChangeNotifier {
+class ErpOrderState extends ChangeNotifier {
   LocalStorage storage = LocalStorage('usertoken');
 
   List<ErpOrder> _erpOrders = [];
@@ -84,7 +84,7 @@ class OrderState extends ChangeNotifier {
     return _erpOrders.firstWhere((element) => element.quoteNo == quoteNo);
   }
 
-  List<ErpOrderItem>? OrderItem(int id) {
+  List<ErpOrderItem>? orderItem(int id) {
     var order = _erpOrders.firstWhere((element) => element.id == id);
     return order.itemsNew;
   }

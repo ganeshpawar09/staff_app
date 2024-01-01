@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AppStyles {
+  static const String rupeesSymbol = '\u{20B9}';
+
   static const TextStyle mondaN = TextStyle(
     fontFamily: 'monda',
     fontSize: 16.0,

@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:staff_flutter_app/const/font.dart';
 import 'package:staff_flutter_app/models/combine_data.dart';
-import 'package:staff_flutter_app/state/order_item_state.dart';
+import 'package:staff_flutter_app/state/erp_order_item_state.dart';
 import 'package:staff_flutter_app/widget/process_rfq_state.dart';
 
 class RFQDetailScreen extends StatefulWidget {
@@ -22,8 +22,8 @@ class _RFQDetailScreenState extends State<RFQDetailScreen> {
 
   void onAdd() async {
     final String rfqCost = costController.text;
-    final String leadTime = leadTimeController.text;
-    final String comment = commentController.text;
+    // final String leadTime = leadTimeController.text;
+    // final String comment = commentController.text;
 
     if (rfqCost.isNotEmpty) {
       await Provider.of<ProcessRFQState>(context, listen: false)
@@ -41,16 +41,16 @@ class _RFQDetailScreenState extends State<RFQDetailScreen> {
     try {
       print('Before fetching data');
       await context
-          .read<OrderItemState>()
+          .read<ErpOrderItemState>()
           .getErpOrderItemByProcess(widget.processRFQ.process!);
-      orderitem = context.read<OrderItemState>().erpOrderItemByProcess;
+      orderitem = context.read<ErpOrderItemState>().erpOrderItemByProcess;
 
       print('After fetching data');
     } catch (error) {
       print('Error fetching data: $error');
     }
 
-    return context.read<OrderItemState>().erpOrderItemByProcess;
+    return context.read<ErpOrderItemState>().erpOrderItemByProcess;
   }
 
   void refresh(BuildContext context) {
