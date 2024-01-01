@@ -137,7 +137,7 @@ class ProductSearch extends SearchDelegate<String> {
                 ),
               );
             } else if (screen == "process") {
-              OrderProcess orderProcess = context
+              ErpOrderProcess orderProcess = context
                   .read<OrderProcessState>()
                   .singleProcess(data.elementAt(index).processId!);
               Navigator.push(

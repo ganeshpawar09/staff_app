@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:staff_flutter_app/screens/process/widget/order_button.dart';
+import 'package:provider/provider.dart';
 import 'package:staff_flutter_app/const/font.dart';
 import 'package:staff_flutter_app/models/combine_data.dart';
-import 'package:staff_flutter_app/screens/process/widget/order_item_button.dart';
+import 'package:staff_flutter_app/state/order_item_state.dart';
+import 'package:staff_flutter_app/widget/process_rfq_state.dart';
 
 class RFQDetailScreen extends StatefulWidget {
-  final OrderProcess orderProcess;
-  const RFQDetailScreen({Key? key, required this.orderProcess})
-      : super(key: key);
+  final ProcessRFQ processRFQ;
+
+  const RFQDetailScreen({Key? key, required this.processRFQ}) : super(key: key);
 
   @override
   State<RFQDetailScreen> createState() => _RFQDetailScreenState();
@@ -20,22 +21,51 @@ class _RFQDetailScreenState extends State<RFQDetailScreen> {
   final leadTimeController = TextEditingController();
 
   void onAdd() async {
-    final String cost = costController.text;
+    final String rfqCost = costController.text;
     final String leadTime = leadTimeController.text;
     final String comment = commentController.text;
 
-    // if (cost.isNotEmpty && leadTime.isNotEmpty) {
-    //   await Provider.of<ProcessState>(context, listen: false)
-    //       .updateProcessStatus(processId, double.parse(cost), barcodeLink);
-    // }
-    // if (context.mounted) {
-    //   Navigator.pop(context);
-    // }
+    if (rfqCost.isNotEmpty) {
+      await Provider.of<ProcessRFQState>(context, listen: false)
+          .updateProcessRFQ(widget.processRFQ.id!, double.parse(rfqCost));
+    }
+
+    if (context.mounted) {
+      Navigator.pop(context);
+    }
+  }
+
+  ErpOrderItem? orderitem;
+
+  Future<ErpOrderItem?> fetchData(BuildContext context) async {
+    try {
+      print('Before fetching data');
+      await context
+          .read<OrderItemState>()
+          .getErpOrderItemByProcess(widget.processRFQ.process!);
+      orderitem = context.read<OrderItemState>().erpOrderItemByProcess;
+
+      print('After fetching data');
+    } catch (error) {
+      print('Error fetching data: $error');
+    }
+
+    return context.read<OrderItemState>().erpOrderItemByProcess;
+  }
+
+  void refresh(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+          builder: (context) => RFQDetailScreen(
+                processRFQ: widget.processRFQ,
+              )),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    OrderProcess process = widget.orderProcess;
+    ErpOrderProcess process = widget.processRFQ.process!;
     String processid = process.processId!;
     String processname = process.processName!;
 
@@ -67,23 +97,28 @@ class _RFQDetailScreenState extends State<RFQDetailScreen> {
                   ),
                   customRow("Process Id: ", processid),
                   customRow("Process Name: ", processname.toUpperCase()),
+                  customRow("Target Cost: ", "${process.targetCost}"),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("Status:",
                           style: AppStyles.mondaN
                               .copyWith(fontSize: 16, color: Colors.black54)),
-                      process.completed!
+                      widget.processRFQ.rfqCost != 0.00
                           ? Text(
-                              ('Completed'),
+                              ('Offer Given'),
                               style: AppStyles.mondaB
-                                  .copyWith(fontSize: 17, color: Colors.green),
+                                  .copyWith(fontSize: 18, color: Colors.green),
                             )
-                          : Text(('Not Completed'),
+                          : Text(('Offer Left'),
                               style: AppStyles.mondaB
-                                  .copyWith(fontSize: 17, color: Colors.red)),
+                                  .copyWith(fontSize: 18, color: Colors.red)),
                     ],
                   ),
+                  customRow("Your Offer: ", "${widget.processRFQ.rfqCost}"),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -106,12 +141,63 @@ class _RFQDetailScreenState extends State<RFQDetailScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      OrderItemButton(orderProcess: widget.orderProcess),
-                      OrderButton(orderProcess: widget.orderProcess)
-                    ],
+                  FutureBuilder<ErpOrderItem?>(
+                    future: fetchData(context),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.black,
+                          ),
+                        );
+                      } else if (snapshot.hasError ||
+                          !snapshot.hasData ||
+                          snapshot.data == null) {
+                        return Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Chech Your Internet Connection",
+                                textAlign: TextAlign.center,
+                                style: AppStyles.mondaN.copyWith(fontSize: 16),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  refresh(context);
+                                },
+                                icon: const Icon(
+                                  Icons.refresh,
+                                  size: 45,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      } else {
+                        return Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Material Details:",
+                                  style:
+                                      AppStyles.mondaB.copyWith(fontSize: 20),
+                                ),
+                              ],
+                            ),
+                            customRow("Material Type Name",
+                                orderitem!.materialDetail!.materialTypeName!),
+                            customRow("Material Name",
+                                orderitem!.materialDetail!.materialName!),
+                            customRow("Dimensions",
+                                "${orderitem!.document!.dimensionX} x ${orderitem!.document!.dimensionY} x ${orderitem!.document!.dimensionZ} mm"),
+                          ],
+                        );
+                      }
+                    },
                   ),
                   const SizedBox(
                     height: 20,

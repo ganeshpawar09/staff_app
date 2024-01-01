@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:staff_flutter_app/const/font.dart';
 import 'package:staff_flutter_app/models/combine_data.dart';
 import 'package:staff_flutter_app/screens/home/home_screen.dart';
-import 'package:staff_flutter_app/screens/rfq/widget/rfq_process_list_view.dart';
-import 'package:staff_flutter_app/state/order_process_state.dart';
-import 'package:provider/provider.dart';
+import 'package:staff_flutter_app/screens/processrfq/widget/rfq_process_list_view.dart';
+import 'package:staff_flutter_app/widget/process_rfq_state.dart';
 
 class RFQScreen extends StatelessWidget {
-  const RFQScreen({super.key});
+  const RFQScreen({Key? key}) : super(key: key);
 
-  Future<List<OrderProcess>> fetchData(BuildContext context) async {
+  Future<List<ProcessRFQ>> fetchData(BuildContext context) async {
     try {
       print('Before fetching data');
       if (!DataFetchStatus.rfqProcessDataIsFetched) {
-        await context.read<OrderProcessState>().getOrderProcessList();
+        await context.read<ProcessRFQState>().getProcessRFQlists();
 
         DataFetchStatus.rfqProcessDataIsFetched = true;
       }
@@ -25,7 +25,7 @@ class RFQScreen extends StatelessWidget {
 
     if (context.mounted) {
       print('Returning orderProcessList');
-      return context.read<OrderProcessState>().orderProcessList;
+      return context.read<ProcessRFQState>().processRFQList;
     }
 
     return [];
@@ -51,14 +51,18 @@ class RFQScreen extends StatelessWidget {
             "View RFQ Process",
             style: AppStyles.mondaB.copyWith(fontSize: 22),
           ),
-          bottom: const TabBar(
+          bottom: TabBar(
             indicatorColor: Colors.black,
             labelColor: Colors.black,
             dividerColor: Colors.white,
-            labelStyle: TextStyle(fontFamily: 'monda', fontSize: 17),
+            labelStyle: const TextStyle(fontFamily: 'monda', fontSize: 17),
             tabs: [
-              Tab(text: 'Offer Left'),
-              Tab(text: 'Offer Given'),
+              Tab(
+                  text:
+                      '(${context.watch<ProcessRFQState>().notOfferProcessRFQList.length})Offer Left'),
+              Tab(
+                  text:
+                      '(${context.watch<ProcessRFQState>().offerProcessRFQList.length})Offer Given (${context.watch<ProcessRFQState>().offerProcessRFQList.length})'),
             ],
           ),
           actions: [
@@ -79,11 +83,14 @@ class RFQScreen extends StatelessWidget {
             )
           ],
         ),
-        body: FutureBuilder<List<OrderProcess>>(
+        body: FutureBuilder<List<ProcessRFQ>>(
           future: fetchData(context),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(
+                  child: CircularProgressIndicator(
+                color: Colors.black,
+              ));
             } else if (snapshot.hasError || !snapshot.hasData) {
               return Center(
                 child: Column(
@@ -110,17 +117,17 @@ class RFQScreen extends StatelessWidget {
             } else {
               return TabBarView(
                 children: [
-                  Consumer<OrderProcessState>(
+                  Consumer<ProcessRFQState>(
                     builder: (context, provider, child) => OrderProcessTab(
-                      data: provider.orderProcessList,
+                      data: provider.notOfferProcessRFQList,
                       refreshFunction: () {
                         refresh(context);
                       },
                     ),
                   ),
-                  Consumer<OrderProcessState>(
+                  Consumer<ProcessRFQState>(
                     builder: (context, provider, child) => OrderProcessTab(
-                      data: provider.orderProcessPendingList,
+                      data: provider.offerProcessRFQList,
                       refreshFunction: () {
                         refresh(context);
                       },
@@ -137,7 +144,7 @@ class RFQScreen extends StatelessWidget {
 }
 
 class OrderProcessTab extends StatelessWidget {
-  final List<OrderProcess> data;
+  final List<ProcessRFQ> data;
   final VoidCallback refreshFunction;
 
   const OrderProcessTab(
@@ -156,7 +163,7 @@ class OrderProcessTab extends StatelessWidget {
         child: ListView.builder(
           itemCount: data.length,
           itemBuilder: (BuildContext context, int index) => RFQProcessListView(
-            orderProcess: data[index],
+            processRFQ: data[index],
           ),
         ),
       ),

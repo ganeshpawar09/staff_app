@@ -93,10 +93,10 @@ class ErpOrderItem {
   User? user;
   Document? document;
   MaterialDetail? materialDetail;
-  ManufacturingCapabilities? manufacturingTech;
+  // ManufacturingCapabilities? manufacturingTech;
   MaterialVendor? materialVendorcode;
-  List<OrderProcess>? process;
-  List<OrderMovement>? movement;
+  List<ErpOrderProcess>? process;
+  List<ErpOrderMovement>? movement;
 
   ErpOrderItem(
       {this.id,
@@ -122,7 +122,7 @@ class ErpOrderItem {
       this.user,
       this.document,
       this.materialDetail,
-      this.manufacturingTech,
+      // this.manufacturingTech,
       this.materialVendorcode,
       this.process,
       this.movement});
@@ -154,22 +154,22 @@ class ErpOrderItem {
     materialDetail = json['material_detail'] != null
         ? MaterialDetail.fromJson(json['material_detail'])
         : null;
-    manufacturingTech = json['manufacturing_tech'] != null
-        ? ManufacturingCapabilities.fromJson(json['manufacturing_tech'])
-        : null;
+    // manufacturingTech = json['manufacturing_tech'] != null
+    //     ? ManufacturingCapabilities.fromJson(json['manufacturing_tech'])
+    //     : null;
     materialVendorcode = json['material_vendorcode'] != null
         ? MaterialVendor.fromJson(json['material_vendorcode'])
         : null;
     if (json['process'] != null) {
-      process = <OrderProcess>[];
+      process = <ErpOrderProcess>[];
       json['process'].forEach((v) {
-        process!.add(OrderProcess.fromJson(v));
+        process!.add(ErpOrderProcess.fromJson(v));
       });
     }
     if (json['movement'] != null) {
-      movement = <OrderMovement>[];
+      movement = <ErpOrderMovement>[];
       json['movement'].forEach((v) {
-        movement!.add(OrderMovement.fromJson(v));
+        movement!.add(ErpOrderMovement.fromJson(v));
       });
     }
   }
@@ -214,9 +214,9 @@ class ErpOrderItem {
     if (materialDetail != null) {
       data['material_detail'] = materialDetail!.toJson();
     }
-    if (manufacturingTech != null) {
-      data['manufacturing_tech'] = manufacturingTech!.toJson();
-    }
+    // if (manufacturingTech != null) {
+    //   data['manufacturing_tech'] = manufacturingTech!.toJson();
+    // }
     if (materialVendorcode != null) {
       data['material_vendorcode'] = materialVendorcode!.toJson();
     }
@@ -459,14 +459,13 @@ class ManufacturingCapabilities {
     priceCalculator = json['price_calculator'];
     instantQuote = json['instant_quote'];
 
-    // Check if 'material' is present in the JSON and is a List
     if (json['material'] != null && json['material'] is List) {
       material = List<MaterialDetail>.from(
         (json['material'] as List)
             .map((materialJson) => MaterialDetail.fromJson(materialJson)),
       );
     } else {
-      material = null; // or an empty list, depending on your use case
+      material = null;
     }
   }
 
@@ -531,7 +530,7 @@ class PaymentDetails {
   }
 }
 
-class OrderMovement {
+class ErpOrderMovement {
   int? id;
   int? srNo;
   String? movementId;
@@ -551,7 +550,7 @@ class OrderMovement {
   bool? picked;
   Rider? rider;
 
-  OrderMovement(
+  ErpOrderMovement(
       {this.id,
       this.srNo,
       this.movementId,
@@ -571,7 +570,7 @@ class OrderMovement {
       this.picked,
       this.rider});
 
-  OrderMovement.fromJson(Map<String, dynamic> json) {
+  ErpOrderMovement.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     srNo = json['sr_no'];
     movementId = json['movement_id'];
@@ -732,7 +731,7 @@ class MaterialDetail {
   }
 }
 
-class OrderProcess {
+class ErpOrderProcess {
   int? id;
   int? srNo;
   String? processName;
@@ -752,11 +751,11 @@ class OrderProcess {
   bool? rfqVendorBool;
   bool? reviewed;
   bool? proceed;
-  ManufacturingCapabilities? manufacturingCapabilities;
+  // ManufacturingCapabilities? manufacturingCapabilities;
   VendorDetail? vendorDetail;
   PaymentDetails? paymentDetails;
 
-  OrderProcess(
+  ErpOrderProcess(
       {this.id,
       this.srNo,
       this.processName,
@@ -776,11 +775,11 @@ class OrderProcess {
       this.rfqVendorBool,
       this.reviewed,
       this.proceed,
-      this.manufacturingCapabilities,
+      // this.manufacturingCapabilities,
       this.vendorDetail,
       this.paymentDetails});
 
-  OrderProcess.fromJson(Map<String, dynamic> json) {
+  ErpOrderProcess.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     srNo = json['sr_no'];
     processName = json['process_name'];
@@ -800,9 +799,9 @@ class OrderProcess {
     rfqVendorBool = json['rfq_vendor_bool'];
     reviewed = json['reviewed'];
     proceed = json['proceed'];
-    manufacturingCapabilities = json['manufacturing_capabilities'] != null
-        ? ManufacturingCapabilities.fromJson(json['manufacturing_capabilities'])
-        : null;
+    // manufacturingCapabilities = json['manufacturing_capabilities'] != null
+    //     ? ManufacturingCapabilities.fromJson(json['manufacturing_capabilities'])
+    //     : null;
     vendorDetail = json['vendor_detail'] != null
         ? VendorDetail.fromJson(json['vendor_detail'])
         : null;
@@ -832,9 +831,9 @@ class OrderProcess {
     data['rfq_vendor_bool'] = rfqVendorBool;
     data['reviewed'] = reviewed;
     data['proceed'] = proceed;
-    if (manufacturingCapabilities != null) {
-      data['manufacturing_capabilities'] = manufacturingCapabilities!.toJson();
-    }
+    // if (manufacturingCapabilities != null) {
+    //   data['manufacturing_capabilities'] = manufacturingCapabilities!.toJson();
+    // }
     if (vendorDetail != null) {
       data['vendor_detail'] = vendorDetail!.toJson();
     }
@@ -1006,3 +1005,49 @@ class User {
   }
 }
 
+class ProcessRFQ {
+  int? id;
+  double? rfqCost;
+  bool? whatappAlert;
+  VendorDetail? vendor;
+  MaterialVendor? materialVendor;
+  ErpOrderProcess? process;
+
+  ProcessRFQ(
+      {this.id,
+      this.rfqCost,
+      this.whatappAlert,
+      this.vendor,
+      this.materialVendor,
+      this.process});
+
+  ProcessRFQ.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    rfqCost = json['rfq_cost'];
+    whatappAlert = json['whatapp_alert'];
+    vendor =
+        json['vendor'] != null ? VendorDetail.fromJson(json['vendor']) : null;
+    materialVendor = json['material_vendor'] != null
+        ? MaterialVendor.fromJson(json['material_vendor'])
+        : null;
+    process =
+        json['process'] != null ? ErpOrderProcess.fromJson(json['process']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['rfq_cost'] = rfqCost;
+    data['whatapp_alert'] = whatappAlert;
+    if (vendor != null) {
+      data['vendor'] = vendor!.toJson();
+    }
+    if (materialVendor != null) {
+      data['material_vendor'] = materialVendor!.toJson();
+    }
+    if (process != null) {
+      data['process'] = process!.toJson();
+    }
+    return data;
+  }
+}

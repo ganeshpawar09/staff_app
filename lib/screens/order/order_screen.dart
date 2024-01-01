@@ -48,15 +48,22 @@ class OrderScreen extends StatelessWidget {
             "View Order",
             style: AppStyles.mondaB.copyWith(fontSize: 22),
           ),
-          bottom: const TabBar(
+          bottom: TabBar(
+            labelPadding: EdgeInsets.zero,
             dividerColor: Colors.white,
             indicatorColor: Colors.black,
             labelColor: Colors.black,
-            labelStyle: TextStyle(fontFamily: 'monda', fontSize: 17),
+            labelStyle: const TextStyle(fontFamily: 'monda', fontSize: 17),
             tabs: [
-              Tab(text: 'Total'),
-              Tab(text: 'Upcoming'),
-              Tab(text: 'Completed'),
+              Tab(
+                  text:
+                      '(${context.watch<OrderState>().erporderlist.length})Total'),
+              Tab(
+                  text:
+                      '(${context.watch<OrderState>().erporderpendinglist.length})Upcoming'),
+              Tab(
+                  text:
+                      '(${context.watch<OrderState>().erpordercompletedlist.length})Completed'),
             ],
           ),
           actions: [
@@ -67,7 +74,8 @@ class OrderScreen extends StatelessWidget {
                 size: 30,
               ),
               onPressed: () {
-                showSearch(context: context, delegate: ProductSearch(screen: "order"));
+                showSearch(
+                    context: context, delegate: ProductSearch(screen: "order"));
               },
             ),
             const SizedBox(
@@ -79,7 +87,9 @@ class OrderScreen extends StatelessWidget {
           future: fetchData(context),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const SkeletonTabbarView();
+              return const SkeletonTabbarView(
+                tabs: 3,
+              );
             } else if (snapshot.hasError || !snapshot.hasData) {
               return Center(
                 child: Column(

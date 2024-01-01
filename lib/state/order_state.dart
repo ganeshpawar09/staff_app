@@ -9,7 +9,7 @@ class OrderState extends ChangeNotifier {
   LocalStorage storage = LocalStorage('usertoken');
 
   List<ErpOrder> _erpOrders = [];
-   ErpOrder? _singleErpOrder;
+  ErpOrder? _singleErpOrder;
 
   Future<void> getErpOrderList() async {
     String url = '$serversite/api/erp-orders/';
@@ -36,7 +36,8 @@ class OrderState extends ChangeNotifier {
       print("error erporderlist");
     }
   }
-  Future<void> getErpOrderByProcess(OrderProcess orderProcess) async {
+
+  Future<void> getErpOrderByProcess(ErpOrderProcess orderProcess) async {
     String url =
         '$serversite/api/erp-order-by-processid/${orderProcess.processId}';
     var token = storage.getItem('token');
@@ -63,8 +64,7 @@ class OrderState extends ChangeNotifier {
     }
   }
 
-  ErpOrder? get singleErpOrderByProcess
-  {
+  ErpOrder? get singleErpOrderByProcess {
     return _singleErpOrder;
   }
 

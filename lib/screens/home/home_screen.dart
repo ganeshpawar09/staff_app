@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:staff_flutter_app/models/combine_data.dart';
 import 'package:staff_flutter_app/screens/movement/movement_screen.dart';
-import 'package:staff_flutter_app/screens/rfq/rfq_screen.dart';
+import 'package:staff_flutter_app/screens/processrfq/rfq_screen.dart';
 import 'package:staff_flutter_app/screens/vendor/vendor_screen.dart';
 import 'package:staff_flutter_app/screens/home/widget/home_grid_view.dart';
 import 'package:staff_flutter_app/screens/order/order_screen.dart';
@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       GridItem(
         title: "View RFQ Process",
-        img: "assets/group.png",
+        img: "assets/bid.png",
         widget: RFQScreen(),
       ),
       GridItem(

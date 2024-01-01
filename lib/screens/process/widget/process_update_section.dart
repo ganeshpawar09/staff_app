@@ -7,7 +7,7 @@ import 'package:staff_flutter_app/models/combine_data.dart';
 import 'package:staff_flutter_app/state/order_process_state.dart';
 
 class ProcessUpdateSection extends StatefulWidget {
-  final OrderProcess orderProcess;
+  final ErpOrderProcess orderProcess;
   const ProcessUpdateSection({Key? key, required this.orderProcess})
       : super(key: key);
 

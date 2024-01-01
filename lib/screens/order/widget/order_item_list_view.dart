@@ -45,22 +45,23 @@ class OrderItemListView extends StatelessWidget {
               const SizedBox(
                 height: 8,
               ),
-              (orderItem.materialDetail!=null)?
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Material Type: ",
-                          style: AppStyles.mondaN
-                              .copyWith(fontSize: 15, color: Colors.black54)),
-                      Text(orderItem.materialDetail!.materialTypeName!,
-                          style: AppStyles.mondaB.copyWith(fontSize: 16))
-                    ],
-                  ),
-                ],
-              ):const SizedBox(),
+              (orderItem.materialDetail != null)
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Material Type: ",
+                                style: AppStyles.mondaN.copyWith(
+                                    fontSize: 15, color: Colors.black54)),
+                            Text(orderItem.materialDetail!.materialTypeName!,
+                                style: AppStyles.mondaB.copyWith(fontSize: 16))
+                          ],
+                        ),
+                      ],
+                    )
+                  : const SizedBox(),
               const SizedBox(
                 height: 8,
               ),

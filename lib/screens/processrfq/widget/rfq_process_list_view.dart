@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:staff_flutter_app/const/font.dart';
 import 'package:staff_flutter_app/models/combine_data.dart';
-import 'package:staff_flutter_app/screens/rfq/rfq_detail.dart';
+import 'package:staff_flutter_app/screens/processrfq/rfq_detail.dart';
 
 class RFQProcessListView extends StatelessWidget {
-  final OrderProcess orderProcess;
-  const RFQProcessListView({super.key, required this.orderProcess});
-
-  String processDate(String dateString) {
-    DateTime dateTime = DateTime.parse(dateString);
-    String formattedDate = DateFormat('dd-MM-yyyy').format(dateTime);
-    return formattedDate;
-  }
+  final ProcessRFQ processRFQ;
+  const RFQProcessListView({
+    Key? key,
+    required this.processRFQ,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,40 +25,30 @@ class RFQProcessListView extends StatelessWidget {
               Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text('Process Id: ${orderProcess.processId}',
+                    Text('Process Id: ${processRFQ.process!.processId}',
                         style: AppStyles.mondaB.copyWith(fontSize: 18)),
                   ]),
               const SizedBox(
                 height: 8,
               ),
-              Row(
-                children: [
-                  Text("Process Name: ",
-                      style: AppStyles.mondaN
-                          .copyWith(fontSize: 15, color: Colors.black54)),
-                  Text(orderProcess.processName!.toUpperCase(),
-                      style: AppStyles.mondaB.copyWith(fontSize: 16)),
-                ],
-              ),
+              customRow("Process Name: ", "${processRFQ.process!.processName}"),
               const SizedBox(
                 height: 8,
               ),
-              Row(
-                children: [
-                  Text("Taget Cost: ",
-                      style: AppStyles.mondaN
-                          .copyWith(fontSize: 15, color: Colors.black54)),
-                  Text(orderProcess.targetCost.toString(),
-                      style: AppStyles.mondaB.copyWith(fontSize: 16)),
-                ],
+              customRow("Target Cost: ", "${processRFQ.process!.targetCost}"),
+              const SizedBox(
+                height: 8,
               ),
+              (processRFQ.rfqCost != 0.00)
+                  ? customRow("Your Offer: ", "${processRFQ.rfqCost}")
+                  : const SizedBox(),
               const SizedBox(
                 height: 8,
               ),
               Text("Status:",
                   style: AppStyles.mondaN
                       .copyWith(fontSize: 16, color: Colors.black54)),
-              orderProcess.completed!
+              processRFQ.rfqCost != 0.00
                   ? Text(
                       ('Offer Given'),
                       style: AppStyles.mondaB
@@ -85,7 +71,7 @@ class RFQProcessListView extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => RFQDetailScreen(
-                          orderProcess: orderProcess,
+                          processRFQ: processRFQ,
                         ),
                       ),
                     );
@@ -102,4 +88,15 @@ class RFQProcessListView extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget customRow(String title, String value) {
+  return Row(
+    children: [
+      Text(title,
+          style:
+              AppStyles.mondaN.copyWith(fontSize: 15, color: Colors.black54)),
+      Text(value, style: AppStyles.mondaB.copyWith(fontSize: 16)),
+    ],
+  );
 }

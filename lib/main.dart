@@ -7,6 +7,7 @@ import 'package:staff_flutter_app/state/order_state.dart';
 import 'package:staff_flutter_app/state/order_process_state.dart';
 import 'package:staff_flutter_app/state/user_state.dart';
 import 'package:staff_flutter_app/state/vedor_state.dart';
+import 'package:staff_flutter_app/widget/process_rfq_state.dart';
 
 main() {
   runApp(const CadAndCart());
@@ -28,6 +29,7 @@ class CadAndCart extends StatelessWidget {
         ChangeNotifierProvider(create: (ctx) => OrderItemState()),
         ChangeNotifierProvider(create: (ctx) => MovementState()),
         ChangeNotifierProvider(create: (ctx) => VendorState()),
+        ChangeNotifierProvider(create: (ctx) => ProcessRFQState()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

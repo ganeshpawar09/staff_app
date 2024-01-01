@@ -11,10 +11,10 @@ class OrderItemDetailScreen extends StatelessWidget {
     if (orderItem.materialDetail != null) {
       totalPrice += orderItem.quantity! * orderItem.materialDetail!.rate!;
     }
-    for (OrderProcess orderProcess in orderItem.process!) {
+    for (ErpOrderProcess orderProcess in orderItem.process!) {
       totalPrice += orderProcess.cost ?? 0;
     }
-    for (OrderMovement orderMovement in orderItem.movement!) {
+    for (ErpOrderMovement orderMovement in orderItem.movement!) {
       totalPrice += orderMovement.transportCost ?? 0;
     }
     return totalPrice;

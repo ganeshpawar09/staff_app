@@ -22,12 +22,12 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
           totalPrice += orderItem.quantity! * orderItem.materialDetail!.rate!;
         }
         if (orderItem.process != null) {
-          for (OrderProcess orderProcess in orderItem.process!) {
+          for (ErpOrderProcess orderProcess in orderItem.process!) {
             totalPrice += orderProcess.cost ?? 0;
           }
         }
         if (orderItem.movement != null) {
-          for (OrderMovement orderMovement in orderItem.movement!) {
+          for (ErpOrderMovement orderMovement in orderItem.movement!) {
             totalPrice += orderMovement.transportCost ?? 0;
           }
         }

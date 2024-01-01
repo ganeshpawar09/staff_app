@@ -64,15 +64,22 @@ class OrderItemScreen extends StatelessWidget {
           //   },
           // ),
 
-          bottom: const TabBar(
+          bottom: TabBar(
+            labelPadding: EdgeInsets.zero,
             dividerColor: Colors.white,
             indicatorColor: Colors.black,
             labelColor: Colors.black,
-            labelStyle: TextStyle(fontFamily: 'monda', fontSize: 17),
+            labelStyle: const TextStyle(fontFamily: 'monda', fontSize: 17),
             tabs: [
-              Tab(text: 'Total'),
-              Tab(text: 'Upcoming'),
-              Tab(text: 'Completed'),
+              Tab(
+                  text:
+                      '(${context.watch<OrderItemState>().erporderitemlist.length})Total'),
+              Tab(
+                  text:
+                      '(${context.watch<OrderItemState>().erporderitempendinglist.length})Upcoming'),
+              Tab(
+                  text:
+                      '(${context.watch<OrderItemState>().erporderitemcompletedlist.length})Completed'),
             ],
           ),
           actions: [
@@ -97,7 +104,9 @@ class OrderItemScreen extends StatelessWidget {
           future: fetchData(context),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const SkeletonTabbarView();
+              return const SkeletonTabbarView(
+                tabs: 3,
+              );
             } else if (snapshot.hasError || !snapshot.hasData) {
               return Center(
                 child: Column(

@@ -7,7 +7,7 @@ import 'package:staff_flutter_app/server_url.dart';
 
 class OrderProcessState extends ChangeNotifier {
   LocalStorage data = LocalStorage('usertoken');
-  List<OrderProcess> _orderProcessList = [];
+  List<ErpOrderProcess> _orderProcessList = [];
 
   Future<void> getOrderProcessList() async {
     String url = '$serversite/api/erp-process/';
@@ -18,10 +18,10 @@ class OrderProcessState extends ChangeNotifier {
         "Authorization": "token $token",
       });
       var data = jsonDecode(response.body) as Map;
-      List<OrderProcess> demo = [];
+      List<ErpOrderProcess> demo = [];
       if (data['error'] == false) {
         data['data'].forEach((element) {
-          OrderProcess orderprocesslist = OrderProcess.fromJson(element);
+          ErpOrderProcess orderprocesslist = ErpOrderProcess.fromJson(element);
           demo.add(orderprocesslist);
         });
         // print('Sucess process data');
@@ -36,23 +36,23 @@ class OrderProcessState extends ChangeNotifier {
     }
   }
 
-  List<OrderProcess> get orderProcessList {
+  List<ErpOrderProcess> get orderProcessList {
     return _orderProcessList;
   }
 
-  List<OrderProcess> get orderProcessCompletedList {
+  List<ErpOrderProcess> get orderProcessCompletedList {
     return _orderProcessList
         .where((element) => element.completed == true)
         .toList();
   }
 
-  List<OrderProcess> get orderProcessPendingList {
+  List<ErpOrderProcess> get orderProcessPendingList {
     return _orderProcessList
         .where((element) => element.completed == false)
         .toList();
   }
 
-  OrderProcess singleProcess(String processId) {
+  ErpOrderProcess singleProcess(String processId) {
     return _orderProcessList
         .firstWhere((element) => element.processId == processId);
   }
@@ -79,7 +79,7 @@ class OrderProcessState extends ChangeNotifier {
       var data = jsonDecode(response.body);
       if (response.statusCode == 200 && !data['error']) {
         print(data["error"]);
-        OrderProcess process = _orderProcessList
+        ErpOrderProcess process = _orderProcessList
             .firstWhere((element) => element.id.toString() == processId);
         process.barcodeLink = barcodeLink;
         process.completed = true;

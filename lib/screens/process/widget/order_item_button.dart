@@ -7,7 +7,7 @@ import 'package:staff_flutter_app/state/order_item_state.dart';
 import 'package:connectivity/connectivity.dart';
 
 class OrderItemButton extends StatefulWidget {
-  final OrderProcess orderProcess;
+  final ErpOrderProcess orderProcess;
   const OrderItemButton({super.key, required this.orderProcess});
 
   @override

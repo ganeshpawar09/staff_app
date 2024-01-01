@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 class MovementScreen extends StatelessWidget {
   const MovementScreen({super.key});
 
-  Future<List<OrderMovement>> fetchData(BuildContext context) async {
+  Future<List<ErpOrderMovement>> fetchData(BuildContext context) async {
     try {
       if (!DataFetchStatus.movementDataIsFetched) {
         await context.read<MovementState>().getMovementList();
@@ -72,11 +72,11 @@ class MovementScreen extends StatelessWidget {
             )
           ],
         ),
-        body: FutureBuilder<List<OrderMovement>>(
+        body: FutureBuilder<List<ErpOrderMovement>>(
           future: fetchData(context),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const SkeletonTabbarView();
+              return const SkeletonTabbarView(tabs: 1,);
             } else if (snapshot.hasError || !snapshot.hasData) {
               return Center(
                 child: Column(
@@ -138,7 +138,7 @@ class MovementScreen extends StatelessWidget {
 }
 
 class MovementTab extends StatelessWidget {
-  final List<OrderMovement> data;
+  final List<ErpOrderMovement> data;
   final VoidCallback refreshFunction;
 
   const MovementTab(

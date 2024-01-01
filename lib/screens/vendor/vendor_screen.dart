@@ -50,22 +50,6 @@ class VendorScreen extends StatelessWidget {
             "View Vendor Details",
             style: AppStyles.mondaB.copyWith(fontSize: 22),
           ),
-
-          // leading: Builder(
-          //   builder: (BuildContext context) {
-          //     return IconButton(
-          //       icon: const Icon(
-          //         Icons.menu,
-          //         color: Colors.black,
-          //         size: 30,
-          //       ),
-          //       onPressed: () {
-          //         Scaffold.of(context).openDrawer();
-          //       },
-          //     );
-          //   },
-          // ),
-
           actions: [
             IconButton(
               icon: const Icon(
@@ -87,7 +71,9 @@ class VendorScreen extends StatelessWidget {
           future: fetchData(context),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const SkeletonTabbarView();
+              return const SkeletonTabbarView(
+                tabs: 1,
+              );
             } else if (snapshot.hasError || !snapshot.hasData) {
               return Center(
                 child: Column(

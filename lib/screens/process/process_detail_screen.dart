@@ -7,13 +7,13 @@ import 'package:staff_flutter_app/screens/process/widget/process_update_section.
 import 'package:staff_flutter_app/widget/product_search.dart';
 
 class ProcessDetailScreen extends StatelessWidget {
-  final OrderProcess orderProcess;
+  final ErpOrderProcess orderProcess;
   const ProcessDetailScreen({Key? key, required this.orderProcess})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    OrderProcess process = orderProcess;
+    ErpOrderProcess process = orderProcess;
 
     String processId = process.processId!;
     double processCost = process.cost!;

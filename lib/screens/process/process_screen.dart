@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 class ProcessScreen extends StatelessWidget {
   const ProcessScreen({super.key});
 
-  Future<List<OrderProcess>> fetchData(BuildContext context) async {
+  Future<List<ErpOrderProcess>> fetchData(BuildContext context) async {
     try {
       print('Before fetching data');
       if (!DataFetchStatus.processDataIsFetched) {
@@ -53,15 +53,22 @@ class ProcessScreen extends StatelessWidget {
             "View Process",
             style: AppStyles.mondaB.copyWith(fontSize: 22),
           ),
-          bottom: const TabBar(
+          bottom: TabBar(
+            labelPadding: EdgeInsets.zero,
+            dividerColor: Colors.white,
             indicatorColor: Colors.black,
             labelColor: Colors.black,
-            dividerColor: Colors.white,
-            labelStyle: TextStyle(fontFamily: 'monda', fontSize: 17),
+            labelStyle: const TextStyle(fontFamily: 'monda', fontSize: 17),
             tabs: [
-              Tab(text: 'Total'),
-              Tab(text: 'Pending'),
-              Tab(text: 'Completed'),
+              Tab(
+                  text:
+                      '(${context.watch<OrderProcessState>().orderProcessList.length})Total'),
+              Tab(
+                  text:
+                      '(${context.watch<OrderProcessState>().orderProcessPendingList.length})Upcoming'),
+              Tab(
+                  text:
+                      '(${context.watch<OrderProcessState>().orderProcessCompletedList.length})Completed'),
             ],
           ),
           actions: [
@@ -82,11 +89,13 @@ class ProcessScreen extends StatelessWidget {
             )
           ],
         ),
-        body: FutureBuilder<List<OrderProcess>>(
+        body: FutureBuilder<List<ErpOrderProcess>>(
           future: fetchData(context),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const SkeletonTabbarView();
+              return const SkeletonTabbarView(
+                tabs: 3,
+              );
             } else if (snapshot.hasError || !snapshot.hasData) {
               return Center(
                 child: Column(
@@ -148,7 +157,7 @@ class ProcessScreen extends StatelessWidget {
 }
 
 class OrderProcessTab extends StatelessWidget {
-  final List<OrderProcess> data;
+  final List<ErpOrderProcess> data;
   final VoidCallback refreshFunction;
 
   const OrderProcessTab(

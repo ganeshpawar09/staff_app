@@ -4,7 +4,7 @@ import 'package:staff_flutter_app/models/combine_data.dart';
 import 'package:staff_flutter_app/screens/process/process_detail_screen.dart';
 
 class OrderProcessListView extends StatelessWidget {
-  final OrderProcess orderProcess;
+  final ErpOrderProcess orderProcess;
   const OrderProcessListView({super.key, required this.orderProcess});
 
   @override
