@@ -75,6 +75,26 @@ class ProcessDetailScreen extends StatelessWidget {
                       // ),
                     ],
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Process Drawing: ",
+                        style: AppStyles.mondaN.copyWith(
+                          fontSize: 16,
+                          color: Colors.black54,
+                        ),
+                      ),
+                      ElevatedButton(onPressed: () {}, child: Text("hello"))
+                      // DownloadButton(
+                      //   url:
+                      //       '$serversite/api/process_drawing_download/${process.id}/',
+                      //   filetype: filetype,
+                      //   filename: filename,
+                      //   buttonname: 'filename',
+                      // ),
+                    ],
+                  ),
                   const SizedBox(
                     height: 20,
                   ),
