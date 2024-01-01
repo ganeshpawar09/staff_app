@@ -32,6 +32,10 @@ class _PDFButtonState extends State<PDFButton> {
         return;
       }
 
+      if (!mounted) {
+        return; // Check if the widget is still in the tree
+      }
+
       setState(() {
         _loading = true;
       });
@@ -39,29 +43,41 @@ class _PDFButtonState extends State<PDFButton> {
       final file = await PDFApi.loadNetwork(widget.url);
 
       if (file != null) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => PDFViewerPage(file: file),
-          ),
-        );
+        if (mounted) {
+          // Check if the widget is still in the tree
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PDFViewerPage(file: file),
+            ),
+          );
+        }
       } else {
         print('Error loading PDF file');
-        setState(() {
-          _error = true;
-        });
+        if (mounted) {
+          // Check if the widget is still in the tree
+          setState(() {
+            _error = true;
+          });
+        }
       }
 
       print('After fetching PDF data');
     } catch (error) {
       print('Error fetching PDF data: $error');
-      setState(() {
-        _error = true;
-      });
+      if (mounted) {
+        // Check if the widget is still in the tree
+        setState(() {
+          _error = true;
+        });
+      }
     } finally {
-      setState(() {
-        _loading = false;
-      });
+      if (mounted) {
+        // Check if the widget is still in the tree
+        setState(() {
+          _loading = false;
+        });
+      }
     }
   }
 

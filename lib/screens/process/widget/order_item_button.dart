@@ -34,6 +34,10 @@ class _OrderItemButtonState extends State<OrderItemButton> {
         return;
       }
 
+      if (!mounted) {
+        return; // Check if the widget is still in the tree
+      }
+
       setState(() {
         _loading = true;
       });
@@ -45,26 +49,32 @@ class _OrderItemButtonState extends State<OrderItemButton> {
       print('After fetching data');
     } catch (error) {
       print('Error fetching data: $error');
-      setState(() {
-        _error = true;
-      });
+
+      if (mounted) {
+        // Check if the widget is still in the tree
+        setState(() {
+          _error = true;
+        });
+      }
     }
 
-    setState(() {
-      _loading = false;
-      if (!_error &&
-          context.read<ErpOrderItemState>().erpOrderItemByProcess != null) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => OrderItemDetailScreen(
-              orderItem:
-                  context.read<ErpOrderItemState>().erpOrderItemByProcess!,
+    if (mounted) {
+      // Check if the widget is still in the tree
+      setState(() {
+        _loading = false;
+        if (!_error &&
+            context.read<ErpOrderItemState>().erpOrderItemByProcess != null) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => OrderItemDetailScreen(
+                orderItem: context.read<ErpOrderItemState>().erpOrderItemByProcess!,
+              ),
             ),
-          ),
-        );
-      }
-    });
+          );
+        }
+      });
+    }
   }
 
   void onPressedCallback(BuildContext context) async {
@@ -76,6 +86,13 @@ class _OrderItemButtonState extends State<OrderItemButton> {
     }
 
     fetchData(context);
+  }
+
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override

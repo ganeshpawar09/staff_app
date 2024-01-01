@@ -34,6 +34,10 @@ class _OrderButtonState extends State<OrderButton> {
         return;
       }
 
+      if (!mounted) {
+        return; // Check if the widget is still in the tree
+      }
+
       setState(() {
         _loading = true;
       });
@@ -45,25 +49,32 @@ class _OrderButtonState extends State<OrderButton> {
       print('After fetching data');
     } catch (error) {
       print('Error fetching data: $error');
-      setState(() {
-        _error = true;
-      });
+
+      if (mounted) {
+        // Check if the widget is still in the tree
+        setState(() {
+          _error = true;
+        });
+      }
     }
 
-    setState(() {
-      _loading = false;
-      if (!_error &&
-          context.read<ErpOrderState>().singleErpOrderByProcess != null) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => OrderDetailScreen(
-              order: context.read<ErpOrderState>().singleErpOrderByProcess!,
+    if (mounted) {
+      // Check if the widget is still in the tree
+      setState(() {
+        _loading = false;
+        if (!_error &&
+            context.read<ErpOrderState>().singleErpOrderByProcess != null) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => OrderDetailScreen(
+                order: context.read<ErpOrderState>().singleErpOrderByProcess!,
+              ),
             ),
-          ),
-        );
-      }
-    });
+          );
+        }
+      });
+    }
   }
 
   void onPressedCallback(BuildContext context) async {
