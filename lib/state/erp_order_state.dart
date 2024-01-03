@@ -27,6 +27,7 @@ class ErpOrderState extends ChangeNotifier {
         });
         print('success erporderlist data');
         _erpOrders = demo;
+        _erpOrders.sort((a, b) => b.startDate!.compareTo(a.startDate!));
         notifyListeners();
       } else {
         print("something went wrong from server side error=True");
